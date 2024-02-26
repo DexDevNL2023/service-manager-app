@@ -24,10 +24,13 @@ export class DetailsComponent implements OnInit {
     sections: SectionContent[] | undefined;
     detailsSection: LiteSectionContent | undefined;
     responsiveOptions: any[] | undefined;
+    loading: boolean = true;
 
     constructor(private location: Location, private sharedService: SharedService, private detailsApiService: DetailsApiService, private route: ActivatedRoute, private generalUtilsService: GeneralUtilsService) { }
 
     ngOnInit(): void {
+        this.loading = true;
+
         // Utilisez cette méthode pour changer l'état de la Landing Page
         this.sharedService.setLandingPageState(true);
 
@@ -78,7 +81,13 @@ export class DetailsComponent implements OnInit {
     loadSectionDetails() {
         this.detailsApiService.getDetailsSection(this.sectionId, this.type).subscribe(data => {
             this.detailsSection = data;
+            this.loading = false;
         });
+    }
+
+    isSectionEnabled(section: SectionContent): boolean {
+        // Déterminer si la section est activée ou désactivée
+        return section.isVisible;
     }
 
     goBackToParentComponent(): void {

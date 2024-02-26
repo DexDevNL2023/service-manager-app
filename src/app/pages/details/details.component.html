@@ -1,16 +1,170 @@
 
-<body class="landing-body">
-    <div class="landing-wrapper">
-        <div id="header" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
-            <div class="header-top">
-                <div class="p-grid">
-                    <div class="p-col-12 p-md-4">
-                        <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+<!-- Add a loading skeleton -->
+<ng-container *ngIf="loading; else contentLoaded">
+    <ng-container *ngIf="type === 'ABOUT'">
+        <h5>Abouts</h5>
+        <div class="border-round border-1 surface-border p-4 surface-card">
+            <div class="flex mb-3">
+                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                <div>
+                    <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton height=".5rem"></p-skeleton>
+                </div>
+            </div>
+            <p-skeleton width="100%" height="150px"></p-skeleton>
+            <div class="flex justify-content-between mt-3">
+                <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                <p-skeleton width="4rem" height="2rem"></p-skeleton>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'CAREER'">
+        <h5 class="mt-3">Careers</h5>
+        <p-skeleton styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="10rem" height="4rem"></p-skeleton>
+
+        <p-skeleton styleClass="mb-2" borderRadius="16px"></p-skeleton>
+        <p-skeleton width="10rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+        <p-skeleton width="5rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+        <p-skeleton height="2rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+        <p-skeleton width="10rem" height="4rem" borderRadius="16px"></p-skeleton>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'OFFER'">
+        <h5 class="mt-3">Offers</h5>
+        <div class="border-round border-1 surface-border p-4 surface-card">
+            <ul class="m-0 p-0 list-none">
+                <li class="mb-3">
+                    <div class="flex">
+                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                        <div style="flex: 1">
+                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="75%"></p-skeleton>
+                        </div>
                     </div>
-                    <div class="p-col-12 p-md-8">
-                        <ul class="landing-menu">
-                            <li><a href="#home">Home</a></li>
-                        </ul>
+                </li>
+                <li class="mb-3">
+                    <div class="flex">
+                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                        <div style="flex: 1">
+                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="75%"></p-skeleton>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-3">
+                    <div class="flex">
+                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                        <div style="flex: 1">
+                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="75%"></p-skeleton>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex">
+                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                        <div style="flex: 1">
+                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="75%"></p-skeleton>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'PARTNER'">
+        <h5 class="mt-3">Partners</h5>
+        <p-table [value]="sections" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>            </th>
+                    <th>            </th>
+                    <th>            </th>
+                    <th>            </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td><p-skeleton></p-skeleton></td>
+                    <td><p-skeleton></p-skeleton></td>
+                    <td><p-skeleton></p-skeleton></td>
+                    <td><p-skeleton></p-skeleton></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'CONTACT'">
+        <h5 class="mt-3">Contacts</h5>
+        <p-skeleton shape="circle" size="5rem"></p-skeleton>
+        <p-skeleton shape="circle" size="5rem"></p-skeleton>
+        <p-skeleton shape="circle" size="5rem"></p-skeleton>
+        <p-skeleton shape="circle" size="5rem"></p-skeleton>
+    </ng-container>
+</ng-container>
+
+<ng-template #contentLoaded>
+    <body class="landing-body">
+        <div class="landing-wrapper">
+            <div id="header" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+                <div class="header-top">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-4">
+                            <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                        </div>
+                        <div class="p-col-12 p-md-8">
+                            <ul class="landing-menu">
+                                <li><a href="#home">Home</a></li>
+                            </ul>
+                            <ul class="landing-menu">
+                                <li *ngFor="let section of sections">
+                                    <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
+                                        {{ section.label }}
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="landing-menu">
+                                <li><a routerLink="/help" target="_blank">Help</a></li>
+                                <li><a routerLink="/login" target="_blank">Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-content animation-element slide-bottom" [ngStyle]="{ 'background-image': 'url(' + homePageContent.logoUrl + ')' }">
+                    <h1>{{ homePageContent.name | uppercase }}</h1>
+                    <h3>{{ homePageContent.bannerTitle }}</h3>
+                    <p style="line-height: 1.5">{{ homePageContent.bannerDescription }}</p>
+                    <div>
+                        <button type="button" class="p-button p-button-warning">
+                            <span class="p-button-text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="detailsSection">
+                <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
+                <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
+            </div>
+
+            <div id="footer" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6">
+                        <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                        <div>
+                            <h1>{{ homePageContent.footerTitle | uppercase }}</h1>
+                            <p style="line-height: 1.5">{{ homePageContent.footerDescription }}</p>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6">
                         <ul class="landing-menu">
                             <li *ngFor="let section of sections">
                                 <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
@@ -18,51 +172,10 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="landing-menu">
-                            <li><a routerLink="/help" target="_blank">Help</a></li>
-                            <li><a routerLink="/login" target="_blank">Login</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
-
-            <div class="header-content animation-element slide-bottom" [ngStyle]="{ 'background-image': 'url(' + homePageContent.logoUrl + ')' }">
-                <h1>{{ homePageContent.name | uppercase }}</h1>
-                <h3>{{ homePageContent.bannerTitle }}</h3>
-                <p style="line-height: 1.5">{{ homePageContent.bannerDescription }}</p>
-                <div>
-                    <button type="button" class="p-button p-button-warning">
-                        <span class="p-button-text">Learn More</span>
-                    </button>
-                </div>
-            </div>
         </div>
-
-        <div *ngIf="detailsSection">
-            <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
-            <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
-        </div>
-
-        <div id="footer" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
-            <div class="p-grid">
-                <div class="p-col-12 p-md-6">
-                    <img src="{{ homePageContent.logoUrl }}" class="logo"/>
-                    <div>
-                        <h1>{{ homePageContent.footerTitle | uppercase }}</h1>
-                        <p style="line-height: 1.5">{{ homePageContent.footerDescription }}</p>
-                    </div>
-                </div>
-                <div class="p-col-12 p-md-6">
-                    <ul class="landing-menu">
-                        <li *ngFor="let section of sections">
-                            <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
-                                {{ section.label }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+    </body>
+</ng-template>
 

@@ -15,6 +15,9 @@ import {CarouselModule} from "primeng/carousel";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {GeneralUtilsService} from "../../utilities/services/general.utils.service";
+import {DividerModule} from "primeng/divider";
+import {SkeletonModule} from "primeng/skeleton";
+import {TableModule} from "primeng/table";
 
 @Component({
   selector: 'app-home',
@@ -27,7 +30,10 @@ import {GeneralUtilsService} from "../../utilities/services/general.utils.servic
         CarouselModule,
         CardModule,
         ButtonModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        DividerModule,
+        SkeletonModule,
+        TableModule
     ],
   templateUrl: './home.component.html',
 })
@@ -35,10 +41,13 @@ export class HomeComponent implements OnInit {
     homePageContent: HomePageContent | undefined;
     sections: SectionContent[] | undefined;
     responsiveOptions: any[] | undefined;
+    loading: boolean = true;
 
     constructor(private sharedService: SharedService, private homeApiService: HomeApiService, private router: Router, private generalUtilsService: GeneralUtilsService) {}
 
     ngOnInit(): void {
+        this.loading = true;
+
         // Utilisez cette méthode pour changer l'état de la Landing Page
         this.sharedService.setLandingPageState(true);
 
@@ -46,6 +55,7 @@ export class HomeComponent implements OnInit {
         this.homeApiService.getSections().subscribe((data: HomePageContent) => {
             this.homePageContent = data;
             this.sections = data.sections;
+            this.loading = false;
         });
 
         this.responsiveOptions = [
