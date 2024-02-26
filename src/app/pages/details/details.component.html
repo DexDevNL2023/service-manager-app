@@ -1,181 +1,281 @@
+<!DOCTYPE html>
+<html>
 
-<!-- Add a loading skeleton -->
-<ng-container *ngIf="loading; else contentLoaded">
-    <ng-container *ngIf="type === 'ABOUT'">
-        <h5>Abouts</h5>
-        <div class="border-round border-1 surface-border p-4 surface-card">
-            <div class="flex mb-3">
-                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                <div>
-                    <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-                    <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-                    <p-skeleton height=".5rem"></p-skeleton>
-                </div>
-            </div>
-            <p-skeleton width="100%" height="150px"></p-skeleton>
-            <div class="flex justify-content-between mt-3">
-                <p-skeleton width="4rem" height="2rem"></p-skeleton>
-                <p-skeleton width="4rem" height="2rem"></p-skeleton>
-            </div>
-        </div>
-    </ng-container>
+    <head>
+        <script>document.write('<base href="' + document.location + '" />');</script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>Service Manager App</title>
 
-    <ng-container *ngIf="type === 'CAREER'">
-        <h5 class="mt-3">Careers</h5>
-        <p-skeleton styleClass="mb-2"></p-skeleton>
-        <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-        <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
-        <p-skeleton width="10rem" height="4rem"></p-skeleton>
+        <link rel="stylesheet" type="text/css" href="../theme/theme-teal-yellow.css">
+        <link rel="stylesheet" type="text/css" href="../layout/css/layout-teal-yellow.css">
+        <link rel="stylesheet" type="text/css" href="primeng.min.css">
+        <link rel="stylesheet" type="text/css" href="primeflex.min.css">
 
-        <p-skeleton styleClass="mb-2" borderRadius="16px"></p-skeleton>
-        <p-skeleton width="10rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-        <p-skeleton width="5rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-        <p-skeleton height="2rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-        <p-skeleton width="10rem" height="4rem" borderRadius="16px"></p-skeleton>
-    </ng-container>
+    </head>
 
-    <ng-container *ngIf="type === 'OFFER'">
-        <h5 class="mt-3">Offers</h5>
-        <div class="border-round border-1 surface-border p-4 surface-card">
-            <ul class="m-0 p-0 list-none">
-                <li class="mb-3">
-                    <div class="flex">
-                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                        <div style="flex: 1">
-                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
-                            <p-skeleton width="75%"></p-skeleton>
-                        </div>
-                    </div>
-                </li>
-                <li class="mb-3">
-                    <div class="flex">
-                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                        <div style="flex: 1">
-                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
-                            <p-skeleton width="75%"></p-skeleton>
-                        </div>
-                    </div>
-                </li>
-                <li class="mb-3">
-                    <div class="flex">
-                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                        <div style="flex: 1">
-                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
-                            <p-skeleton width="75%"></p-skeleton>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex">
-                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                        <div style="flex: 1">
-                            <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
-                            <p-skeleton width="75%"></p-skeleton>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </ng-container>
-
-    <ng-container *ngIf="type === 'PARTNER'">
-        <h5 class="mt-3">Partners</h5>
-        <p-table [value]="sections" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>            </th>
-                    <th>            </th>
-                    <th>            </th>
-                    <th>            </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product>
-                <tr>
-                    <td><p-skeleton></p-skeleton></td>
-                    <td><p-skeleton></p-skeleton></td>
-                    <td><p-skeleton></p-skeleton></td>
-                    <td><p-skeleton></p-skeleton></td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </ng-container>
-
-    <ng-container *ngIf="type === 'CONTACT'">
-        <h5 class="mt-3">Contacts</h5>
-        <p-skeleton shape="circle" size="5rem"></p-skeleton>
-        <p-skeleton shape="circle" size="5rem"></p-skeleton>
-        <p-skeleton shape="circle" size="5rem"></p-skeleton>
-        <p-skeleton shape="circle" size="5rem"></p-skeleton>
-    </ng-container>
-</ng-container>
-
-<ng-template #contentLoaded>
     <body class="landing-body">
-        <div class="landing-wrapper">
-            <div id="header" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
-                <div class="header-top">
-                    <div class="p-grid">
-                        <div class="p-col-12 p-md-4">
-                            <img src="{{ homePageContent.logoUrl }}" class="logo"/>
-                        </div>
-                        <div class="p-col-12 p-md-8">
-                            <ul class="landing-menu">
-                                <li><a href="#home">Home</a></li>
-                            </ul>
-                            <ul class="landing-menu">
-                                <li *ngFor="let section of sections">
-                                    <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
-                                        {{ section.label }}
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="landing-menu">
-                                <li><a routerLink="/help" target="_blank">Help</a></li>
-                                <li><a routerLink="/login" target="_blank">Login</a></li>
-                            </ul>
+        <!-- Add a loading skeleton -->
+        <ng-container *ngIf="loading; else contentLoaded">
+            <div class="landing-wrapper">
+                <div>
+                    <div class="header-top">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <img src="../layout/images/logo-white.png"  class="logo"/>
+                            </div>
+                            <div class="p-col-12 p-md-8">
+                                <ul class="landing-menu">
+                                    <li>
+                                        <a href="#home">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#features">Features</a>
+                                    </li>
+                                    <li>
+                                        <a href="#events">Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="#pricing">Pricing</a>
+                                    </li>
+                                    <li>
+                                        <a href="#video">Video</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="header-content animation-element slide-bottom" [ngStyle]="{ 'background-image': 'url(' + homePageContent.logoUrl + ')' }">
-                    <h1>{{ homePageContent.name | uppercase }}</h1>
-                    <h3>{{ homePageContent.bannerTitle }}</h3>
-                    <p style="line-height: 1.5">{{ homePageContent.bannerDescription }}</p>
-                    <div>
-                        <button type="button" class="p-button p-button-warning">
-                            <span class="p-button-text">Learn More</span>
-                        </button>
+                    <div class="header-content animation-element slide-bottom">
+                        <h1>Service Manager App</h1>
+                        <h2 style="line-height: 1.5">Modern and elegant responsive application template with a premium look
+                            for PrimeNG components.</h2>
+                        <div>
+                            <button type="button" class="p-button p-button-warning">
+                                <span class="p-button-text">Learn More</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div *ngIf="detailsSection">
-                <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
-                <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
-            </div>
+            <ng-container *ngIf="type === 'ABOUT'">
+                <h3>ABOUTS</h3>
+                <span class="price-for">For serious companies</span>
+                <div class="border-round border-1 surface-border p-4 surface-card">
+                    <div class="flex mb-3">
+                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                        <div>
+                            <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                            <p-skeleton height=".5rem"></p-skeleton>
+                        </div>
+                    </div>
+                    <p-skeleton width="100%" height="150px"></p-skeleton>
+                    <div class="flex justify-content-between mt-3">
+                        <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                        <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                    </div>
+                </div>
+            </ng-container>
 
-            <div id="footer" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+            <ng-container *ngIf="type === 'CAREER'">
+                <h3>CAREERS</h3>
+                <span class="price-for">For serious companies</span>
+                <p-skeleton styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="10rem" height="4rem"></p-skeleton>
+
+                <p-skeleton styleClass="mb-2" borderRadius="16px"></p-skeleton>
+                <p-skeleton width="10rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+                <p-skeleton width="5rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+                <p-skeleton height="2rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+                <p-skeleton width="10rem" height="4rem" borderRadius="16px"></p-skeleton>
+            </ng-container>
+
+            <ng-container *ngIf="type === 'OFFER'">
+                <h3>OFFERS</h3>
+                <span class="price-for">For serious companies</span>
+                <div class="border-round border-1 surface-border p-4 surface-card">
+                    <ul class="m-0 p-0 list-none">
+                        <li class="mb-3">
+                            <div class="flex">
+                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                                <div style="flex: 1">
+                                    <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                                    <p-skeleton width="75%"></p-skeleton>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="flex">
+                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                                <div style="flex: 1">
+                                    <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                                    <p-skeleton width="75%"></p-skeleton>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="flex">
+                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                                <div style="flex: 1">
+                                    <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                                    <p-skeleton width="75%"></p-skeleton>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flex">
+                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+                                <div style="flex: 1">
+                                    <p-skeleton width="100%" styleClass="mb-2"></p-skeleton>
+                                    <p-skeleton width="75%"></p-skeleton>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="type === 'PARTNER'">
+                <h3>PARTNERS</h3>
+                <span class="price-for">For serious companies</span>
+                <p-table [value]="sections" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Name</th>
+                            <th>Adresses</th>
+                            <th>Phone number</th>
+                            <th>Web site</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                        <tr>
+                            <td><p-skeleton></p-skeleton></td>
+                            <td><p-skeleton></p-skeleton></td>
+                            <td><p-skeleton></p-skeleton></td>
+                            <td><p-skeleton></p-skeleton></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-container>
+
+            <ng-container *ngIf="type === 'CONTACT'">
+                <h3>CONTACTS</h3>
+                <span class="price-for">For serious companies</span>
+                <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
+                <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
+                <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
+                <p-skeleton shape="circle" size="5rem"></p-skeleton>
+            </ng-container>
+
+            <div>
                 <div class="p-grid">
                     <div class="p-col-12 p-md-6">
-                        <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                        <img src="../layout/images/logo-white.png"  />
                         <div>
-                            <h1>{{ homePageContent.footerTitle | uppercase }}</h1>
-                            <p style="line-height: 1.5">{{ homePageContent.footerDescription }}</p>
+                            <span>Modern and elegant responsive application template with a premium look for PrimeNG components.</span>
                         </div>
                     </div>
                     <div class="p-col-12 p-md-6">
                         <ul class="landing-menu">
-                            <li *ngFor="let section of sections">
-                                <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
-                                    {{ section.label }}
-                                </a>
-                            </li>
+                            <div class="p-col-6">
+                                <li>
+                                    <a href="#home">Home</a>
+                                </li>
+                                <li>
+                                    <a href="#features">Features</a>
+                                </li>
+                                <li>
+                                    <a href="#statistics">Events</a>
+                                </li>
+                            </div>
+                            <div class="p-col-6">
+                                <li>
+                                    <a href="#pricing">Pricing</a>
+                                </li>
+                                <li>
+                                    <a href="#video">Video</a>
+                                </li>
+                            </div>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </body>
-</ng-template>
+        </ng-container>
 
+        <ng-template #contentLoaded>
+            <body class="landing-body">
+                <div class="landing-wrapper">
+                    <div id="header" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+                        <div class="header-top">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-4">
+                                    <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                                </div>
+                                <div class="p-col-12 p-md-8">
+                                    <ul class="landing-menu">
+                                        <li><a href="#home">Home</a></li>
+                                    </ul>
+                                    <ul class="landing-menu">
+                                        <li *ngFor="let section of sections">
+                                            <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
+                                                {{ section.label }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <ul class="landing-menu">
+                                        <li><a routerLink="/help" target="_blank">Help</a></li>
+                                        <li><a routerLink="/login" target="_blank">Login</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="header-content animation-element slide-bottom" [ngStyle]="{ 'background-image': 'url(' + homePageContent.logoUrl + ')' }">
+                            <h1>{{ homePageContent.name | uppercase }}</h1>
+                            <h3>{{ homePageContent.bannerTitle }}</h3>
+                            <p style="line-height: 1.5">{{ homePageContent.bannerDescription }}</p>
+                            <div>
+                                <button type="button" class="p-button p-button-warning">
+                                    <span class="p-button-text">Learn More</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="detailsSection">
+                        <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
+                        <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
+                    </div>
+
+                    <div id="footer" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6">
+                                <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                                <div>
+                                    <h1>{{ homePageContent.footerTitle | uppercase }}</h1>
+                                    <p style="line-height: 1.5">{{ homePageContent.footerDescription }}</p>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <ul class="landing-menu">
+                                    <li *ngFor="let section of sections">
+                                        <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
+                                            {{ section.label }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </ng-template>
+    </body>
+</html>

@@ -101,7 +101,6 @@ import { DetailsComponent } from './pages/details/details.component';
 import {RouterModule} from "@angular/router";
 import {DetailsApiService} from "./utilities/services/details.api.service";
 import {GeneralUtilsService} from "./utilities/services/general.utils.service";
-import {SwiperModule} from "swiper/angular";
 
 @NgModule({
     imports: [
@@ -189,8 +188,7 @@ import {SwiperModule} from "swiper/angular";
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        RouterModule,
-        SwiperModule
+        RouterModule
     ],
     declarations: [
         AppComponent,
