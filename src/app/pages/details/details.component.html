@@ -1,0 +1,68 @@
+
+<body class="landing-body">
+    <div class="landing-wrapper">
+        <div id="header" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+            <div class="header-top">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-4">
+                        <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                    </div>
+                    <div class="p-col-12 p-md-8">
+                        <ul class="landing-menu">
+                            <li><a href="#home">Home</a></li>
+                        </ul>
+                        <ul class="landing-menu">
+                            <li *ngFor="let section of sections">
+                                <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
+                                    {{ section.label }}
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="landing-menu">
+                            <li><a routerLink="/help" target="_blank">Help</a></li>
+                            <li><a routerLink="/login" target="_blank">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-content animation-element slide-bottom" [ngStyle]="{ 'background-image': 'url(' + homePageContent.logoUrl + ')' }">
+                <h1>{{ homePageContent.name | uppercase }}</h1>
+                <h3>{{ homePageContent.bannerTitle }}</h3>
+                <p style="line-height: 1.5">{{ homePageContent.bannerDescription }}</p>
+                <div>
+                    <button type="button" class="p-button p-button-warning">
+                        <span class="p-button-text">Learn More</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="detailsSection">
+            <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
+            <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
+        </div>
+
+        <div id="footer" [ngStyle]="{ 'color': homePageContent.hexaCouleurTheme }">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                    <img src="{{ homePageContent.logoUrl }}" class="logo"/>
+                    <div>
+                        <h1>{{ homePageContent.footerTitle | uppercase }}</h1>
+                        <p style="line-height: 1.5">{{ homePageContent.footerDescription }}</p>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-6">
+                    <ul class="landing-menu">
+                        <li *ngFor="let section of sections">
+                            <a *ngIf="isSectionEnabled(section)" [routerLink]="'#' + section.key" [href]="'#' + section.key" target="{{section.target}}">
+                                {{ section.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

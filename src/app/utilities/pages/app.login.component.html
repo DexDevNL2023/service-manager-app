@@ -1,0 +1,35 @@
+<div class="login-body">
+    <div class="grid grid-nogutter">
+        <div class="col-12" style="text-align:center">
+            <img src="assets/layout/images/logo-manhattan.png" alt="manhattan-layout" class="logo" />
+        </div>
+    </div>
+    <div class="login-panel">
+        <div class="grid">
+            <div class="col-12 lg:col-6 left-side">
+                <img src="assets/layout/images/login/login-photo.png" alt="manhattan-layout" class="login-image" />
+            </div>
+            <div class="col-12 lg:col-6 right-side p-fluid">
+                <div class="col-12 container">
+                    <h3>Welcome guest!</h3>
+                    <h2>Sign in to Manhattan Network</h2>
+                </div>
+                <div class="col-12">
+                    <div class="input-wrapper p-input-icon-left">
+                        <i class="pi pi-user"></i>
+                        <input type="text" autocomplete="off" placeholder="Username" pInputText>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-wrapper p-input-icon-left">
+                        <i class="pi pi-lock"></i>
+                        <input type="password" autocomplete="off" placeholder="Password" pInputText>
+                    </div>
+                </div>
+                <div class="col-12 button-container">
+                    <button type="button" pButton label="Sign In" class="p-button-raised" [routerLink]="['/']"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
