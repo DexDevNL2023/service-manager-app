@@ -1,0 +1,40 @@
+name: Docker push - Service-Manager-App
+
+on:
+  push:
+      branches: [ main ]
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+    building:
+        runs-on: ubuntu-latest
+        container: docker:stable
+        steps:
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                  username:  dockerdevnl23
+                  password: dckr_pat__wBaUPhcQ6mZFnCqjYD0PmGCSYU
+            - name: Check out
+              uses: actions/checkout@v3
+            - name: Building
+              run: |
+                  echo Start app building here !
+                  ls
+                  docker -v
+                  docker build -t service-manager-app .
+                  docker tag service-manager-app dockerdevnl23/service-manager-app:latest
+                  docker push dockerdevnl23/service-manager-app:latest
+
+    deployment:
+        needs: [building]
+        runs-on: frontend
+        steps:
+            - name: Run deploy
+              run: |
+                  echo Start app deployment here !
+                  docker rm -f service-manager-app ||  docker kill service-manager-app  ||  echo "Nothing to kill"
+                  docker run  --name service-manager-app -p 10001:80  --rm -dit --hostname localhost -e LETSENCRYPT_HOST=localhost --pull=always dockerdevnl23/service-manager-app
