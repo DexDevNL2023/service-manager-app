@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "frontend": {
+        "service-manager-app": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/frontend",
+                        "outputPath": "dist/service-manager-app",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -27,12 +27,13 @@
                         "inlineStyleLanguage": "scss",
                         "aot": true,
                         "assets": [
-                            "src/assets",
                             "src/upload.php",
-                            "src/favicon.ico"
+                            "src/favicon.ico",
+                            "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/aos/dist/aos.css"
                         ],
                         "scripts": [
                             "node_modules/prismjs/prism.js",
@@ -75,14 +76,14 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "frontend:build"
+                        "browserTarget": "service-manager-app:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "frontend:build:production"
+                            "browserTarget": "service-manager-app:build:production"
                         },
                         "development": {
-                            "browserTarget": "frontend:build:development"
+                            "browserTarget": "service-manager-app:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -90,7 +91,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "frontend:build"
+                        "browserTarget": "service-manager-app:build"
                     }
                 },
                 "test": {

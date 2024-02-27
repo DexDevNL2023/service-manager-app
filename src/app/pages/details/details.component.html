@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-    <head>
-        <script>document.write('<base href="' + document.location + '" />');</script>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <title>Service Manager App</title>
-
-        <link rel="stylesheet" type="text/css" href="./../../assets/theme/theme-teal-yellow.css">
-        <link rel="stylesheet" type="text/css" href="./../../assets/layout/css/layout-teal-yellow.css">
-        <link rel="stylesheet" type="text/css" href="./../../assets/pages/primeng.min.css">
-        <link rel="stylesheet" type="text/css" href="./../../assets/pages/primeflex.min.css">
-
-    </head>
-
-    <body class="landing-body">
         <!-- Add a loading skeleton -->
         <ng-container *ngIf="loading; else contentLoaded">
             <div class="landing-wrapper">
@@ -24,7 +6,7 @@
                     <div class="header-top">
                         <div class="p-grid">
                             <div class="p-col-12 p-md-4">
-                                <img src="../layout/images/logo-white.png"  class="logo"/>
+                                <img src="/layout/images/logo-white.png"  class="logo"/>
                             </div>
                             <div class="p-col-12 p-md-8">
                                 <ul class="landing-menu">
@@ -177,7 +159,7 @@
             <div>
                 <div class="p-grid">
                     <div class="p-col-12 p-md-6">
-                        <img src="../layout/images/logo-white.png"  />
+                        <img src="assets/layout/images/logo-white.png"  />
                         <div>
                             <span>Modern and elegant responsive application template with a premium look for PrimeNG components.</span>
                         </div>
@@ -277,5 +259,3 @@
                 </div>
             </body>
         </ng-template>
-    </body>
-</html>

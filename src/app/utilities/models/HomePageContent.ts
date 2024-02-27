@@ -1,4 +1,5 @@
 import {SectionContent} from "./SectionContent";
+import {SectionType} from "../enums/SectionType";
 
 export class HomePageContent {
     name: string;
@@ -11,5 +12,4 @@ export class HomePageContent {
     footerTitle: string;
     footerDescription: string;
     sections: SectionContent[] = [];
-    isVisible: boolean;
 }

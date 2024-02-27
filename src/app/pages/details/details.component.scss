@@ -1,0 +1,29 @@
+.textfooter{
+    font-size: 15px !important;
+    font-weight: bolder !important;
+}
+.footertext{
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 12px;
+    font-weight: bold !important;
+}
+#footer{
+    background-color: #293782f3 !important;
+    color: white !important;
+}
+input{
+    margin-top: 8px !important;
+    border-radius: 8px !important;
+}
+:host ::ng-deep .buttons{
+    width: 100% !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+    background-color: #2D8EE3;
+    border-color: #2D8EE3;
+    color: white;
+}
+#contact{
+    background-image: url('../../../assets/contact.png');
+}

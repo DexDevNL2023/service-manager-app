@@ -112,4 +112,21 @@ export class GeneralUtilsService {
                 return 'success';
         }
     }
+
+    getSectionIcon(type: SectionType) {
+        switch (type) {
+            case SectionType.ABOUT:
+                return 'pi pi-info';
+            case SectionType.CAREER:
+                return 'pi pi-briefcase';
+            case SectionType.OFFER:
+                return 'pi pi-gift';
+            case SectionType.PARTNER:
+                return 'pi pi-users';
+            case SectionType.CONTACT:
+                return 'pi pi-envelope';
+            default:
+                return 'pi pi-home';
+        }
+    }
 }
