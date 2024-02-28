@@ -5,6 +5,7 @@ import {CareerType} from "../enums/CareerType";
 import {Observable} from "rxjs";
 import {LiteSectionContent} from "../models/LiteSectionContent";
 import {ContactType} from "../enums/ContactType";
+import {SectionContent} from "../models/SectionContent";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,62 @@ import {ContactType} from "../enums/ContactType";
 export class GeneralUtilsService {
 
   constructor() { }
+
+    getDefaultText(type: SectionType): string {
+        let defaultText: string;
+
+        switch (type) {
+            case SectionType.ABOUT:
+                defaultText = 'We provide you with the best advisors for your success.';
+                break;
+            case SectionType.CAREER:
+                defaultText = 'Find job offers tailored to your professional goals.';
+                break;
+            case SectionType.OFFER:
+                defaultText = 'Highlight your services using the most popular digital platform.';
+                break;
+            case SectionType.PARTNER:
+                defaultText = 'Become partners and benefit.';
+                break;
+            case SectionType.CONTACT:
+                defaultText = 'We are at your service 24h/24 and 7j/7.';
+                break;
+            default:
+                defaultText = '';
+                break;
+        }
+
+        return defaultText;
+    }
+
+    generateLabelContent(label: string): string {
+        // Découper le label en blocs aléatoires de 2, 3 ou 4 lettres
+        const pieces = [];
+        let currentIndex = 0;
+
+        while (currentIndex < label.length) {
+            const blockSize = this.getRandomBlockSize();
+            const block = label.substr(currentIndex, blockSize);
+            const textStyle = currentIndex % 2 === 0 ? 'text-900' : 'text-blue-600';
+            pieces.push(`<span class="${textStyle}">${block}</span>`);
+            currentIndex += blockSize;
+        }
+
+        // Assembler les morceaux dans un p-divider
+        return `<p-divider layout="horizontal" styleClass="hidden md:flex" [align]="'center'">
+            <div class="mb-3 font-bold text-2xl">${pieces.join('')}</div>
+          </p-divider>`;
+    }
+
+    getRandomBlockSize(): number {
+        // Retourner une taille de bloc aléatoire entre 2, 3 ou 4
+        return [2, 3, 4][Math.floor(Math.random() * 3)];
+    }
+
+    getColorByIndex(index: number): string {
+        // Logique pour déterminer la couleur en fonction de l'index
+        return index % 2 === 0 ? '#0066ba26 !important' : '#ffffff';
+    }
 
     getActionContact(contact: string, type: ContactType): string {
         let contactAction = ''; // Variable pour stocker l'action associée au contact

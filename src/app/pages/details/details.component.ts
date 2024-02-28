@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SharedService} from "../../utilities/services/shared.service";
 import {DetailsApiService} from "../../utilities/services/details.api.service";
 import {SectionType} from "../../utilities/enums/SectionType";
@@ -12,24 +12,53 @@ import {LiteSectionContent} from "../../utilities/models/LiteSectionContent";
 import {GeneralUtilsService} from "../../utilities/services/general.utils.service";
 import {HomePageContent} from "../../utilities/models/HomePageContent";
 import {SectionContent} from "../../utilities/models/SectionContent";
+import AOS from 'aos';
+import Typewriter from 't-writer.js';
 
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html'
 })
 export class DetailsComponent implements OnInit {
-    sectionId: number | undefined;
-    type: SectionType | undefined;
     homePageContent: HomePageContent | undefined;
-    sections: SectionContent[] | undefined;
-    detailsSection: LiteSectionContent | undefined;
     responsiveOptions: any[] | undefined;
     loading: boolean = true;
+    currentDate = new Date();
+    defaultSections: any[] | undefined;
+    isBannerVisible = true;
+    menuItems = [
+        { label: 'Home', icon: 'pi pi-home', command: () => this.goToHome('home') },
+        { label: 'About', icon: 'pi pi-info', command: () => this.goToHome('abouts') },
+        { label: 'Careers', icon: 'pi pi-briefcase', command: () => this.goToHome('careers') },
+        { label: 'Offers', icon: 'pi pi-gift', command: () => this.goToHome('offers') },
+        { label: 'Partners', icon: 'pi pi-users', command: () => this.goToHome('partners') },
+        { label: 'Contacts', icon: 'pi pi-envelope', command: () => this.goToHome('contacts') },
+    ];
+    // Assurez-vous que homePageContent.bannerTitle est défini avant d'utiliser ce code
+    bannerTitles: string[] = ["Service Manager", "App"];
+    defaultColor: string = '#293782f3';
 
-    constructor(private location: Location, private sharedService: SharedService, private detailsApiService: DetailsApiService, private route: ActivatedRoute, private generalUtilsService: GeneralUtilsService) { }
+    sectionId: number | undefined;
+    type: SectionType | undefined;
+    detailsSection: LiteSectionContent | undefined;
+
+    constructor(private location: Location, private sharedService: SharedService, private detailsApiService: DetailsApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) { }
 
     ngOnInit(): void {
         this.loading = true;
+        AOS.init();
+        this.defaultSections = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
+
+        const target = document.querySelector('.tw')
+        const writer = new Typewriter(target, {
+            loop: true,
+            typeSpeed: 80,
+            deleteSpeed: 80,
+            typeColor: '#0066ba'
+        })
+
+        // Utilisez le tableau résultant pour la séquence d'écriture
+        writer.strings(400, ...this.bannerTitles).start();
 
         // Utilisez cette méthode pour changer l'état de la Landing Page
         this.sharedService.setLandingPageState(true);
@@ -37,7 +66,20 @@ export class DetailsComponent implements OnInit {
         // Récupère homePageContent du service partagé
         this.sharedService.homePageContent$.subscribe((content) => {
             this.homePageContent = content;
-            this.sections = content.sections;
+
+            // Ajoutez les titres dynamiques à partir de homePageContent.bannerTitle
+            if (this.homePageContent && this.homePageContent.bannerTitle) {
+                this.bannerTitles.push(...this.homePageContent.bannerTitle.split(','));
+            }
+
+            // Construisez le tableau menuItems
+            this.menuItems = content.sections
+                .filter(section => this.isSectionEnabled(section))
+                .map(section => ({
+                    label: section.label,
+                    icon: this.generalUtilsService.getSectionIcon(section.type),
+                    command: () => this.goToHome(`${section.key}`),
+                }));
         });
 
         this.route.paramMap.subscribe(params => {
@@ -77,6 +119,11 @@ export class DetailsComponent implements OnInit {
         window.removeEventListener('popstate', this.goBackToParentComponent);
     }
 
+    isSectionEnabled(section: SectionContent): boolean {
+        // Déterminer si la section est activée ou désactivée
+        return section.isVisible;
+    }
+
     // Récupérez du contenu dynamique depuis le backend
     loadSectionDetails() {
         this.detailsApiService.getDetailsSection(this.sectionId, this.type).subscribe(data => {
@@ -85,9 +132,13 @@ export class DetailsComponent implements OnInit {
         });
     }
 
-    isSectionEnabled(section: SectionContent): boolean {
-        // Déterminer si la section est activée ou désactivée
-        return section.isVisible;
+    closeBanner(): void {
+        this.isBannerVisible = false;
+    }
+
+    goToHome(scrollTo: string): void {
+        // Naviguez vers DetailsComponent avec les paramètres de l'URL
+        this.router.navigate(['/home', scrollTo]);
     }
 
     goBackToParentComponent(): void {
@@ -115,7 +166,7 @@ export class DetailsComponent implements OnInit {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         return `
             <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
+                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
             </p-divider>
             <div [ngIf]="${about.images}">
                 <p-galleria [(value)]="${about.images}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="false" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
@@ -141,12 +192,12 @@ export class DetailsComponent implements OnInit {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         return `
             <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
+                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
             </p-divider>
             <div [ngIf]="${career.partenaire}">
                 <img [ngIf]="${career.partenaire.logo}" [ngSrc]="${career.partenaire.logo}" alt="${career.job}" class="w-6 shadow-2" [preview]="true" />
                 <p-divider align="center" type="dotted">
-                    <h3 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${career.partenaire.name.toUpperCase()}</h3>
+                    <h3 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${career.partenaire.name.toUpperCase()}</h3>
                 </p-divider>
                 <p-tag [value]="${career.partenaire.siteWeb ? career.partenaire.siteWeb : career.partenaire.contact}" severity="secondary"></p-tag>
             </div>
@@ -224,12 +275,12 @@ export class DetailsComponent implements OnInit {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         return `
             <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
+                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
             </p-divider>
             <div [ngIf]="${offer.partenaire}">
                 <img [ngIf]="${offer.partenaire.logo}" [ngSrc]="${offer.partenaire.logo}" alt="${offer.name}" class="w-6 shadow-2" [preview]="true" />
                 <p-divider align="center" type="dotted">
-                    <h3 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${offer.partenaire.name.toUpperCase()}</h3>
+                    <h3 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${offer.partenaire.name.toUpperCase()}</h3>
                 </p-divider>
                 <p-tag [value]="${offer.partenaire.siteWeb ? offer.partenaire.siteWeb : offer.partenaire.contact}" severity="secondary"></p-tag>
             </div>
@@ -262,11 +313,11 @@ export class DetailsComponent implements OnInit {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         return `
             <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
+                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
             </p-divider>
             <img [ngIf]="${partner.logo}" [ngSrc]="${partner.logo}" alt="${partner.name}" class="w-6 shadow-2" [preview]="true" />
             <p-divider align="center" type="dotted">
-                <h3 [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">${partner.name.toUpperCase()}</h3>
+                <h3 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${partner.name.toUpperCase()}</h3>
             </p-divider>
             <p-tag [value]="${partner.siteWeb}" severity="secondary"></p-tag>
             <p-tag [value]="${partner.contact}" severity="secondary"></p-tag>

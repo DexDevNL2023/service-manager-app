@@ -130,64 +130,12 @@ export class HomeComponent implements OnInit {
         ];
     }
 
-    getDefaultText(type: SectionType): string {
-        let defaultText: string;
-
-        switch (type) {
-            case SectionType.ABOUT:
-                defaultText = 'We provide you with the best advisors for your success.';
-                break;
-            case SectionType.CAREER:
-                defaultText = 'Find job offers tailored to your professional goals.';
-                break;
-            case SectionType.OFFER:
-                defaultText = 'Highlight your services using the most popular digital platform.';
-                break;
-            case SectionType.PARTNER:
-                defaultText = 'Become partners and benefit.';
-                break;
-            case SectionType.CONTACT:
-                defaultText = 'We are at your service 24h/24 and 7j/7.';
-                break;
-            default:
-                defaultText = '';
-                break;
-        }
-
-        return defaultText;
-    }
-
-    generateLabelContent(label: string): string {
-        // Découper le label en blocs aléatoires de 2, 3 ou 4 lettres
-        const pieces = [];
-        let currentIndex = 0;
-
-        while (currentIndex < label.length) {
-            const blockSize = this.getRandomBlockSize();
-            const block = label.substr(currentIndex, blockSize);
-            const textStyle = currentIndex % 2 === 0 ? 'text-900' : 'text-blue-600';
-            pieces.push(`<span class="${textStyle}">${block}</span>`);
-            currentIndex += blockSize;
-        }
-
-        // Assembler les morceaux dans un p-divider
-        return `<p-divider layout="horizontal" styleClass="hidden md:flex" [align]="'center'">
-            <div class="mb-3 font-bold text-2xl">${pieces.join('')}</div>
-          </p-divider>`;
-    }
-
-    getRandomBlockSize(): number {
-        // Retourner une taille de bloc aléatoire entre 2, 3 ou 4
-        return [2, 3, 4][Math.floor(Math.random() * 3)];
-    }
-
-    getColorByIndex(index: number): string {
-        // Logique pour déterminer la couleur en fonction de l'index
-        return index % 2 === 0 ? '#0066ba26 !important' : '#ffffff';
-    }
-
     getSectionIcon(section: SectionContent) {
         return this.generalUtilsService.getSectionIcon(section.type)
+    }
+
+    getColorByIndex(index: number) {
+        return this.generalUtilsService.getColorByIndex(index)
     }
 
     closeBanner(): void {
@@ -199,6 +147,15 @@ export class HomeComponent implements OnInit {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
+    }
+
+    viewDetails(item: any, type: SectionType): void {
+        // Convertissez SectionType en chaîne pour l'URL
+        const typeString = SectionType[type];
+
+        // Naviguez vers DetailsComponent avec les paramètres de l'URL
+        this.sharedService.setHomePageContent(this.homePageContent);
+        this.router.navigate(['/details', item.id, typeString]);
     }
 
     isSectionEnabled(section: SectionContent): boolean {
@@ -223,30 +180,21 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    private viewDetails(item: any, type: SectionType): void {
-        // Convertissez SectionType en chaîne pour l'URL
-        const typeString = SectionType[type];
-
-        // Naviguez vers DetailsComponent avec les paramètres de l'URL
-        this.sharedService.setHomePageContent(this.homePageContent);
-        this.router.navigate(['/details', item.id, typeString]);
-    }
-
     private generateAboutCardContent(abouts: AboutContent[], label: string, description: string, type: SectionType): string {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        const labelHtml = this.generateLabelContent(label);
-        const defaultText = this.getDefaultText(type);
+        const labelHtml = this.generalUtilsService.generateLabelContent(label);
+        const defaultText = this.generalUtilsService.getDefaultText(type);
 
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         const timeLineItems = abouts.map(about => `
             <ng-container [ngIf]="${about}">
                 <ng-template pTemplate="marker" let-event>
-                    <span class="custom-marker shadow-2" [style.backgroundColor]="${this.homePageContent.hexaCouleurTheme}">
+                    <span class="custom-marker shadow-2" [style.backgroundColor]="${this.homePageContent?.hexaCouleurTheme || this.defaultColor}">
                         <i [ngIf]="${about.icon}" [ngClass]="${about.icon}"></i>
                     </span>
                 </ng-template>
                 <ng-template pTemplate="content" let-event>
-                    <p-card [header]="${about.title.toUpperCase()}" [subheader]="${about.subTitle}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
+                    <p-card [header]="${about.title.toUpperCase()}" [subheader]="${about.subTitle}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">
                         <p-galleria [ngIf]="${about.images}" [(value)]="${about.images}" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
                             <ng-template let-image pTemplate="item">
                                 <img [src]="image" [alt]="${about.title}" width="200" class="shadow-2" [preview]="true" />
@@ -274,13 +222,13 @@ export class HomeComponent implements OnInit {
 
     private generateCareerCardContent(careers: CareerContent[], label: string, description: string, type: SectionType): string {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        const labelHtml = this.generateLabelContent(label);
-        const defaultText = this.getDefaultText(type);
+        const labelHtml = this.generalUtilsService.generateLabelContent(label);
+        const defaultText = this.generalUtilsService.getDefaultText(type);
 
         const carouselItems = careers.map(career => `
             <ng-container [ngIf]="${career}">
                 <ng-template let-partner pTemplate="item">
-                  <p-card header="${career.job.toUpperCase()}" subheader="${this.generalUtilsService.getCareerTypeLabel(career.type)}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
+                  <p-card header="${career.job.toUpperCase()}" subheader="${this.generalUtilsService.getCareerTypeLabel(career.type)}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">
                     <ng-template pTemplate="header">
                       <img [ngIf]="${career.partenaire.logo}" [ngSrc]="${career.partenaire.logo}" alt="${career.job}" class="w-6 shadow-2" [preview]="true" />
                     </ng-template>
@@ -311,8 +259,8 @@ export class HomeComponent implements OnInit {
 
     private generateContactCardContent(contacts: ContactContent[], label: string, description: string, type: SectionType): string {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        const labelHtml = this.generateLabelContent(label);
-        const defaultText = this.getDefaultText(type);
+        const labelHtml = this.generalUtilsService.generateLabelContent(label);
+        const defaultText = this.generalUtilsService.getDefaultText(type);
 
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         const fieldsetItems = contacts.map(contact => {
@@ -349,8 +297,8 @@ export class HomeComponent implements OnInit {
 
     private generateOfferCardContent(offers: OfferContent[], label: string, description: string, type: SectionType): string {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        const labelHtml = this.generateLabelContent(label);
-        const defaultText = this.getDefaultText(type);
+        const labelHtml = this.generalUtilsService.generateLabelContent(label);
+        const defaultText = this.generalUtilsService.getDefaultText(type);
 
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         const carouselItems = offers.map(offer => `
@@ -388,13 +336,13 @@ export class HomeComponent implements OnInit {
 
     private generatePartnerCardContent(partners: PartnerContent[], label: string, description: string, type: SectionType): string {
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        const labelHtml = this.generateLabelContent(label);
-        const defaultText = this.getDefaultText(type);
+        const labelHtml = this.generalUtilsService.generateLabelContent(label);
+        const defaultText = this.generalUtilsService.getDefaultText(type);
 
         const carouselItems = partners.map(partner => `
             <ng-container [ngIf]="${partner}">
                 <ng-template let-partner pTemplate="item">
-                  <p-card header="${partner.name.toUpperCase()}" subheader="${this.generalUtilsService.getPartnerTypeLabel(partner.type)}" [style]="{ width: '360px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
+                  <p-card header="${partner.name.toUpperCase()}" subheader="${this.generalUtilsService.getPartnerTypeLabel(partner.type)}" [style]="{ width: '360px' }" [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">
                     <ng-template pTemplate="header">
                       <img [ngIf]="${partner.logo}" [ngSrc]="${partner.logo}" alt="${partner.name}" class="w-6 shadow-2" [preview]="true" />
                     </ng-template>
