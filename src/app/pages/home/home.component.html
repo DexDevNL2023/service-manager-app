@@ -18,7 +18,8 @@
     <body class="landing-body">
         <div class="landing-wrapper">
             <div id="header" style="position: relative;">
-                <div class="image" style="background-image: url('../../../assets/layout/images/landing/contacts2.png'); background-size: cover; background-position: center; height: 550px;">
+                <div class="image" [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/contacts2.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'"
+                     style="background-size: cover; background-position: center; height: 550px;">
                     <div class="header-top">
                         <div class="px-8 py-4 md:px-6 lg:px-8 text-center" >
                             <div class="px-8 md:px-8" >
