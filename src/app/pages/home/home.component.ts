@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
     ];
     // Assurez-vous que homePageContent.bannerTitle est défini avant d'utiliser ce code
     bannerTitles: string[] = ["Service Manager", "App"];
+    defaultColor: string = '#293782f3';
 
     constructor(private sharedService: SharedService, private homeApiService: HomeApiService, private router: Router, private generalUtilsService: GeneralUtilsService) {}
 
@@ -238,29 +239,36 @@ export class HomeComponent implements OnInit {
 
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         const timeLineItems = abouts.map(about => `
-            <ng-template pTemplate="marker" let-event>
-                <span class="custom-marker shadow-2" [style.backgroundColor]="${this.homePageContent.hexaCouleurTheme}">
-                    <i [ngIf]="${about.icon}" [ngClass]="${about.icon}"></i>
-                </span>
-            </ng-template>
-            <ng-template pTemplate="content" let-event>
-                <p-card [header]="${about.title.toUpperCase()}" [subheader]="${about.subTitle}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
-                    <p-galleria [ngIf]="${about.images}" [(value)]="${about.images}" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
-                        <ng-template let-image pTemplate="item">
-                            <img [src]="image" [alt]="${about.title}" width="200" class="shadow-2" [preview]="true" />
-                        </ng-template>
-                    </p-galleria>
-                    <p style="line-height: 1.5">${about.description}</p>
-                    <p-button label="Read more" icon="pi pi-chevron-right" style="background-color: ${this.homePageContent.hexaCouleurTheme}; color: white;" (click)="viewDetails(${about.id}, ${type})"></p-button>
-                </p-card>
-            </ng-template>
+            <ng-container [ngIf]="${about}">
+                <ng-template pTemplate="marker" let-event>
+                    <span class="custom-marker shadow-2" [style.backgroundColor]="${this.homePageContent.hexaCouleurTheme}">
+                        <i [ngIf]="${about.icon}" [ngClass]="${about.icon}"></i>
+                    </span>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                    <p-card [header]="${about.title.toUpperCase()}" [subheader]="${about.subTitle}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
+                        <p-galleria [ngIf]="${about.images}" [(value)]="${about.images}" [showIndicators]="true" [showThumbnails]="false" [changeItemOnIndicatorHover]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
+                            <ng-template let-image pTemplate="item">
+                                <img [src]="image" [alt]="${about.title}" width="200" class="shadow-2" [preview]="true" />
+                            </ng-template>
+                        </p-galleria>
+                        <p style="line-height: 1.5">${about.description}</p>
+                       <p-button label="View More" icon="pi pi-chevron-right"
+                            [style.background-color]="${this.homePageContent?.hexaCouleurTheme || this.defaultColor}"
+                            style="color: white;"
+                            (click)="viewDetails(${about.id}, ${type})"></p-button>
+                    </p-card>
+                </ng-template>
+            </ng-container>
         `);
         return `
-            ${labelHtml}
-            <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
-            <p-timeline [ngIf]="${abouts}" [value]="${abouts}" align="alternate" styleClass="customized-timeline">
-              ${timeLineItems.join('\n')}
-            </p-timeline>
+            <ng-container [ngIf]="${abouts} && ${abouts.length} > 0">
+                ${labelHtml}
+                <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
+                <p-timeline [ngIf]="${abouts}" [value]="${abouts}" align="alternate" styleClass="customized-timeline">
+                  ${timeLineItems.join('\n')}
+                </p-timeline>
+            </ng-container>
         `;
     }
 
@@ -270,27 +278,34 @@ export class HomeComponent implements OnInit {
         const defaultText = this.getDefaultText(type);
 
         const carouselItems = careers.map(career => `
-            <ng-template let-partner pTemplate="item">
-              <p-card header="${career.job.toUpperCase()}" subheader="${this.generalUtilsService.getCareerTypeLabel(career.type)}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
-                <ng-template pTemplate="header">
-                  <img [ngIf]="${career.partenaire.logo}" [ngSrc]="${career.partenaire.logo}" alt="${career.job}" class="w-6 shadow-2" [preview]="true" />
+            <ng-container [ngIf]="${career}">
+                <ng-template let-partner pTemplate="item">
+                  <p-card header="${career.job.toUpperCase()}" subheader="${this.generalUtilsService.getCareerTypeLabel(career.type)}" [style]="{ width: '640px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
+                    <ng-template pTemplate="header">
+                      <img [ngIf]="${career.partenaire.logo}" [ngSrc]="${career.partenaire.logo}" alt="${career.job}" class="w-6 shadow-2" [preview]="true" />
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                      <p style="line-height: 1.5">${this.generalUtilsService.getCareerTypeLabel(career.type)}</p>
+                      <p-tag [value]="Deadline ${career.dateLimite} at ${career.heureLimite}" [severity]="${this.generalUtilsService.getSeverity(career.dateLimite, career.heureLimite)}"></p-tag>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                       <p-button label="View More" icon="pi pi-chevron-right"
+                            [style.background-color]="${this.homePageContent?.hexaCouleurTheme || this.defaultColor}"
+                            style="color: white;"
+                            (click)="viewDetails(${career.id}, ${type})"></p-button>
+                    </ng-template>
+                  </p-card>
                 </ng-template>
-                <ng-template pTemplate="content">
-                  <p style="line-height: 1.5">${this.generalUtilsService.getCareerTypeLabel(career.type)}</p>
-                  <p-tag [value]="Deadline ${career.dateLimite} at ${career.heureLimite}" [severity]="${this.generalUtilsService.getSeverity(career.dateLimite, career.heureLimite)}"></p-tag>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                  <p-button label="View More" icon="pi pi-chevron-right" style="background-color: ${this.homePageContent.hexaCouleurTheme}; color: white;" (click)="viewDetails(${career.id}, ${type})"></p-button>
-                </ng-template>
-              </p-card>
-            </ng-template>
+            </ng-container>
         `);
         return `
-            ${labelHtml}
-            <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
-            <p-carousel [ngIf]="${careers}" [value]="${careers}" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
-              ${carouselItems.join('\n')}
-            </p-carousel>
+            <ng-container [ngIf]="${careers} && ${careers.length} > 0">
+                ${labelHtml}
+                <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
+                <p-carousel [ngIf]="${careers}" [value]="${careers}" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
+                  ${carouselItems.join('\n')}
+                </p-carousel>
+            </ng-container>
         `;
     }
 
@@ -300,29 +315,36 @@ export class HomeComponent implements OnInit {
         const defaultText = this.getDefaultText(type);
 
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        return contacts.map(contact => {
+        const fieldsetItems = contacts.map(contact => {
             let contactAction = this.generalUtilsService.getActionContact(contact.description, contact.type); // Variable pour stocker l'action associée au contact
 
             // Vérifiez si contactAction est une chaîne vide
             const showButton = contactAction !== '';
 
             return `
-            ${labelHtml}
-            <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
-            <p-fieldset>
-                <ng-template pTemplate="header">
-                    <div class="flex align-items-center gap-2 px-2">
-                        <p-avatar [ngIf]="${contact.image}" image="${contact.image}" shape="circle" />
-                        <span class="font-bold" style="color: ${this.homePageContent.hexaCouleurTheme}">${contact.name.toUpperCase()}</span>
-                    </div>
-                </ng-template>
-                <p class="m-0">
-                    ${contact.description}
-                </p>
-                ${showButton ? `
-                <p-button label="Contact us" style="color: ${this.homePageContent.hexaCouleurTheme}" [text]="true" [raised]="true" [plain]="true" (click)="${contactAction}"></p-button>` : ''}
-            </p-fieldset>`;
-        }).join('');
+                <ng-container [ngIf]="${contact}">
+                    <p-fieldset>
+                        <ng-template pTemplate="header">
+                            <div class="flex align-items-center gap-2 px-2">
+                                <p-avatar [ngIf]="${contact.image}" image="${contact.image}" shape="circle" />
+                                <span class="font-bold" style="color: ${this.homePageContent.hexaCouleurTheme}">${contact.name.toUpperCase()}</span>
+                            </div>
+                        </ng-template>
+                        <p class="m-0">
+                            ${contact.description}
+                        </p>
+                        ${showButton ? `
+                        <p-button label="Contact us" style="color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor}" [text]="true" [raised]="true" [plain]="true" (click)="${contactAction}"></p-button>` : ''}
+                    </p-fieldset>
+                </ng-container>`;
+        });
+        return `
+            <ng-container [ngIf]="${contacts} && ${contacts.length} > 0">
+                ${labelHtml}
+                <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
+                ${fieldsetItems.join('\n')}
+            </ng-container>
+        `;
     }
 
     private generateOfferCardContent(offers: OfferContent[], label: string, description: string, type: SectionType): string {
@@ -332,28 +354,35 @@ export class HomeComponent implements OnInit {
 
         // Personnalisez cette fonction en fonction de votre structure de données spécifique
         const carouselItems = offers.map(offer => `
-          <p-galleria [ngIf]="${offer.images}" [(value)]="${offer.images}" [autoPlay]="true" [circular]="true" [responsiveOptions]="${this.responsiveOptions}" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
-               <ng-template let-image pTemplate="item">
-                   <img [ngIf]="image" [ngSrc]="image" style="width: 100%; display: block;" />
-               </ng-template>
-               <ng-template let-image pTemplate="thumbnail">
-                   <div class="grid grid-nogutter justify-content-center">
-                        <img [ngIf]="image" [ngSrc]="image" style="display: block;" />
-                   </div>
-               </ng-template>
-               <ng-template pTemplate="caption" let-item>
-                   <h4 style="margin-bottom: .5rem; color: #ffffff;">{${offer.name.toUpperCase()}</h4>
-                   <p style="line-height: 1.5">${offer.partenaire.siteWeb ? offer.partenaire.siteWeb : offer.partenaire.contact}</p>
-                   <p-button label="View More" icon="pi pi-chevron-right" style="background-color: ${this.homePageContent.hexaCouleurTheme}; color: white;" (click)="viewDetails(${offer.id}, ${type})"></p-button>
-               </ng-template>
-          </p-galleria>
+            <ng-container [ngIf]="${offer}">
+                <p-galleria [ngIf]="${offer.images}" [(value)]="${offer.images}" [autoPlay]="true" [circular]="true" [responsiveOptions]="${this.responsiveOptions}" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
+                   <ng-template let-image pTemplate="item">
+                       <img [ngIf]="image" [ngSrc]="image" style="width: 100%; display: block;" />
+                   </ng-template>
+                   <ng-template let-image pTemplate="thumbnail">
+                       <div class="grid grid-nogutter justify-content-center">
+                            <img [ngIf]="image" [ngSrc]="image" style="display: block;" />
+                       </div>
+                   </ng-template>
+                   <ng-template pTemplate="caption" let-item>
+                       <h4 style="margin-bottom: .5rem; color: #ffffff;">{${offer.name.toUpperCase()}</h4>
+                       <p style="line-height: 1.5">${offer.partenaire.siteWeb ? offer.partenaire.siteWeb : offer.partenaire.contact}</p>
+                       <p-button label="View More" icon="pi pi-chevron-right"
+                            [style.background-color]="${this.homePageContent?.hexaCouleurTheme || this.defaultColor}"
+                            style="color: white;"
+                            (click)="viewDetails(${offer.id}, ${type})"></p-button>
+                   </ng-template>
+                </p-galleria>
+            </ng-container>
         `);
         return `
-            ${labelHtml}
-            <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
-            <p-carousel [ngIf]="${offers}" [value]="${offers}" [numVisible]="3" [numScroll]="3" [responsiveOptions]="responsiveOptions">
-              ${carouselItems.join('\n')}
-            </p-carousel>
+            <ng-container [ngIf]="${offers} && ${offers.length} > 0">
+                ${labelHtml}
+                <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
+                <p-carousel [ngIf]="${offers}" [value]="${offers}" [numVisible]="3" [numScroll]="3" [responsiveOptions]="responsiveOptions">
+                  ${carouselItems.join('\n')}
+                </p-carousel>
+            </ng-container>
         `;
     }
 
@@ -363,26 +392,34 @@ export class HomeComponent implements OnInit {
         const defaultText = this.getDefaultText(type);
 
         const carouselItems = partners.map(partner => `
-            <ng-template let-partner pTemplate="item">
-              <p-card header="${partner.name.toUpperCase()}" subheader="${this.generalUtilsService.getPartnerTypeLabel(partner.type)}" [style]="{ width: '360px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
-                <ng-template pTemplate="header">
-                  <img [ngIf]="${partner.logo}" [ngSrc]="${partner.logo}" alt="${partner.name}" class="w-6 shadow-2" [preview]="true" />
+            <ng-container [ngIf]="${partner}">
+                <ng-template let-partner pTemplate="item">
+                  <p-card header="${partner.name.toUpperCase()}" subheader="${this.generalUtilsService.getPartnerTypeLabel(partner.type)}" [style]="{ width: '360px' }" [ngStyle]="{ color: ${this.homePageContent.hexaCouleurTheme} }">
+                    <ng-template pTemplate="header">
+                      <img [ngIf]="${partner.logo}" [ngSrc]="${partner.logo}" alt="${partner.name}" class="w-6 shadow-2" [preview]="true" />
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                      <p-tag [value]="${partner.siteWeb}" severity="secondary"></p-tag>
+                      <p-tag [value]="${partner.contact}" severity="secondary"></p-tag>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                       <p-button label="View More" icon="pi pi-chevron-right"
+                            [style.background-color]="${this.homePageContent?.hexaCouleurTheme || this.defaultColor}"
+                            style="color: white;"
+                            (click)="viewDetails(${partner.id}, ${type})"></p-button>
+                    </ng-template>
+                  </p-card>
                 </ng-template>
-                <ng-template pTemplate="content">
-                  <p-tag [value]="${partner.siteWeb ? partner.siteWeb : partner.contact}" severity="secondary"></p-tag>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                  <p-button label="View More" icon="pi pi-chevron-right" style="background-color: ${this.homePageContent.hexaCouleurTheme}; color: white;" (click)="viewDetails(${partner.id}, ${type})"></p-button>
-                </ng-template>
-              </p-card>
-            </ng-template>
+            </ng-container>
         `);
         return `
-            ${labelHtml}
-            <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
-            <p-carousel [ngIf]="${partners}" [value]="${partners}" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
-              ${carouselItems.join('\n')}
-            </p-carousel>
+            <ng-container [ngIf]="${partners} && ${partners.length} > 0">
+                ${labelHtml}
+                <span class="text-700 text-sm line-height-3">${description || defaultText}</span>
+                <p-carousel [ngIf]="${partners}" [value]="${partners}" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
+                  ${carouselItems.join('\n')}
+                </p-carousel>
+            </ng-container>
         `;
     }
 
