@@ -27,6 +27,16 @@
                                         <ng-template pTemplate="start">
                                             <!-- Utilisation de la liaison de données pour l'attribut src -->
                                             <img [src]="loading ? '../../../assets/layout/images/logo-manhattan.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-manhattan.png')" height="40" class="mr-2" />
+
+                                            <!-- Utilisation de *ngIf pour afficher l'image appropriée en fonction de la valeur de loading -->
+                                            <img *ngIf="loading; else logoImage" src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
+
+                                            <!-- Modèle pour l'image du logo si loading est faux -->
+                                            <ng-template #logoImage>
+                                                <img *ngIf="homePageContent?.logoUrl" [src]="homePageContent.logoUrl" height="40" class="mr-2" />
+                                                <!-- Vous pouvez également fournir une image statique si homePageContent.logoUrl est null -->
+                                                <img *ngIf="!homePageContent?.logoUrl" src="../../../assets/layout/images/logo-manhattan.png" height="40" class="mr-2" />
+                                            </ng-template>
                                         </ng-template>
                                     </p-menubar>
                                 </div>
@@ -259,13 +269,21 @@
             <div id="footer">
                 <div class="p-grid">
                     <div class="col-12 md:col-12 lg:col-12 footer" style="text-align: center;">
-                        <img [src]="loading ? '../../../assets/layout/images/logo-white.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-white.png')" height="40" class="mr-2" />
+                        <!-- Utilisation de *ngIf pour afficher l'image appropriée en fonction de la valeur de loading -->
+                        <img *ngIf="loading; else logoImage" src="../../../assets/layout/images/logo-white.png" height="40" class="mr-2" />
+
+                        <!-- Modèle pour l'image du logo si loading est faux -->
+                        <ng-template #logoImage>
+                            <img *ngIf="homePageContent?.logoUrl" [src]="homePageContent.logoUrl" height="40" class="mr-2" />
+                            <!-- Vous pouvez également fournir une image statique si homePageContent.logoUrl est null -->
+                            <img *ngIf="!homePageContent?.logoUrl" src="../../../assets/layout/images/logo-white.png" height="40" class="mr-2" />
+                        </ng-template>
                     </div>
                     <div class="px-4 md:px-6 lg:px-8">
                         <div class="text-700 text-center">
-                            <div class="text-white font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;{{ loading ? 'For services managements.' : homePageContent?.name }}</div>
-                            <div class="textfooter font-bold text-5xl mb-3">{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerTitle }}</div>
-                            <div class="text-white text-2xl mb-5">{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.footerDescription }}</div>
+                            <div class="text-white font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;For services managements.</div>
+                            <div class="textfooter font-bold text-5xl mb-3">Join Service Manager Community</div>
+                            <div class="text-white text-2xl mb-5">The first services and jobs referencing site.</div>
                             <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
                         </div>
                     </div>
