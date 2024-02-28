@@ -216,21 +216,70 @@
         </div>
 
         <div id="footer" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
-            <div class="p-grid">
-                <div class="col-12 md:col-12 lg:col-12 footer" style="text-align: center;">
-                    <img [src]="loading ? '../../../assets/layout/images/logo-white.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-white.png')" height="40" class="mr-2" />
-                </div>
-                <div class="px-4 md:px-6 lg:px-8">
-                    <div class="text-700 text-center">
-                        <div class="text-white font-bold mb-3"><i class="pi pi-discord"></i>&nbsp;{{ loading ? 'For services managements.' : homePageContent?.name }}</div>
-                        <div class="textfooter font-bold text-5xl mb-3">{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerTitle }}</div>
-                        <div class="text-white text-2xl mb-5">{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.footerDescription }}</div>
-                        <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+            <div class="footer-content animation-element slide-bottom">
+                <div class="footer-content animation-element slide-bottom">
+                    <div class="px-2 md:px-2 lg:px-2">
+                        <div class="custom-grid md:text-left">
+                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4">
+                                <span class="text-900 text-xl block">Company</span>
+                                <ul class="list-none p-0">
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Abouts</a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Careers</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4">
+                                <span class="text-900 text-xl block">Offers</span>
+                                <ul class="list-none p-0">
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">IT Graphik</a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">DeVops</a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Big Data</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4 lg:border-right-1">
+                                <span class="text-900 text-xl block">Legal</span>
+                                <ul class="list-none p-0">
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Partners</a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Contacts</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4 mb-4 lg:mb-0">
+                                <span class="text-900 text-xl block">Subscribe</span>
+                                <div class="text-white py-4 block mt-4 line-height-3"><i class="pi pi-discord"></i>&nbsp;{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerTitle }}</div>
+                                <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-2 py-4 lg:px-2 flex flex-column lg:flex-row justify-content-between align-items-center">
+                        <div class="col-fixed flex align-items-center flex-order-0 lg:flex-order-1">
+                            <a tabindex="0" class="cursor-pointer mr-3">
+                                <i class="pi pi-facebook surface-900 p-1 text-sm border-circle text-0"></i>
+                            </a>
+                            <a tabindex="0" class="cursor-pointer mr-3">
+                                <i class="pi pi-twitter surface-900 p-1 text-sm border-circle text-0"></i>
+                            </a>
+                            <a tabindex="0" class="cursor-pointer mr-3">
+                                <i class="pi pi-youtube surface-900 p-1 text-sm border-circle text-0"></i>
+                            </a>
+                            <a tabindex="0" class="cursor-pointer">
+                                <i class="pi pi-google surface-900 p-1 text-sm border-circle text-0"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 py-6" style="color: #fff; text-align: center;font-weight: bold;">
-                Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a>
             </div>
         </div>
     </div>

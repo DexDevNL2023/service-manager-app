@@ -24,7 +24,6 @@ import {AvatarModule} from "primeng/avatar";
 import {ToolbarModule} from "primeng/toolbar";
 import {MenubarModule} from "primeng/menubar";
 import {ScrollTopModule} from "primeng/scrolltop";
-import {RippleModule} from "primeng/ripple";
 
 @Component({
     selector: 'app-home',
@@ -44,8 +43,7 @@ import {RippleModule} from "primeng/ripple";
         AvatarModule,
         ToolbarModule,
         MenubarModule,
-        ScrollTopModule,
-        RippleModule
+        ScrollTopModule
     ],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
