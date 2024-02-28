@@ -129,6 +129,11 @@ export class HomeComponent implements OnInit {
         ];
     }
 
+    getColorByIndex(index: number): string {
+        // Logique pour déterminer la couleur en fonction de l'index
+        return index % 2 === 0 ? '#0066ba26 !important' : '#ffffff';
+    }
+
     getSectionIcon(section: SectionContent) {
         return this.generalUtilsService.getSectionIcon(section.type)
     }
