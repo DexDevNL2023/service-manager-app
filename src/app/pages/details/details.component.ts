@@ -137,8 +137,11 @@ export class DetailsComponent implements OnInit {
     }
 
     goToHome(scrollTo: string): void {
+        // Vérifiez si scrollTo est défini, sinon définissez une valeur par défaut
+        const scrollToSection = scrollTo || 'home';
+
         // Naviguez vers DetailsComponent avec les paramètres de l'URL
-        this.router.navigate(['/home', scrollTo]);
+        this.router.navigate(['/home', scrollToSection]);
     }
 
     goBackToParentComponent(): void {

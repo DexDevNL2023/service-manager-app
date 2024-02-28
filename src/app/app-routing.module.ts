@@ -11,14 +11,15 @@ import {DetailsComponent} from "./pages/details/details.component";
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            {path: 'home', component: HomeComponent},
-            { path: 'details/:id/:type', component: DetailsComponent },
+            {path: '', component: HomeComponent},
+            {path: 'home/:scrollTo?', component: HomeComponent},
+            {path: 'details/:id/:type', component: DetailsComponent},
             {path: 'help', component: AppHelpComponent},
             {path: 'error', component: AppErrorComponent},
             {path: 'access', component: AppAccessdeniedComponent},
             {path: 'notfound', component: AppNotfoundComponent},
             {path: 'login', component: AppLoginComponent},
-            { path: '', redirectTo: '/home', pathMatch: 'full'},
+            {path: '', redirectTo: '/home', pathMatch: 'full'},
         ], {scrollPositionRestoration: 'enabled'})
     ],
     exports: [RouterModule]

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SharedService} from "../../utilities/services/shared.service";
-import {Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {HomeApiService} from "../../utilities/services/home.api.service";
 import {NgForOf, NgIf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {HomePageContent} from "../../utilities/models/HomePageContent";
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
     bannerTitles: string[] = ["Service Manager", "App"];
     defaultColor: string = '#293782f3';
 
-    constructor(private sharedService: SharedService, private homeApiService: HomeApiService, private router: Router, private generalUtilsService: GeneralUtilsService) {}
+    constructor(private sharedService: SharedService, private homeApiService: HomeApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) {}
 
     ngOnInit(): void {
         this.loading = true;
@@ -88,6 +88,17 @@ export class HomeComponent implements OnInit {
 
         // Utilisez cette méthode pour changer l'état de la Landing Page
         this.sharedService.setLandingPageState(true);
+
+        // Récupérer le paramètre 'scrollTo' de l'URL
+        this.route.params.subscribe(params => {
+            const scrollTo = params['scrollTo'];
+
+            // Assurez-vous que scrollToSection est défini avant de faire défiler
+            if (scrollTo) {
+                // Faire défiler la page vers la section correspondante
+                this.scrollTo(scrollTo);
+            }
+        });
 
         // Récupérez du contenu dynamique depuis le backend
         this.homeApiService.getSections().subscribe((data: HomePageContent) => {
