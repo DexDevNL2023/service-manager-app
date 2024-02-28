@@ -15,12 +15,12 @@
 
     <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
 
-    <body class="landing-body" *ngIf="loading">
+    <body class="landing-body">
         <div class="landing-wrapper">
             <div id="header" style="position: relative;">
                 <div class="image" style="background-image: url('../../../assets/layout/images/landing/contacts2.png'); background-size: cover; background-position: center; height: 550px;">
                     <div class="header-top">
-                        <div class="px-8 py-8 md:px-6 lg:px-8 text-center" >
+                        <div class="px-8 py-4 md:px-6 lg:px-8 text-center" >
                             <div class="px-8 md:px-8" >
                                 <div class="col-12" style="color: #fff; text-align: center;font-weight: bold;">
                                     <p-menubar [model]="menuItems" styleClass="centered-menu" [style]="{ 'width': 'fit-content', 'display': 'flex', 'justify-content': 'center', 'border-radius': '10px', 'text-align': 'center', 'color': '#fff' }">
@@ -34,10 +34,13 @@
                         </div>
                         <div class="header-content animation-element slide-bottom">
                             <div style="line-height: 1.5;color: #000000;font-size: xx-large; font-weight: bolder;">Welcome To <span
-                                class="tw"></span></div>
-
-                            <h2 style="line-height: 1.5;color: #000000;" data-aos="fade-up" data-aos-duration="3000">For services managements.</h2>
-                            <div>
+                                class="tw"></span>
+                            </div>
+                            <div class="py-6 text-center" style="line-height: 1.5;color: #000000;" data-aos="fade-up" data-aos-duration="3000">
+                                <h3>{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.bannerTitle }}</h3>
+                                <h6>{{ loading ? 'For services managements.' : homePageContent?.bannerDescription }}</h6>
+                            </div>
+                            <div class="py-4 text-center">
                                 <button pButton pRipple data-aos="fade-up" style="line-height: 1.5;color: #ffffff;"
                                         data-aos-duration="3500" type="button" label="Learn More"
                                         class="p-button-rounded p-button-primary mr-2 mb-2" (click)="scrollTo('home')"></button>
