@@ -23,7 +23,7 @@
                     <div class="header-top">
                         <div class="px-8 py-4 md:px-6 lg:px-8 text-center" >
                             <div class="px-8 md:px-8" >
-                                <div class="col-12" style="color: #fff; text-align: center;font-weight: bold;">
+                                <div style="color: #fff; text-align: center;font-weight: bold;">
                                     <p-menubar [model]="menuItems" styleClass="centered-menu" [style]="{ 'width': 'fit-content', 'display': 'flex', 'justify-content': 'center', 'border-radius': '10px', 'text-align': 'center', 'color': '#fff' }">
                                         <ng-template pTemplate="start">
                                             <!-- Utilisation de la liaison de données pour l'attribut src -->
@@ -122,14 +122,12 @@
 
             <div *ngIf="loading">
                 <div id="abouts" class="px-4 py-6 md:px-6 lg:px-8 text-center" >
-                    <p-divider layout="horizontal" styleClass="hidden md:flex" [align]="'center'">
-                        <div class="mb-3 font-bold text-2xl">
-                            <span class="text-900">ABO</span>
-                            <span class="text-blue-600">UTS</span>
-                        </div>
-                    </p-divider>
+                    <div class="mb-3 font-bold text-2xl">
+                        <span class="text-900">ABO</span>
+                        <span class="text-blue-600">UTS</span>
+                    </div>
                     <span class="text-700 text-sm line-height-3">We provide you with the best advisors for your success.</span>
-                    <div class="border-round border-1 p-4 surface-card">
+                    <div class="p-4 surface-card">
                         <div class="flex mb-3">
                             <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
                             <div>
@@ -166,15 +164,13 @@
                 </div>
 
                 <div id="offers" class="px-4 py-6 md:px-6 lg:px-8 text-center" >
-                    <p-divider layout="horizontal" styleClass="hidden md:flex" [align]="'center'">
-                        <div class="mb-3 font-bold text-2xl">
-                            <span class="text-900">O</span>
-                            <span class="text-blue-600">FFER</span>
-                            <span class="text-900">S</span>
-                        </div>
-                    </p-divider>
+                    <div class="mb-3 font-bold text-2xl">
+                        <span class="text-900">O</span>
+                        <span class="text-blue-600">FFER</span>
+                        <span class="text-900">S</span>
+                    </div>
                     <span class="text-700 text-sm line-height-3">Highlight your services using the most popular digital platform.</span>
-                    <div class="border-round border-1 p-4 surface-card">
+                    <div class="p-4 surface-card">
                         <ul class="m-0 p-0 list-none">
                             <li class="mb-3">
                                 <div class="flex">
@@ -244,16 +240,14 @@
                 </div>
 
                 <div id="contacts" class="px-4 py-6 md:px-6 lg:px-8 text-center" >
-                    <p-divider layout="horizontal" styleClass="hidden md:flex" [align]="'center'">
-                        <div class="mb-3 font-bold text-2xl">
-                            <span class="text-900">CO</span>
-                            <span class="text-blue-600">NT</span>
-                            <span class="text-900">AC</span>
-                            <span class="text-blue-600">TS</span>
-                        </div>
-                    </p-divider>
+                    <div class="mb-3 font-bold text-2xl">
+                        <span class="text-900">CO</span>
+                        <span class="text-blue-600">NT</span>
+                        <span class="text-900">AC</span>
+                        <span class="text-blue-600">TS</span>
+                    </div>
                     <span class="text-700 text-sm line-height-3">We are at your service 24h/24 and 7j/7.</span>
-                    <div class="col-12 block md:flex center">
+                    <div class="p-4 surface-card block md:flex center">
                         <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
                         <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
                         <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
@@ -301,7 +295,7 @@
                         <div class="px-2 md:px-2 lg:px-2">
                             <div class="grid md:text-left">
                                 <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4">
-                                    <span class="text-900 text-xl block">Company</span>
+                                    <span class="text-900 text-2xl block">Company</span>
                                     <ul class="list-none p-0">
                                         <li>
                                             <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Abouts</a>
@@ -312,7 +306,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4">
-                                    <span class="text-900 text-xl block">Offers</span>
+                                    <span class="text-900 text-2xl block">Offers</span>
                                     <ul class="list-none p-0">
                                         <li>
                                             <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">IT Graphik</a>
@@ -326,7 +320,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4 lg:border-right-1">
-                                    <span class="text-900 text-xl block">Legal</span>
+                                    <span class="text-900 text-2xl block">Legal</span>
                                     <ul class="list-none p-0">
                                         <li>
                                             <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Partners</a>
@@ -337,7 +331,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4 mb-4 lg:mb-0">
-                                    <span class="text-900 text-xl block">Subscribe</span>
+                                    <span class="text-900 text-2xl block">Subscribe</span>
                                     <div class="text-white py-4 block mt-4 line-height-3"><i class="pi pi-discord"></i>&nbsp;{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerTitle }}</div>
                                     <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
                                 </div>
