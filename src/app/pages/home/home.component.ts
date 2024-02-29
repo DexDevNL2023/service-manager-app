@@ -28,6 +28,7 @@ import {RippleModule} from "primeng/ripple";
 
 @Component({
     selector: 'app-home',
+    templateUrl: './home.component.html',
     standalone: true,
     imports: [
         RouterLink,
@@ -46,9 +47,7 @@ import {RippleModule} from "primeng/ripple";
         MenubarModule,
         ScrollTopModule,
         RippleModule
-    ],
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    ]
 })
 export class HomeComponent implements OnInit {
     homePageContent: HomePageContent | undefined;

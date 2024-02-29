@@ -9,6 +9,8 @@
 @import "assets/demo/documentation.scss";
 
 //@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "assets/theme/theme-teal-yellow.css";
+@import "assets/layout/css/layout-teal-yellow.css";
 @import "primeng/resources/primeng.css";
 @import "primeng/resources/primeng.min.css";
 
@@ -87,4 +89,84 @@ body{
     color: red;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.textfooter{
+    font-size: 15px !important;
+    font-weight: bolder !important;
+}
+
+.footertext{
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 12px;
+    font-weight: bold !important;
+}
+
+#footer{
+    background-color: #293782f3 !important;
+    color: white !important;
+}
+
+input{
+    margin-top: 8px !important;
+    border-radius: 8px !important;
+}
+
+:host ::ng-deep .buttons{
+    width: 100% !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+    background-color: #2D8EE3;
+    border-color: #2D8EE3;
+    color: white;
+}
+
+#contact{
+    background-image: url('assets/contact.png');
+}
+
+.white-text {
+    color: white !important;
+}
+
+.custom-menu {
+    background-color: #333;
+    color: #fff;
+}
+
+.custom-menu-item {
+    color: #fff;
+}
+
+.custom-menubar .p-menuitem-link {
+    color: white !important;
+}
+
+.bg-gray-900 .p-menuitem-link,
+.bg-gray-900 .p-toolbar-group-end button {
+    color: white !important;
+}
+
+.centered-menu {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 10px;
+}
+
+.block-content {
+    padding: 0;
+    border: 1px
+    px
+    solid var(--surface-border);
+    border-top: 0 none;
+}
+
+.custom-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.1rem;
+    margin-left: -0.1rem;
+    margin-top: -0.1rem;
 }
