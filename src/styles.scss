@@ -8,9 +8,10 @@
 @import "assets/demo/flags/flags.css";
 @import "assets/demo/documentation.scss";
 
-//@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "assets/theme/theme-teal-yellow.css";
 @import "assets/layout/css/layout-teal-yellow.css";
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeng/resources/primeng.min.css";
 
@@ -59,36 +60,11 @@
     width: 2.5em
 }
 
-p-table td{
-    overflow-wrap: break-word;
-    max-width: 15em;
-}
-
 body{
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-}
-
-.unite-examen-true{
-    color: green;
-}
-
-.unite-examen-false{
-    color: red;
-}
-
-.moyenne-valide{
-    color: green;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.moyenne-0{
-    color: red;
-    font-size: 1.2em;
-    font-weight: bold;
 }
 
 .textfooter{
@@ -148,13 +124,6 @@ input{
     color: white !important;
 }
 
-.centered-menu {
-    display: flex;
-    justify-content: center;
-    width: fit-content;
-    border-radius: 10px;
-}
-
 .block-content {
     padding: 0;
     border: 1px
@@ -169,4 +138,70 @@ input{
     margin-right: -0.1rem;
     margin-left: -0.1rem;
     margin-top: -0.1rem;
+}
+
+::ng-deep .ui-menu,.ui-menu .ui-menu-child {
+    border: 0px;
+    background:#5393bc 0 0 repeat-x !important;
+}
+
+::ng-deep .ui-menu .ui-menuitem .ui-menuitem-link:hover {
+    background-color: #5393bc;
+}
+
+::ng-deep .ui-menu .ui-menuitem .ui-state-active{
+    background-color: #5393bc;
+}
+
+::ng-deep .ui-menu .ui-menuitem.ui-menuitem-active>.ui-menuitem-link,
+.ui-menu .ui-menuitem .ui-menuitem-link:hover {
+    background-color:#186ba0;
+}
+
+::ng-deep .menucus {
+    background: #5393bc !important;
+}
+
+.centered-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100vh !important;
+}
+
+.centered-menu {
+    display: flex !important;
+    justify-content: center !important;
+    width: fit-content !important;
+    border-radius: 10px !important;
+    background-color: #293782f3 !important;
+}
+
+.centered-menu .ui-menuitem-text {
+    color: white !important;
+}
+
+.ui-menubar {
+    border: 1px solid #aed0ea !important;
+    background: #293782f3 50% 50% repeat-x !important;
+    color: #ffffff !important;
+    font-weight: bolder !important;
+}
+
+.ui-state-disabled {
+    cursor: default !important;
+    background-color: white !important;
+}
+
+::ng-deep .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+    background: #293782f3 50% 50% repeat-x !important;
+    color: #ffffff !important;
+}
+
+:host ::ng-deep .p-menuitem-text {
+    color: white !important;
+}
+
+.p-menuitem-text {
+    color: white !important;
 }

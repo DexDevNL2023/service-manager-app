@@ -1,51 +1,30 @@
-<!DOCTYPE html>
-<html>
 
-    <head>
-        <script>document.write('<base href="' + document.location + '" />');</script>
-        <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
-        <meta content="yes" name="apple-mobile-web-app-capable" />
-        <title>PrimeNG - Manhattan - Landing Page</title>
-
-        <!-- PrimeNG styles -->
-        <link href="https://cdn.jsdelivr.net/npm/primeng@16.0.2/resources/primeng.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- PrimeIcons -->
-        <link href="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.css" rel="stylesheet" type="text/css" />
-
-        <!-- PrimeFlex (optional, if you are using it) -->
-        <link href="https://cdn.jsdelivr.net/npm/primeflex@^3.3.1/primeflex.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- Your custom styles or additional stylesheets -->
-
-    </head>
-
-    <body class="ng-star-inserted">
-        <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center">
-            <div class="font-bold mr-8">🔥 Service Manager!</div>
-            <div class="align-items-center hidden lg:flex">
-                <span class="line-height-3">The first services and jobs referencing site.</span>
-            </div>
-            <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="scrollTo('home')" style="cursor: pointer;">
-                Learn More
-            </a>
-            <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
-                <i class="pi pi-times"></i>
-            </a>
+<div style="width: 100%; height: 100%; overflow: auto">
+    <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap">
+        <div class="font-bold mr-8">🔥 Service Manager!</div>
+        <div class="align-items-center hidden lg:flex">
+            <span class="line-height-3">The first services and jobs referencing site.</span>
         </div>
+        <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="goToHome('home')" style="cursor: pointer;">
+            Learn More
+        </a>
+        <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
+            <i class="pi pi-times"></i>
+        </a>
+    </div>
 
-        <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
+    <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
 
+    <body class="landing-body">
+    <div class="landing-wrapper">
         <div id="header" style="position: relative;" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
             <div class="image" [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/contacts2.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'"
                  style="background-size: cover; background-position: center; height: 550px;">
                 <div class="header-top">
-                    <div class="container-fluid">
-                        <div class="row justify-content-center">
-                            <div class="px-8 py-4 md:px-6 lg:px-8 p-col-12">
-                                <p-menubar [model]="menuItems" styleClass="centered-menu">
+                    <div class="px-8 py-4 md:px-6 lg:px-8 text-center" >
+                        <div class="px-8 md:px-8" >
+                            <div style="color: #fff; text-align: center;font-weight: bold;">
+                                <p-menubar [model]="menuItems" styleClass="centered-menu" [style]="{ 'width': 'fit-content', 'display': 'flex', 'justify-content': 'center', 'border-radius': '10px', 'text-align': 'center', 'color': '#fff' }">
                                     <ng-template pTemplate="start">
                                         <!-- Utilisation de la liaison de données pour l'attribut src -->
                                         <img [src]="loading ? '../../../assets/layout/images/logo-manhattan.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-manhattan.png')" height="40" class="mr-2" />
@@ -54,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-4 py-6 md:px-6 lg:px-8 text-center header-content animation-element slide-bottom">
+                    <div class="header-content animation-element slide-bottom">
                         <div style="line-height: 1.5;color: #000000;font-size: xx-large; font-weight: bolder;">Welcome To <span
                             class="tw"></span>
                         </div>
@@ -65,76 +44,7 @@
                         <div class="py-4 text-center">
                             <button pButton pRipple data-aos="fade-up" style="line-height: 1.5;color: #ffffff;"
                                     data-aos-duration="3500" type="button" label="Learn More"
-                                    class="p-button-rounded p-button-primary mr-2 mb-2" (click)="scrollTo('home')"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="home" class="px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;">
-            <div class="mb-3 font-bold text-2xl">
-                <span class="text-900">What do </span>
-                <span class="text-blue-600">Service Manager ?</span>
-            </div>
-            <div class="text-700 text-sm mb-6">Everything you need to find the service you need.</div>
-            <div *ngIf="loading">
-                <div class="grid">
-                    <div class="col-12 md:col-4 mb-4 px-5" data-aos="fade-up" data-aos-duration="2300">
-                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                            <i class="pi pi-home text-4xl text-blue-500"></i>
-                        </span>
-                        <div class="text-900 mb-3 font-medium">Web site Service Manager</div>
-                        <span class="text-700 text-sm line-height-3">The first services and jobs referencing site.</span>
-                    </div>
-                    <div class="col-12 md:col-4 mb-4 px-5" data-aos="fade-up" data-aos-duration="2500">
-                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                            <i class="pi pi-info text-4xl text-blue-500"></i>
-                        </span>
-                        <div class="text-900 mb-3 font-medium">Abouts</div>
-                        <span class="text-700 text-sm line-height-3">We provide you with the best advisors for your success.</span>
-                    </div>
-                    <div class="col-12 md:col-4 mb-4 px-5" data-aos="fade-up" data-aos-duration="3000">
-                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                            <i class="pi pi-briefcase text-4xl text-blue-500"></i>
-                        </span>
-                        <div class="text-900 mb-3 font-medium">Careers</div>
-                        <span class="text-700 text-sm line-height-3">Find job offers tailored to your professional goals.</span>
-                    </div>
-                    <div class="col-12 md:col-4 mb-4 px-5" data-aos="fade-up" data-aos-duration="2300">
-                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                            <i class="pi pi-gift text-4xl text-blue-500"></i>
-                        </span>
-                        <div class="text-900 mb-3 font-medium">Offers</div>
-                        <span class="text-700 text-sm line-height-3">Highlight your services using the most popular digital platform.</span>
-                    </div>
-                    <div class="col-12 md:col-4 mb-4 px-5" data-aos="fade-up" data-aos-duration="2500">
-                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                            <i class="pi pi-users text-4xl text-blue-500"></i>
-                        </span>
-                        <div class="text-900 mb-3 font-medium">Partners</div>
-                        <span class="text-700 text-sm line-height-3">Become partners and benefit.</span>
-                    </div>
-                    <div class="col-12 md:col-4 md:mb-4 mb-0 px-3" data-aos="fade-up" data-aos-duration="3000">
-                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                            <i class="pi pi-envelope text-4xl text-blue-500"></i>
-                        </span>
-                        <div class="text-900 mb-3 font-medium">Contacts</div>
-                        <span class="text-700 text-sm line-height-3">We are at your service 24h/24 and 7j/7.</span>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="!loading">
-                <div class="grid">
-                    <div *ngFor="let section of sections">
-                        <div *ngIf="isSectionEnabled(section)">
-                            <div class="col-12 md:col-4 md:mb-4 mb-0 px-3" data-aos="fade-up" data-aos-duration="3000">
-                                <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                                    <i class="{{ this.getSectionIcon(section) }} text-4xl text-blue-500"></i>
-                                </span>
-                                <div class="text-900 mb-3 font-medium">{{ section.label }}</div>
-                                <span class="text-700 text-sm line-height-3">{{ section.description }}</span>
-                            </div>
+                                    class="p-button-rounded p-button-primary mr-2 mb-2" (click)="goToHome('home')"></button>
                         </div>
                     </div>
                 </div>
@@ -142,13 +52,13 @@
         </div>
 
         <div *ngIf="loading">
-            <div id="abouts" class="px-4 py-6 md:px-6 lg:px-8 text-center" >
+            <div *ngIf="type === 'ABOUT'" id="abouts" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center">
                 <div class="mb-3 font-bold text-2xl">
                     <span class="text-900">ABO</span>
                     <span class="text-blue-600">UTS</span>
                 </div>
                 <span class="text-700 text-sm line-height-3">We provide you with the best advisors for your success.</span>
-                <div class="p-4 surface-card">
+                <div class="border-round border-1 surface-border p-4 surface-card">
                     <div class="flex mb-3">
                         <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
                         <div>
@@ -165,7 +75,7 @@
                 </div>
             </div>
 
-            <div id="careers" class="px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;" >
+            <div *ngIf="type === 'CAREER'" id="careers" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;" >
                 <div class="mb-3 font-bold text-2xl">
                     <span class="text-blue-600">CAR</span>
                     <span class="text-900">EERS</span>
@@ -184,14 +94,14 @@
                 <p-skeleton width="10rem" height="4rem" borderRadius="16px"></p-skeleton>
             </div>
 
-            <div id="offers" class="px-4 py-6 md:px-6 lg:px-8 text-center" >
+            <div *ngIf="type === 'OFFER'" id="offers" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" >
                 <div class="mb-3 font-bold text-2xl">
                     <span class="text-900">O</span>
                     <span class="text-blue-600">FFER</span>
                     <span class="text-900">S</span>
                 </div>
                 <span class="text-700 text-sm line-height-3">Highlight your services using the most popular digital platform.</span>
-                <div class="p-4 surface-card">
+                <div class="border-round border-1 surface-border p-4 surface-card">
                     <ul class="m-0 p-0 list-none">
                         <li class="mb-3">
                             <div class="flex">
@@ -233,7 +143,7 @@
                 </div>
             </div>
 
-            <div id="partners" class="px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;" >
+            <div *ngIf="type === 'PARTNER'" id="partners" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;" >
                 <div class="mb-3 font-bold text-2xl">
                     <span class="text-blue-600">PAR</span>
                     <span class="text-900">RTN</span>
@@ -260,7 +170,7 @@
                 </p-table>
             </div>
 
-            <div id="contacts" class="px-4 py-6 md:px-6 lg:px-8 text-center" >
+            <div *ngIf="type === 'CONTACT'" id="contacts" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" >
                 <div class="mb-3 font-bold text-2xl">
                     <span class="text-900">CO</span>
                     <span class="text-blue-600">NT</span>
@@ -268,7 +178,7 @@
                     <span class="text-blue-600">TS</span>
                 </div>
                 <span class="text-700 text-sm line-height-3">We are at your service 24h/24 and 7j/7.</span>
-                <div class="p-4 surface-card block md:flex center">
+                <div class="col-12 block md:flex center">
                     <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
                     <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
                     <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
@@ -277,22 +187,11 @@
             </div>
         </div>
         <div *ngIf="!loading">
-            <div *ngFor="let section of sections; let i = index">
-                <div *ngIf="isSectionEnabled(section)" id="{{ section.key }}" class="px-4 py-6 md:px-6 lg:px-8 text-center"
-                     [ngStyle]="{'background-color': getColorByIndex(i)}" [innerHTML]="generateSectionContent(section)">
-                </div>
+            <div *ngIf="detailsSection">
+                <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
+                <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
             </div>
-            <div *ngIf="sections && sections.length === 0">
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
+            <div *ngIf="!detailsSection">
                 <p-skeleton></p-skeleton>
                 <p-skeleton></p-skeleton>
                 <p-skeleton></p-skeleton>
@@ -377,60 +276,57 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Scripts (make sure to include required PrimeNG and PrimeIcons scripts) -->
-        <script src="https://cdn.jsdelivr.net/npm/primeng@16.0.2/resources/primeng.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.js"></script>
-
-        <script>
-            EcuadorLanding = {
-                addClass: function (element, className) {
-                    if (element.classList)
-                        element.classList.add(className);
-                    else
-                        element.className += ' ' + className;
-                },
-
-                removeClass: function (element, className) {
-                    if (element.classList)
-                        element.classList.remove(className);
-                    else
-                        element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-                },
-
-                hasClass: function (element, className) {
-                    if (element.classList)
-                        return element.classList.contains(className);
-                    else
-                        return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
-                },
-
-                hideMenu: function () {
-                    this.removeClass(document.getElementById('landing-menu'), 'landing-menu-active');
-                },
-
-                showMenu: function () {
-                    this.addClass(document.getElementById('landing-menu'), 'landing-menu-active');
-                }
-            };
-
-            document.getElementById('menu-btn').addEventListener('click', function (e) {
-                var menu = document.getElementById('landing-menu');
-
-                if (EcuadorLanding.hasClass(menu, 'landing-menu-active'))
-                    EcuadorLanding.hideMenu();
+    <script>
+        EcuadorLanding = {
+            addClass: function (element, className) {
+                if (element.classList)
+                    element.classList.add(className);
                 else
-                    EcuadorLanding.showMenu();
+                    element.className += ' ' + className;
+            },
 
-                e.preventDefault();
-            });
+            removeClass: function (element, className) {
+                if (element.classList)
+                    element.classList.remove(className);
+                else
+                    element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            },
 
-            var menuLinks = document.querySelectorAll('#landing-menu a');
-            for (i = 0; i < menuLinks.length; i++) {
-                menuLinks[i].addEventListener('click', function (e) {
-                    EcuadorLanding.hideMenu();
-                });
+            hasClass: function (element, className) {
+                if (element.classList)
+                    return element.classList.contains(className);
+                else
+                    return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+            },
+
+            hideMenu: function () {
+                this.removeClass(document.getElementById('landing-menu'), 'landing-menu-active');
+            },
+
+            showMenu: function () {
+                this.addClass(document.getElementById('landing-menu'), 'landing-menu-active');
             }
-        </script>
+        };
+
+        document.getElementById('menu-btn').addEventListener('click', function (e) {
+            var menu = document.getElementById('landing-menu');
+
+            if (EcuadorLanding.hasClass(menu, 'landing-menu-active'))
+                EcuadorLanding.hideMenu();
+            else
+                EcuadorLanding.showMenu();
+
+            e.preventDefault();
+        });
+
+        var menuLinks = document.querySelectorAll('#landing-menu a');
+        for (i = 0; i < menuLinks.length; i++) {
+            menuLinks[i].addEventListener('click', function (e) {
+                EcuadorLanding.hideMenu();
+            });
+        }
+    </script>
     </body>
-</html>
+</div>
