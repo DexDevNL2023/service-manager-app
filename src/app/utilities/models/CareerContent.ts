@@ -1,5 +1,5 @@
-import {PartnerContent} from "./PartnerContent";
 import {CareerType} from "../enums/CareerType";
+import {LitePartnerContent} from "./LitePartnerContent";
 
 export class CareerContent {
     id: number;
@@ -13,6 +13,6 @@ export class CareerContent {
     appyInstructions: string;
     dateLimite: string;
     heureLimite: string;
-    partenaire: PartnerContent;
+    partenaire: LitePartnerContent;
     isVisible: boolean;
 }

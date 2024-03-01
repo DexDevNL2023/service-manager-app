@@ -1,0 +1,34 @@
+<div class="login-body">
+    <div class="grid grid-nogutter">
+        <div class="col-12" style="text-align:center">
+            <img src="../../../assets/layout/images/logo-manhattan.png" alt="logo" class="logo" />
+        </div>
+    </div>
+    <div class="login-panel">
+        <div class="grid">
+            <div class="col-12 lg:col-6 left-side">
+                <img src="../../../assets/layout/images/logo-manhattan.png" alt="manhattan-layout" class="login-image" />
+            </div>
+            <div class="flex flex-column md:flex-row">
+                <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
+                    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label class="w-6rem">Name</label>
+                        <input pInputText id="name" type="text" class="w-12rem" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label class="w-6rem">Email</label>
+                        <input pInputText id="email" type="email" class="w-12rem" />
+                    </div>
+                    <p-button label="Sign Up" icon="pi pi-user-plus" styleClass="p-button-success w-10rem"></p-button>
+                </div>
+                <div class="w-full md:w-2">
+                    <p-divider layout="vertical" styleClass="hidden md:flex"><b>OR</b></p-divider>
+                    <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'"><b>OR</b></p-divider>
+                </div>
+                <div class="w-full md:w-5 flex align-items-center justify-content-center py-5">
+                    <p-button label="Login" icon="pi pi-user" styleClass="w-10rem mx-auto" (click)="navigateToLogin()"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

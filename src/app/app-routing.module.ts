@@ -14,6 +14,8 @@ import {DetailsComponent} from "./pages/details/details.component";
             {path: '', component: HomeComponent},
             {path: 'home/:scrollTo?', component: HomeComponent},
             {path: 'details/:id/:type', component: DetailsComponent},
+            {path: 'search-careers', component: SearchCareersComponent},
+            {path: 'search-offers', component: SearchOffersComponent},
             {path: 'help', component: AppHelpComponent},
             {path: 'error', component: AppErrorComponent},
             {path: 'access', component: AppAccessdeniedComponent},

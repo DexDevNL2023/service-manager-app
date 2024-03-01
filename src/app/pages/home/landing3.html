@@ -23,236 +23,317 @@
   </head>
 
   <body class="ng-star-inserted">
-      <div
-          class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap">
-          <div class="font-bold mr-8">🔥 Hot Deals!</div>
+      <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center">
+          <div class="font-bold mr-8">🔥 Service Manager!</div>
           <div class="align-items-center hidden lg:flex">
-              <span class="line-height-3">Libero voluptatum atque exercitationem praesentium provident odit.</span>
+              <span class="line-height-3">The first services and jobs referencing site.</span>
           </div>
-          <a class="flex align-items-center ml-2 mr-8">
-              <span class="underline font-bold">Learn More</span>
+          <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="scrollTo('home')" style="cursor: pointer;">
+              Learn More
           </a>
-          <a class="flex align-items-center no-underline justify-content-center border-circle text-gray-100 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width: 2rem; height: 2rem;">
+          <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
               <i class="pi pi-times"></i>
           </a>
       </div>
 
-      <div class="surface-overlay py-3 px-6 shadow-2 flex align-items-center justify-content-between relative lg:static">
-          <img alt="Image" height="50" src="assets/images/blocks/logos/hyper.svg">
-          <a class="p-element cursor-pointer block lg:hidden text-700" enterclass="hidden" leavetoclass="hidden" pstyleclass="@next">
-              <i class="pi pi-bars text-4xl"></i>
-          </a>
-          <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full surface-overlay left-0 top-100 px-6 lg:px-0 z-2 shadow-2 lg:shadow-none">
-              <section></section>
-              <ul class="list-none p-0 m-0 flex lg:align-items-center text-900 select-none flex-column lg:flex-row cursor-pointer">
-                  <li class="relative">
-                      <a class="p-element p-ripple flex px-0 lg:px-5 py-3 align-items-center hover:text-blue-600 font-medium transition-colors transition-duration-150" enteractiveclass="scalein" enterclass="hidden" leaveactiveclass="fadeout" leavetoclass="hidden" pripple="" pstyleclass="@next">
-                          <span>Products</span>
-                          <i class="pi pi-chevron-down ml-auto lg:ml-3"></i>
-                          <span class="p-ink" style="height: 159px; width: 159px; top: -54.5px; left: 42.1406px;"></span>
+      <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
+
+      <div id="header" style="position: relative;" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
+          <div id="navbar" class="surface-overlay py-3 px-6 shadow-2 flex align-items-center justify-content-between relative lg:static">
+              <img [src]="loading ? '../../../assets/layout/images/logo-manhattan.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-manhattan.png')" alt="logo" height="50">
+              <a class="p-element cursor-pointer block lg:hidden text-700" enterclass="hidden" leavetoclass="hidden" pstyleclass="@next">
+                  <i class="pi pi-bars text-4xl"></i>
+              </a>
+              <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full surface-overlay left-0 top-100 px-6 lg:px-0 z-2 shadow-2 lg:shadow-none">
+                  <section></section>
+                  <ul class="list-none p-0 m-0 flex lg:align-items-center text-900 select-none flex-column lg:flex-row cursor-pointer">
+                      <li (click)="scrollTo('home')">
+                          <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150" pripple="">
+                              <span>Home</span>
+                              <span class="p-ink"></span>
+                          </a>
+                      </li>
+                      <li (click)="scrollTo('abouts')">
+                          <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150" pripple="">
+                              <span>Abouts</span>
+                              <span class="p-ink"></span>
+                          </a>
+                      </li>
+                      <li (click)="scrollTo('careers')">
+                          <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150" pripple="">
+                              <span>Careers</span>
+                              <span class="p-ink"></span>
+                          </a>
+                      </li>
+                      <li class="relative" (click)="scrollTo('offers')">
+                          <a class="p-element p-ripple flex px-0 lg:px-5 py-3 align-items-center hover:text-blue-600 font-medium transition-colors transition-duration-150" enteractiveclass="scalein" enterclass="hidden" leaveactiveclass="fadeout" leavetoclass="hidden" pripple="" pstyleclass="@next" (click)="toggleOffersDropdown()">
+                              <span>Offers</span>
+                              <i class="pi pi-chevron-down ml-auto lg:ml-3"></i>
+                              <span class="p-ink" style="height: 159px; width: 159px; top: -54.5px; left: 42.1406px;"></span>
+                          </a>
+                          <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la variable offersDropdownVisible -->
+                          <ul *ngIf="offersDropdownVisible" class="list-none p-0 m-0 border-round shadow-0 lg:shadow-2 lg:absolute surface-overlay origin-top w-full lg:w-15rem">
+                              <li>
+                                  <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                      <i class="pi pi-list text-2xl mr-2 text-blue-600"></i>
+                                      <span>IT Graphik</span>
+                                      <span class="p-ink"></span>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                      <i class="pi pi-shield text-2xl mr-2 text-blue-600"></i>
+                                      <span>DeVops</span>
+                                      <span class="p-ink"></span>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                      <i class="pi pi-users text-2xl mr-2 text-blue-600"></i>
+                                      <span>Big Data</span>
+                                      <span class="p-ink"></span>
+                                  </a>
+                              </li>
+                              <li class="relative">
+                                  <a class="p-element p-ripple flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" enteractiveclass="scalein" enterclass="hidden" leaveactiveclass="fadeout" leavetoclass="hidden" pripple="" pstyleclass="@next">
+                                      <i class="pi pi-question-circle text-2xl mr-2 text-blue-600"></i>
+                                      <span>Development Application</span>
+                                      <i class="pi pi-chevron-down ml-auto lg:-rotate-90"></i>
+                                      <span class="p-ink"></span>
+                                  </a>
+                                  <ul class="list-none py-3 pl-3 pr-0 m-0 lg:px-0 lg:py-0 border-round shadow-0 lg:shadow-2 lg:absolute surface-overlay hidden origin-top w-full lg:w-15rem cursor-pointer left-100 top-0">
+                                      <li>
+                                          <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                              <i class="pi pi-cloud mr-2"></i>
+                                              <span class="font-medium">Web</span>
+                                              <span class="p-ink"></span>
+                                          </a>
+                                      </li>
+                                      <li class="relative">
+                                          <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                              <i class="pi pi-question-circle mr-2"></i>
+                                              <span class="font-medium">Mobile</span>
+                                              <span class="p-ink"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </li>
+                              <li>
+                                  <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                      <i class="pi pi-users text-2xl mr-2 text-blue-600"></i>
+                                      <span>Courses</span>
+                                      <span class="p-ink"></span>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                      <i class="pi pi-users text-2xl mr-2 text-blue-600"></i>
+                                      <span>Documentation</span>
+                                      <span class="p-ink"></span>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" pripple="">
+                                      <i class="pi pi-users text-2xl mr-2 text-blue-600"></i>
+                                      <span>API Reference</span>
+                                      <span class="p-ink"></span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li (click)="scrollTo('partners')">
+                          <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150" pripple="">
+                              <span>Partners</span>
+                              <span class="p-ink" style="height: 140px; width: 140px; top: -39px; left: 56.3438px;"></span>
+                          </a></li>
+                      <li (click)="scrollTo('contacts')">
+                          <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150" pripple="">
+                              <span>Contacts</span>
+                              <span class="p-ink" style="height: 113px; width: 113px; top: -26.5px; left: 17.3594px;"></span>
+                          </a>
+                      </li>
+                  </ul>
+                  <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
+                      <button class="p-element p-ripple p-button-text font-bold p-button p-component" label="Login" pbutton="" pripple="" (click)="navigateToLogin()">
+                          <span class="p-button-label">Login</span>
+                          <span class="p-ink"></span>
+                      </button>
+                      <button class="p-element p-ripple ml-3 p-button-outlined font-bold p-button p-component" label="Register" pbutton="" pripple="" (click)="navigateToRegister()">
+                          <span class="p-button-label">Register</span>
+                          <span class="p-ink"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+
+          <div id="banner" class="relative p-6 overflow-hidden">
+              <img [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/contacts2.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'" alt="banner" class="absolute top-0 left-0 w-auto h-full block md:w-full">
+              <div class="text-center my-6 relative">
+                  <div style="line-height: 1.5;color: #000000;font-size: xx-large; font-weight: bolder;">Welcome To <span
+                          class="tw"></span>
+                  </div>
+                  <div class="text-6xl text-gray-400 font-bold mb-1">{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.bannerTitle }}</div>
+                  <p class="mt-0 mb-4 line-height-3 text-center mx-auto text-gray-400" style="max-width: 500px;">{{ loading ? 'For services managements.' : homePageContent?.bannerDescription }}</p>
+                  <button class="p-element p-ripple p-button p-component" label="Learn More" pbutton="" pripple="" type="button" (click)="scrollTo('home')">
+                      <span class="p-button-label">Learn More</span>
+                      <span class="p-ink"></span>
+                  </button>
+                  <p class="text-sm mt-4 mb-4 line-height-3 text-white">Join Community</p>
+                  <div class="flex justify-content-center align-items-center">
+                      <a class="text-gray-400 mr-3" href="https://www.apple.com">
+                          <i class="pi pi-apple text-2xl"></i>
                       </a>
-                      <ul class="list-none p-0 m-0 border-round shadow-0 lg:shadow-2 lg:absolute surface-overlay origin-top w-full lg:w-15rem hidden">
-                          <li><a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150"
-                                 pripple=""><i
-                              class="pi pi-list text-2xl mr-2 text-blue-600"></i><span>Features</span><span
-                              class="p-ink"></span></a></li>
-                          <li><a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150"
-                                 pripple=""><i
-                              class="pi pi-shield text-2xl mr-2 text-blue-600"></i><span>Solutions</span><span
-                              class="p-ink"></span></a></li>
-                          <li><a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150"
-                                 pripple=""><i
-                              class="pi pi-users text-2xl mr-2 text-blue-600"></i><span>Customers</span><span
-                              class="p-ink"></span></a></li>
-                          <li class="relative"><a class="p-element p-ripple flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150" enteractiveclass="scalein" enterclass="hidden"
-                                                  leaveactiveclass="fadeout" leavetoclass="hidden"
-                                                  pripple=""
-                                                  pstyleclass="@next"><i
-                              class="pi pi-question-circle text-2xl mr-2 text-blue-600"></i><span>Support</span><i
-                              class="pi pi-chevron-down ml-auto lg:-rotate-90"></i><span
-                              class="p-ink"></span></a>
-                              <ul class="list-none py-3 pl-3 pr-0 m-0 lg:px-0 lg:py-0 border-round shadow-0 lg:shadow-2 lg:absolute surface-overlay hidden origin-top w-full lg:w-15rem cursor-pointer left-100 top-0">
-                                  <li><a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150"
-                                         pripple=""><i
-                                      class="pi pi-cloud mr-2"></i><span
-                                      class="font-medium">Help Center</span><span class="p-ink"></span></a></li>
-                                  <li class="relative"><a class="p-ripple p-element flex p-3 align-items-center hover:surface-50 transition-colors transition-duration-150"
-                                                          pripple=""><i
-                                      class="pi pi-question-circle mr-2"></i><span
-                                      class="font-medium">Faq</span><span class="p-ink"></span></a></li>
-                              </ul>
-                          </li>
-                      </ul>
-                  </li>
-                  <li><a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150"
-                         pripple=""><span>Corporate</span><span
-                      class="p-ink"></span></a></li>
-                  <li><a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150"
-                         pripple=""><span>Resources</span><span
-                      class="p-ink"
-                      style="height: 140px; width: 140px; top: -39px; left: 56.3438px;"></span></a></li>
-                  <li><a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150"
-                         pripple=""><span>Pricing</span><span
-                      class="p-ink" style="height: 113px; width: 113px; top: -26.5px; left: 17.3594px;"></span></a>
-                  </li>
-              </ul>
-              <div
-                  class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
-                  <button class="p-element p-ripple p-button-text font-bold p-button p-component" label="Login" pbutton=""
-                          pripple=""><span
-                      class="p-button-label">Login</span><span class="p-ink"></span></button>
-                  <button class="p-element p-ripple ml-3 p-button-outlined font-bold p-button p-component" label="Register" pbutton=""
-                          pripple=""><span
-                      class="p-button-label">Register</span><span class="p-ink"></span></button>
+                      <a class="ttext-gray-400 mr-3" href="https://play.google.com">
+                          <i class="pi pi-android text-2xl"></i>
+                      </a>
+                      <a class="text-gray-400" href="https://www.facebook.com">
+                          <i class="pi pi-facebook text-2xl"></i>
+                      </a>
+                  </div>
               </div>
           </div>
       </div>
-      <div class="relative p-6 overflow-hidden"><img alt="Image" class="absolute top-0 left-0 w-auto h-full block md:w-full"
-                                                     src="assets/images/blocks/hero/hero-2.jpg">
-          <div class="text-center my-6 relative">
-              <div class="text-6xl text-white font-bold mb-1">The Platform For</div>
-              <div class="text-6xl text-primary font-bold mb-4">Today's Generation</div>
-              <p class="mt-0 mb-4 line-height-3 text-center mx-auto text-white" style="max-width: 500px;">Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                  et dolore magna aliqua.</p>
-              <button class="p-element p-ripple p-button p-component" label="Learn More" pbutton="" pripple=""
-                      type="button"><span
-                  class="p-button-label">Learn More</span><span class="p-ink"></span></button>
-              <p class="text-sm mt-4 mb-4 line-height-3 text-white">Available for MacOS, Web and Google accounts
-                  only</p>
-              <div class="flex justify-content-center align-items-center"><a class="text-white mr-3"
-                                                                             href="https://www.apple.com"><i
-                  class="pi pi-apple text-2xl"></i></a><a class="text-white mr-3"
-                                                          href="https://play.google.com"><i
-                  class="pi pi-android text-2xl"></i></a><a class="text-white"
-                                                            href="https://www.facebook.com"><i
-                  class="pi pi-facebook text-2xl"></i></a></div>
+
+      <div id="home" class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
+          <div class="mb-3 font-bold text-3xl">
+              <span class="text-900">What do </span>
+              <span class="text-blue-600">Service Manager ?</span>
           </div>
-      </div>
-      <div class="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
-          <div class="mb-3 font-bold text-3xl"><span class="text-900">One Product, </span><span
-              class="text-blue-600">Many Solutions</span></div>
-          <div class="text-700 mb-6">Ac turpis egestas maecenas pharetra convallis posuere morbi leo urna.</div>
+          <div class="text-700 mb-6">Everything you need to find the service you need.</div>
           <div class="grid">
-              <div class="col-12 md:col-4 mb-4 px-5"><span class="p-3 shadow-2 mb-3 inline-block surface-card"
-                                                           style="border-radius: 10px;"><i
-                  class="pi pi-desktop text-4xl text-blue-500"></i></span>
+              <div class="col-12 md:col-4 mb-4 px-5">
+                  <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                      <i class="pi pi-desktop text-4xl text-blue-500"></i>
+                  </span>
                   <div class="text-900 text-xl mb-3 font-medium">Built for Developers</div>
                   <span class="text-700 line-height-3">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</span>
               </div>
-              <div class="col-12 md:col-4 mb-4 px-5"><span class="p-3 shadow-2 mb-3 inline-block surface-card"
-                                                           style="border-radius: 10px;"><i
-                  class="pi pi-lock text-4xl text-blue-500"></i></span>
+              <div class="col-12 md:col-4 mb-4 px-5">
+                  <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                      <i class="pi pi-lock text-4xl text-blue-500"></i>
+                  </span>
                   <div class="text-900 text-xl mb-3 font-medium">End-to-End Encryption</div>
                   <span class="text-700 line-height-3">Risus nec feugiat in fermentum posuere urna nec. Posuere sollicitudin aliquam ultrices sagittis.</span>
               </div>
-              <div class="col-12 md:col-4 mb-4 px-5"><span class="p-3 shadow-2 mb-3 inline-block surface-card"
-                                                           style="border-radius: 10px;"><i
-                  class="pi pi-check-circle text-4xl text-blue-500"></i></span>
+              <div class="col-12 md:col-4 mb-4 px-5">
+                  <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                      <i class="pi pi-check-circle text-4xl text-blue-500"></i>
+                  </span>
                   <div class="text-900 text-xl mb-3 font-medium">Easy to Use</div>
                   <span class="text-700 line-height-3">Ornare suspendisse sed nisi lacus sed viverra tellus. Neque volutpat ac tincidunt vitae semper.</span>
               </div>
-              <div class="col-12 md:col-4 mb-4 px-5"><span class="p-3 shadow-2 mb-3 inline-block surface-card"
-                                                           style="border-radius: 10px;"><i
-                  class="pi pi-globe text-4xl text-blue-500"></i></span>
+              <div class="col-12 md:col-4 mb-4 px-5">
+                  <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                      <i class="pi pi-globe text-4xl text-blue-500"></i>
+                  </span>
                   <div class="text-900 text-xl mb-3 font-medium">Fast &amp; Global Support</div>
                   <span class="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span>
               </div>
-              <div class="col-12 md:col-4 mb-4 px-5"><span class="p-3 shadow-2 mb-3 inline-block surface-card"
-                                                           style="border-radius: 10px;"><i
-                  class="pi pi-github text-4xl text-blue-500"></i></span>
+              <div class="col-12 md:col-4 mb-4 px-5">
+                  <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                      <i class="pi pi-github text-4xl text-blue-500"></i>
+                  </span>
                   <div class="text-900 text-xl mb-3 font-medium">Open Source</div>
                   <span class="text-700 line-height-3">Nec tincidunt praesent semper feugiat. Sed adipiscing diam donec adipiscing tristique risus nec feugiat. </span>
               </div>
-              <div class="col-12 md:col-4 md:mb-4 mb-0 px-3"><span
-                  class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;"><i
-                  class="pi pi-shield text-4xl text-blue-500"></i></span>
+              <div class="col-12 md:col-4 md:mb-4 mb-0 px-3">
+                  <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                      <i class="pi pi-shield text-4xl text-blue-500"></i>
+                  </span>
                   <div class="text-900 text-xlmb-3 font-medium">Trusted Securitty</div>
                   <span class="text-700 line-height-3">Mattis rhoncus urna neque viverra justo nec ultrices. Id cursus metus aliquam eleifend.</span>
               </div>
           </div>
       </div>
+
       <div class="surface-section px-4 pb-8 md:px-6 lg:px-8">
-          <div class="p-6 shadow-2 flex flex-column md:flex-row align-items-center justify-content-between"
-               style="border-radius: 1rem; background: linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1C80CF 47.88%, #FFFFFF 100.01%);">
+          <div class="p-6 shadow-2 flex flex-column md:flex-row align-items-center justify-content-between" style="border-radius: 1rem; background: linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1C80CF 47.88%, #FFFFFF 100.01%);">
               <div class="pr-6">
                   <div class="text-blue-100 font-medium text-xl mb-3">TAKE THE NEXT STEP</div>
                   <div class="text-white font-medium text-5xl">Enpower your customer experience</div>
               </div>
               <div class="mt-4 mr-auto md:mt-0 md:mr-0">
-                  <button class="p-element p-ripple font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised white-space-nowrap p-button p-component" label="Get Started" pbutton=""
-                          pripple="">
-                      <span class="p-button-label">Get Started</span><span class="p-ink"></span></button>
+                  <button class="p-element p-ripple font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised white-space-nowrap p-button p-component" label="Get Started" pbutton="" pripple="">
+                      <span class="p-button-label">Get Started</span>
+                      <span class="p-ink"></span>
+                  </button>
               </div>
           </div>
       </div>
-      <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
+
+      <div id="abouts" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
+          <div class="font-bold text-900 text-3xl mb-3 text-center">Explore The Features</div>
+          <div class="text-700 text-center mb-5 line-height-3">
+              Libero justo laoreet sit amet cursus sit amet dictum. Auctor neque vitae tempus quam pellentesque nec nam.
+          </div>
+          <p-timeline [value]="abouts" align="alternate" styleClass="customized-timeline">
+              <ng-template pTemplate="marker" let-about>
+                  <span class="custom-marker shadow-2" [style.backgroundColor]="{{about.color || defaultColor}}">
+                        <i [ngClass]="about.icon"></i>
+                  </span>
+              </ng-template>
+              <ng-template pTemplate="content" let-about>
+                  <p-card [header]="about.title" [subheader]="about.subTitle">
+                      <img *ngIf="about.image" [src]="about.image" [alt]="about.title" width="200" class="shadow-2" />
+                      <p>
+                          {{about.description}}
+                      </p>
+                      <button pButton label="Read more" class="p-button-text" (click)="viewDetails(about.id, about.type)"></button>
+                  </p-card>
+              </ng-template>
+          </p-timeline>
+      </div>
+
+      <div id="abouts" class="surface-ground px-4 py-8 md:px-6 lg:px-8">
           <div>
-              <div class="text-900 font-bold text-4xl line-height-3 mb-3 text-center">Continue Breaking
-                  Records
+              <div class="text-900 font-bold text-4xl line-height-3 mb-3 text-center">
+                  Continue Breaking Records
               </div>
-              <p class="text-600 line-height-3 text-lg m-0 mb-6 text-center">Excepteur sint occaecat cupidatat
-                  non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p class="text-600 line-height-3 text-lg m-0 mb-6 text-center">
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
               <div class="grid surface-card shadow-2" style="border-radius: 10px;">
-                  <div class="col-12 md:col-3 px-5 py-5"><i class="pi pi-users text-4xl text-blue-600 mb-3"></i>
-                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">83M</div>
-                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p></div>
-                  <div class="col-12 md:col-3 px-5 py-5"><i
-                      class="pi pi-chart-line text-4xl text-orange-500 mb-3"></i>
-                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">$256K</div>
-                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p></div>
-                  <div class="col-12 md:col-3 px-5 py-5"><i class="pi pi-globe text-4xl text-cyan-600 mb-3"></i>
-                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">1,453</div>
-                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p></div>
-                  <div class="col-12 md:col-3 px-5 py-5"><i class="pi pi-map text-4xl text-purple-500 mb-3"></i>
-                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">45 km</div>
-                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p></div>
-              </div>
-          </div>
-      </div>
-      <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
-          <div>
-              <div class="text-900 mb-3 font-bold text-4xl text-center">Trusted By</div>
-              <div class="text-600 mb-6 line-height-3 text-xl text-center">We provide many of the Planet Earth’s
-                  most powerful companies with extraordinary infrastructural capabilities.
-              </div>
-              <div class="grid">
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/alfred-500.svg"></div>
+                  <div class="col-12 md:col-3 px-5 py-5">
+                      <i class="pi pi-users text-4xl text-blue-600 mb-3"></i>
+                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">Development Application</div>
+                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p>
+                      <a tabindex="0" class="text-blue-500 font-medium flex align-items-center mt-2">
+                          <span>Explore</span>
+                          <i class="pi pi-arrow-right ml-3"></i>
+                      </a>
                   </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/hyper-500.svg"></div>
+                  <div class="col-12 md:col-3 px-5 py-5">
+                      <i class="pi pi-chart-line text-4xl text-orange-500 mb-3"></i>
+                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">API Reference</div>
+                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p>
+                      <a tabindex="0" class="text-blue-500 font-medium flex align-items-center mt-2">
+                          <span>Explore</span>
+                          <i class="pi pi-arrow-right ml-3"></i>
+                      </a>
                   </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/bastion-500.svg"></div>
+                  <div class="col-12 md:col-3 px-5 py-5">
+                      <i class="pi pi-globe text-4xl text-cyan-600 mb-3"></i>
+                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">Big Data</div>
+                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p>
+                      <a tabindex="0" class="text-blue-500 font-medium flex align-items-center mt-2">
+                          <span>Explore</span>
+                          <i class="pi pi-arrow-right ml-3"></i>
+                      </a>
                   </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/peak-500.svg"></div>
-                  </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/charot-500.svg"></div>
-                  </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/shodan-500.svg"></div>
-                  </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/hodly-500.svg"></div>
-                  </div>
-                  <div class="col-12 md:col-6 lg:col-3">
-                      <div class="flex align-items-center justify-content-center p-3"><img
-                          alt="Image" src="assets/images/blocks/logos/franki-500.svg"></div>
+                  <div class="col-12 md:col-3 px-5 py-5">
+                      <i class="pi pi-map text-4xl text-purple-500 mb-3"></i>
+                      <div class="text-900 font-bold text-4xl mb-3 line-height-3">Documentation</div>
+                      <p class="text-700 m-0">Nostrum laborum accusamus quia iste facere possimus.</p>
+                      <a tabindex="0" class="text-blue-500 font-medium flex align-items-center mt-2">
+                          <span>Explore</span>
+                          <i class="pi pi-arrow-right ml-3"></i>
+                      </a>
                   </div>
               </div>
           </div>
       </div>
-      <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
+
+      <div id="careers" class="surface-ground px-4 py-8 md:px-6 lg:px-8">
           <div class="font-bold text-5xl text-900 mb-5 text-center">Featured Articles</div>
           <div class="grid nogutter">
               <div class="col-12 lg:col-4 p-3">
@@ -319,9 +400,7 @@
                           <div class="text-xl text-900 font-medium mb-3 line-height-3">'Real and imminent'
                               extinction risk
                           </div>
-                          <div class="line-height-3 mb-3 text-700">Lorem ipsum dolor sit amet, consectetur
-                              adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                              aliqua.
+                          <div class="line-height-3 mb-3 text-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                           </div>
                           <div class="flex">
                               <p-avatar class="p-element"
@@ -341,6 +420,7 @@
               </div>
           </div>
       </div>
+
       <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
           <div>
               <div class="text-blue-600 text-2xl mb-4 text-center">Save up to 25% today</div>
@@ -443,6 +523,50 @@
               </div>
           </div>
       </div>
+
+      <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+          <div>
+              <div class="text-900 mb-3 font-bold text-4xl text-center">Trusted By</div>
+              <div class="text-600 mb-6 line-height-3 text-xl text-center">We provide many of the Planet Earth’s
+                  most powerful companies with extraordinary infrastructural capabilities.
+              </div>
+              <div class="grid">
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/alfred-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/hyper-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/bastion-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/peak-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/charot-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/shodan-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/hodly-500.svg"></div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                      <div class="flex align-items-center justify-content-center p-3"><img
+                              alt="Image" src="assets/images/blocks/logos/franki-500.svg"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
       <div class="surface-ground">
           <div class="grid grid-nogutter">
               <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8"
@@ -495,36 +619,46 @@
               </div>
           </div>
       </div>
-      <div class="bg-gray-900 px-4 py-8 md:px-6 lg:px-8">
+
+      <div id="footer" class="bg-gray-900 px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
           <div class="bg-gray-900">
               <div class="grid">
-                  <div class="col-12 md:col-3 flex flex-wrap justify-content-start md:mb-0 mb-3"><img
-                      alt="footer sections" class="mr-3" height="50"
-                      src="assets/images/blocks/footer/footer-2.png" width="50">
-                      <div class="text-gray-300 font-bold text-5xl">Bastion</div>
+                  <div class="col-12 md:col-3 flex flex-wrap justify-content-start md:mb-0 mb-3">
+                      <img alt="footer sections" class="mr-3" height="50" src="assets/images/blocks/footer/footer-2.png" width="50">
+                      <div class="text-gray-300 font-bold text-5xl">{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerTitle }}</div>
                   </div>
                   <div class="col-12 md:col-3">
-                      <div class="text-white text-lg mb-4 flex flex-wrap" style="max-width: 290px;">Jacob
-                          Obrechtstraat 5, 1071 KC Amsterdam The Netherlands
+                      <div class="text-white text-lg mb-4 flex flex-wrap" style="max-width: 290px;">
+                          {{ loading ? 'Join Service Manager Community.' : homePageContent?.footerDescription }}
                       </div>
-                      <div class="text-white mb-3"><i class="pi pi-phone surface-800 border-round p-1 mr-2"></i>(31)
-                          20 779 8986
-                      </div>
-                      <div class="text-white mb-3"><i class="pi pi-inbox surface-800 border-round p-1 mr-2"></i>hello@bastion.co
-                      </div>
+                      <button pbutton="" pripple="" label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" (click)="navigateToLogin()">
+                          <span class="p-button-label">Get Started</span>
+                          <span class="p-ink"></span>
+                      </button>
                   </div>
                   <div class="col-12 md:col-3 text-gray-200">
                       <div class="text-white font-bold line-height-3 mb-3">Company</div>
-                      <a class="line-height-3 block cursor-pointer mb-2">About Us</a><a
-                      class="line-height-3 block cursor-pointer mb-2">News</a><a
-                      class="line-height-3 block cursor-pointer mb-2">Investor Relations</a><a
-                      class="line-height-3 block cursor-pointer mb-2">Careers</a><a
-                      class="line-height-3 block cursor-pointer">Media Kit</a></div>
+                      <a class="line-height-3 block cursor-pointer mb-2" (click)="scrollTo('abouts')">About Us</a>
+                      <a class="line-height-3 block cursor-pointer mb-2" (click)="scrollTo('careers')">Careers</a>
+                  </div>
                   <div class="col-12 md:col-3 text-gray-200">
-                      <div class="text-white font-bold line-height-3 mb-3">Resourses</div>
-                      <a class="line-height-3 block cursor-pointer mb-2">Get Started</a><a
-                      class="line-height-3 block cursor-pointer mb-2">Learn</a><a
-                      class="line-height-3 block cursor-pointer">Case Studies</a></div>
+                      <a class="text-white font-bold line-height-3 mb-3" (click)="scrollTo('offers')">Offers</a>
+                      <a class="line-height-3 block cursor-pointer mb-2">IT Graphik</a>
+                      <a class="line-height-3 block cursor-pointer mb-2">DeVops</a>
+                      <a class="line-height-3 block cursor-pointer mb-2">Big Data</a>
+                      <a class="line-height-3 block cursor-pointer mb-2">Courses</a>
+                      <a class="line-height-3 block cursor-pointer">Documentation</a>
+                      <a class="line-height-3 block cursor-pointer">API Reference</a>
+                      <a class="line-height-3 block cursor-pointer">Development Application</a>
+                  </div>
+                  <div class="col-12 md:col-3 text-gray-200">
+                      <div class="text-white font-bold line-height-3 mb-3">Connect</div>
+                      <a class="line-height-3 block cursor-pointer mb-2" (click)="scrollTo('partners')">Partners</a>
+                      <a class="line-height-3 block cursor-pointer mb-2" (click)="scrollTo('contacts')">Contacts</a>
+                  </div>
+              </div>
+              <div class="col-12" style="color: #fff; text-align: center;font-weight: bold;">
+                  Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a>
               </div>
           </div>
       </div>

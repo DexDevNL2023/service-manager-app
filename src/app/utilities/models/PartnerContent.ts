@@ -9,8 +9,6 @@ export class PartnerContent {
     contact: string;
     siteWeb: string;
     localization: string;
-    latitude: number;
-    longitude: number;
     logo: string;
     isVisible: boolean;
 }

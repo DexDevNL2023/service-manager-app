@@ -1,10 +1,13 @@
-import {PartnerContent} from "./PartnerContent";
+import {LitePartnerContent} from "./LitePartnerContent";
 
 export class OfferContent {
     id: number;
     name: string;
+    price: string;
+    period: string;
     description: string;
-    images: string[] = [];
-    partenaire: PartnerContent;
+    features: string[];
+    subscriptionMessage: string;
+    partenaire: LitePartnerContent;
     isVisible: boolean;
 }

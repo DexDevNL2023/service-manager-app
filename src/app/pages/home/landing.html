@@ -16,42 +16,59 @@
 
   <body class="landing-body">
       <div class="landing-wrapper">
-          <div id="header">
-              <div class="header-top">
-                  <div class="p-grid">
-                      <div class="p-col-12 p-md-4">
-                          <img src="../layout/images/logo-white.png"  class="logo"/>
-                      </div>
-                      <div class="p-col-12 p-md-8">
-                          <ul class="landing-menu">
-                              <li>
-                                  <a href="#home">Home</a>
-                              </li>
-                              <li>
-                                  <a href="#features">Features</a>
-                              </li>
-                              <li>
-                                  <a href="#events">Events</a>
-                              </li>
-                              <li>
-                                  <a href="#pricing">Pricing</a>
-                              </li>
-                              <li>
-                                  <a href="#video">Video</a>
-                              </li>
-                          </ul>
+          <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center">
+              <div class="font-bold mr-8">🔥 Service Manager!</div>
+              <div class="align-items-center hidden lg:flex">
+                  <span class="line-height-3">The first services and jobs referencing site.</span>
+              </div>
+              <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="scrollTo('home')" style="cursor: pointer;">
+                  Learn More
+              </a>
+              <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
+                  <i class="pi pi-times"></i>
+              </a>
+          </div>
+
+          <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
+
+          <div id="header" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
+              <div class="image" [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/contacts2.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'"
+                  <div class="header-top">
+                      <div class="p-grid">
+                          <div class="p-col-12 p-md-4">
+                              <img src="../layout/images/logo-white.png"  class="logo"/>
+                          </div>
+                          <div class="p-col-12 p-md-8">
+                              <ul class="landing-menu">
+                                  <li>
+                                      <a href="#home">Home</a>
+                                  </li>
+                                  <li>
+                                      <a href="#features">Features</a>
+                                  </li>
+                                  <li>
+                                      <a href="#events">Events</a>
+                                  </li>
+                                  <li>
+                                      <a href="#pricing">Pricing</a>
+                                  </li>
+                                  <li>
+                                      <a href="#video">Video</a>
+                                  </li>
+                              </ul>
+                          </div>
                       </div>
                   </div>
-              </div>
 
-              <div class="header-content animation-element slide-bottom">
-                  <h1>PrimeNG Presents Manhattan</h1>
-                  <h2 style="line-height: 1.5">Modern and elegant responsive application template with a premium look
-                  for PrimeNG components.</h2>
-                  <div>
-                      <button type="button" class="p-button p-button-warning">
-                          <span class="p-button-text">Learn More</span>
-                      </button>
+                  <div class="header-content animation-element slide-bottom">
+                      <h1>PrimeNG Presents Manhattan</h1>
+                      <h2 style="line-height: 1.5">Modern and elegant responsive application template with a premium look
+                          for PrimeNG components.</h2>
+                      <div>
+                          <button type="button" class="p-button p-button-warning">
+                              <span class="p-button-text">Learn More</span>
+                          </button>
+                      </div>
                   </div>
               </div>
           </div>

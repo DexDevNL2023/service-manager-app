@@ -1,9 +1,8 @@
 export class AboutContent {
-    id: number;
-    icon: string;
     title: string;
-    subTitle: string;
     description: string;
-    images: string[] = [];
+    icon: string;
+    color: string;
+    image: string;
     isVisible: boolean;
 }
