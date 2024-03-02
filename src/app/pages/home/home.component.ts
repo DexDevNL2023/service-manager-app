@@ -62,7 +62,9 @@ import {MessageService} from "primeng/api";
     templateUrl: './landing2.html'
 })
 export class HomeComponent implements OnInit {
-    homePageContent: HomePageContent | undefined;
+    homePageContent: HomePageContent = {
+        bannerDescription: "Premier segment, Deuxième segment, Troisième segment",
+    };
     sections: SectionContent[] = [
         { key: 'homes', label: 'Home', description: 'Everything you need to find the service you need. The first services and jobs referencing site.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
         { key: 'abouts', label: 'About', description: 'We provide you with the best advisors for your success.', icon: 'pi pi-info', submenu:[], type: SectionType.ABOUT, isVisible: true },
