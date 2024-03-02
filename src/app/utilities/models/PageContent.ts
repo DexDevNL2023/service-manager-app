@@ -1,4 +1,4 @@
-export class HomePageContent {
+export class PageContent {
     name: string;
     description: string;
     hexaCouleurTheme: string;

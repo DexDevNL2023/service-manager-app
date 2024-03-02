@@ -38,9 +38,9 @@
 
       <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
 
-      <div id="header" style="position: relative;" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
+      <div id="header" style="position: relative;" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
           <div id="navbar" class="bg-gray-900 py-3 px-6 shadow-2 flex align-items-center justify-content-between relative">
-              <img [src]="loading ? '../../../assets/layout/images/logo-manhattan.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-manhattan.png')" alt="logo" height="50">
+              <img [src]="pageContent?.logoUrl" alt="logo" height="50">
               <a pstyleclass="@next" enterclass="hidden" leavetoclass="hidden" class="p-element cursor-pointer block lg:hidden text-gray-400">
                   <i class="pi pi-bars text-4xl"></i>
               </a>
@@ -93,16 +93,16 @@
               <div class="flex flex-wrap">
                   <div class="w-12 lg:w-6 p-4">
                       <h1 class="text-6xl font-bold text-white mt-0 mb-3">Welcome To <span class="tw"></span></h1>
-                      <p class="text-3xl text-gray-400 mt-0 mb-5">{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.bannerTitle }}</p>
-                      <ul *ngIf="!loading && homePageContent?.bannerDescription" class="list-none p-0 m-0">
-                          <li *ngFor="let segment of homePageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
-                              <i [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
-                              <span [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="text-gray-400 line-height-3">{{ segment.trim() }}</span>
+                      <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
+                      <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
+                          <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
+                              <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
+                              <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-gray-400 line-height-3">{{ segment.trim() }}</span>
                           </li>
                       </ul>
                   </div>
                   <div class="w-12 lg:w-6 text-center lg:text-right overflow-hidden">
-                      <img [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/about-section-image.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'" alt="banner" class="w-full lg:w-auto">
+                      <img [style.background-image]="'url(' + pageContent?.bannerImageUrl + ')'" alt="banner" class="w-full lg:w-auto">
                   </div>
               </div>
           </div>
@@ -110,9 +110,9 @@
 
       <div id="body" *ngFor="let section of sections">
           <div *ngIf="showSection(section?.key) && section?.key === 'homes'" id="{{ section?.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
-              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(loading ? 'Service Manager' : homePageContent?.name)"></div>
+              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(pageContent?.name)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
-                  {{ loading ? 'Everything you need to find the service you need. The first services and jobs referencing site.' : homePageContent?.description }}
+                  {{ pageContent?.description }}
               </div>
 
               <div class="grid">
@@ -130,7 +130,7 @@
               <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
                   <div class="flex flex-wrap relative overflow-hidden" style="border-radius: 1rem; background: radial-gradient(100% 1126.49% at 100% 0%, rgba(106, 200, 212, 0.4) 0%, rgba(33, 33, 33, 0) 100%), #212121;">
                       <div class="px-6 py-8"><span class="uppercase text-cyan-500 font-bold">BE THE FIRST ONE</span>
-                          <div class="text-white text-medium text-5xl mt-3 mb-5">Join {{ loading ? 'Service Manager' : homePageContent?.name }}</div>
+                          <div class="text-white text-medium text-5xl mt-3 mb-5">Join {{ pageContent?.name }}</div>
                           <button class="p-ripple p-element p-3 bg-cyan-500 hover:bg-cyan-300 cursor-pointer transition-colors font-medium gray-900 border-none p-component transition-duration-150" style="border-radius: 35px;" (click)="navigateToLogin()">
                               Get Started
                               <span class="p-ink"></span>
@@ -142,9 +142,9 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'abouts'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Abouts' : section?.label)"></div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
-                  {{loading ? 'We provide you with the best advisors for your success.' : section?.description}}
+                  {{section?.description}}
               </div>
 
               <div *ngFor="let about of abouts; let i = index" class="flex lg:justify-content-center mb-5">
@@ -182,9 +182,9 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'careers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Careers' : section?.label)"></div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 mb-6">
-                  {{loading ? 'Find job offers tailored to your professional goals.' : section?.description}}
+                  {{section?.description}}
               </div>
 
               <p-carousel [value]="careers" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
@@ -195,7 +195,7 @@
                           <p style="line-height: 1.5">{{ getCareerTypeLabelHtml(career?.type) }}</p>
                           <p-tag [value]="'Deadline ' + career?.dateLimite + ' at ' + career?.heureLimite" [severity]="getSeverityHtml(career?.dateLimite, career?.heureLimite)"></p-tag>
                           <span *ngIf="career?.description" class="text-700 line-height-3">{{ truncateDescription(career?.description) }}</span>
-                          <button pButton type="button" (click)="viewDetails(career?.id, SectionType.CAREER)" class="text-blue-500 font-medium flex align-items-center mt-2">
+                          <button pButton type="button" (click)="viewDetails(career?.id, section.type)" class="text-blue-500 font-medium flex align-items-center mt-2">
                               <span>Explore</span>
                               <i class="pi pi-arrow-right ml-3"></i>
                           </button>
@@ -210,9 +210,9 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'offers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Offers' : section?.label)"></div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 mb-6">
-                  {{loading ? 'Highlight your services using the most popular digital platform.' : section?.description}}
+                  {{section?.description}}
               </div>
 
               <p-carousel [value]="offers" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
@@ -235,7 +235,7 @@
                                       <span>{{ feature }}</span>
                                   </li>
                               </ul>
-                              <button (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
+                              <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
                                   <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
                                   <span class="p-ink"></span>
                               </button>
@@ -264,7 +264,7 @@
                                       <span>{{ feature }}</span>
                                   </li>
                               </ul>
-                              <button (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-success w-full mt-auto p-button p-component">
+                              <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-success w-full mt-auto p-button p-component">
                                   <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
                                   <span class="p-ink"></span>
                               </button>
@@ -291,7 +291,7 @@
                                       <span>{{ feature }}</span>
                                   </li>
                               </ul>
-                              <button (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-outlined w-full mt-auto p-button p-component">
+                              <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-outlined w-full mt-auto p-button p-component">
                                   <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
                                   <span class="p-ink"></span>
                               </button>
@@ -307,9 +307,9 @@
           </div>
 
           <div *ngIf="showSection(section.key) && section.key === 'partners'" id="{{ section.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Partners' : section?.label)"></div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 mb-6">
-                  {{loading ? 'Become partners and benefit.' : section?.description}}
+                  {{section?.description}}
               </div>
 
               <p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
@@ -320,7 +320,7 @@
                                   <div class="text-900 mb-3 font-medium">{{ partner?.name }}</div>
                                   <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
                                   <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
-                                  <button pButton label="Read more" class="p-button-text" (click)="viewDetails(partner?.id, SectionType.OFFER)"></button>
+                                  <button pButton label="Read more" class="p-button-text" (click)="viewDetails(partner?.id, section.type)"></button>
                               </ng-template>
                           </p-image>
                       </div>
@@ -331,15 +331,15 @@
           <div *ngIf="showSection(section.key) && section.key === 'contacts'" id="{{ section.key }}" class="surface-ground">
               <div class="grid grid-nogutter">
                   <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8" style="background-image: url('assets/layout/images/landing/ContactUs.png');">
-                      <div class="text-white text-2xl font-medium mb-6" [innerHTML]="generateLabelHtml(loading ? 'Contact Us' : section?.label)"></div>
+                      <div class="text-white text-2xl font-medium mb-6" [innerHTML]="generateLabelHtml(section?.label)"></div>
                       <div class="text-gray-300 line-height-3 mb-6">
-                          {{loading ? 'We are at your service 24h/24 and 7j/7.' : section?.description}}
+                          {{section?.description}}
                       </div>
-                      <ul *ngIf="!loading && contacts" class="list-none p-0 m-0 mt-6 text-white">
+                      <ul class="list-none p-0 m-0 mt-6 text-white">
                           <li *ngFor="let contact of contacts" class="flex align-items-center mb-3" (click)="getContactAction(contact.value, contact.type)">
                               <div *ngIf="isContactSectionEnabled(contact)">
-                                  <i [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="pi {{ getContactIcon(contact.type) }} mr-2"></i>
-                                  <span [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}">{{ contact.value }}</span>
+                                  <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} mr-2"></i>
+                                  <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">{{ contact.value }}</span>
                               </div>
                           </li>
                       </ul>
@@ -348,22 +348,22 @@
                   <div class="col-12 md:col-6">
                       <div class="p-fluid formgrid grid px-4 py-8 md:px-6 lg:px-8">
                           <div class="field col-12 lg:col-6 mb-4">
-                              <input id="firstname" type="text" pinputtext="" placeholder="Prénom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="firstName" required>
+                              <input id="firstname" type="text" pinputtext="" placeholder="Prénom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="firstName" required>
                           </div>
                           <div class="field col-12 lg:col-6 mb-4">
-                              <input id="lastname" type="text" pinputtext="" placeholder="Nom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="lastName" required>
+                              <input id="lastname" type="text" pinputtext="" placeholder="Nom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="lastName" required>
                           </div>
                           <div class="field col-12 mb-4">
-                              <input id="email" type="text" pinputtext="" placeholder="Email" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="email" required>
+                              <input id="email" type="text" pinputtext="" placeholder="Email" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="email" required>
                           </div>
                           <div class="field col-12 mb-4">
-                              <input id="phone" type="text" pinputtext="" placeholder="Téléphone" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="phone" required>
+                              <input id="phone" type="text" pinputtext="" placeholder="Téléphone" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="phone" required>
                           </div>
                           <div class="field col-12 mb-4">
-                              <textarea id="message" pinputtextarea="" rows="3" placeholder="Message" class="p-inputtextarea p-inputtext p-component p-element py-3 px-2 text-lg p-inputtextarea-resizable" style="height: 95px; overflow: hidden;" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="messageText" required></textarea>
+                              <textarea id="message" pinputtextarea="" rows="3" placeholder="Message" class="p-inputtextarea p-inputtext p-component p-element py-3 px-2 text-lg p-inputtextarea-resizable" style="height: 95px; overflow: hidden;" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="messageText" required></textarea>
                           </div>
                           <div class="col-12 text-right">
-                              <button type="button" label="Submit" icon="pi pi-envelope" class="p-element p-ripple px-5 py-3 w-auto p-button p-component" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}" (click)="sendMessage()">
+                              <button type="button" label="Submit" icon="pi pi-envelope" class="p-element p-ripple px-5 py-3 w-auto p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="sendMessage()">
                                   <span class="p-button-icon p-button-icon-left pi pi-envelope" aria-hidden="true"></span>
                                   <span class="p-button-label">Submit</span>
                                   <span class="p-ink"></span>
@@ -375,14 +375,14 @@
           </div>
       </div>
 
-      <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
+      <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }">
           <div class="flex align-items-start lg:align-items-center lg:justify-content-between pb-5 border-bottom-1 border-300 flex-column lg:flex-row">
               <div class="pr-0 lg:pr-8">
-                  <img [src]="loading ? '../../../assets/layout/images/logo-manhattan.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-manhattan.png')" alt="logo" height="50">
-                  <div class="text-gray-300 font-bold text-5xl">{{ loading ? 'Service Manager App' : homePageContent?.footerTitle }}</div>
-                  <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerDescription }}</p>
+                  <img [src]="pageContent?.logoUrl" alt="logo" height="50">
+                  <div class="text-gray-300 font-bold text-5xl">{{ pageContent?.footerTitle }}</div>
+                  <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ pageContent?.footerDescription }}</p>
               </div>
-              <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}" (click)="navigateToLogin()">
+              <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="navigateToLogin()">
                   <span class="p-button-label">Get Started</span>
                   <span class="p-ink"></span>
               </button>
@@ -412,10 +412,10 @@
           </div>
 
           <div class="flex justify-content-between align-items-center py-5">
-              <span *ngIf="!loading" >Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
+              <span>Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
               <div class="flex align-items-center justify-content-between">
-                  <a *ngFor="let contact of contacts" [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
-                      <i [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="pi {{ getContactIcon(contact.type) }} text-xl"></i>
+                  <a *ngFor="let contact of contacts" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
+                      <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} text-xl"></i>
                   </a>
               </div>
           </div>

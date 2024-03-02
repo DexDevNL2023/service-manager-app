@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {HomePageContent} from "../models/HomePageContent";
+import {PageContent} from "../models/PageContent";
 
 @Injectable({
     providedIn: 'root',
@@ -8,11 +8,11 @@ import {HomePageContent} from "../models/HomePageContent";
 export class SharedService {
     private isLandingPageActiveSubject = new BehaviorSubject<boolean>(true);
     isLandingPageActive$ = this.isLandingPageActiveSubject.asObservable();
-    private homePageContentSource = new BehaviorSubject<any>(null);
-    homePageContent$ = this.homePageContentSource.asObservable();
+    private pageContentSource = new BehaviorSubject<any>(null);
+    homePageContent$ = this.pageContentSource.asObservable();
 
-    setHomePageContent(content: HomePageContent) {
-        this.homePageContentSource.next(content);
+    setHomePageContent(content: PageContent) {
+        this.pageContentSource.next(content);
     }
 
     setLandingPageState(isActive: boolean) {
