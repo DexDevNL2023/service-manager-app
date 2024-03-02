@@ -85,7 +85,7 @@ export class DetailsComponent implements OnInit {
         // Récupère homePageContent du service partagé
         this.sharedService.homePageContent$.subscribe((data: MenuPageContent) => {
             this.pageContent = data.pageContent;
-            this.sections = data.sections;
+            this.sections = data.sectionContents;
 
             // Ajoutez les titres dynamiques à partir de homePageContent.bannerTitle
             if (this.pageContent && this.pageContent.bannerTitle) {

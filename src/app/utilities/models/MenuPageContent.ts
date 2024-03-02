@@ -3,5 +3,10 @@ import {PageContent} from "./PageContent";
 
 export class MenuPageContent {
     pageContent: PageContent | undefined;
-    sections: SectionContent[] = [];
+    sectionContents: SectionContent[] = [];
+
+    constructor(private page: PageContent, private sections: SectionContent[]) {
+        this.pageContent = page;
+        this.sectionContents = sections;
+    }
 }

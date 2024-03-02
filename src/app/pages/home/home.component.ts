@@ -296,7 +296,8 @@ export class HomeComponent implements OnInit {
         // Convertissez SectionType en chaîne pour l'URL
         const typeString = SectionType[type];
 
-        MenuPageContent menuPage = new MenuPageContent(this.pageContent, this.sections);
+        // Assuming MenuPageContent takes pageContent and sections as parameters in its constructor
+        const menuPage: MenuPageContent = new MenuPageContent(this.pageContent, this.sections);
 
         // Naviguez vers DetailsComponent avec les paramètres de l'URL
         this.sharedService.setMenuPageContent(menuPage);
