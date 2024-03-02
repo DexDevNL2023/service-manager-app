@@ -412,11 +412,12 @@
           </div>
 
           <div class="flex justify-content-between align-items-center py-5">
-              <span>Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
-              <div class="flex align-items-center justify-content-between"><a
-                  class="cursor-pointer text-500 md:ml-3 ml-2"><i class="pi pi-twitter text-xl"></i></a><a
-                  class="cursor-pointer text-500 md:ml-3 ml-2"><i class="pi pi-facebook text-xl"></i></a><a
-                  class="cursor-pointer text-500 md:ml-3 ml-2"><i class="pi pi-github text-xl"></i></a></div>
+              <span *ngIf="!loading" >Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
+              <div class="flex align-items-center justify-content-between">
+                  <a *ngFor="let contact of contacts" [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
+                      <i [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="pi {{ getContactIcon(contact.type) }} text-xl"></i>
+                  </a>
+              </div>
           </div>
       </div>
 
