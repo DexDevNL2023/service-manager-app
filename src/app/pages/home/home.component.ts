@@ -31,6 +31,9 @@ import {TagModule} from "primeng/tag";
 import {CareerType} from "../../utilities/enums/CareerType";
 import {ImageModule} from "primeng/image";
 import {PartnerType} from "../../utilities/enums/PartnerType";
+import {ContactType} from "../../utilities/enums/ContactType";
+import {FormsModule} from "@angular/forms";
+import {MessageService} from "primeng/api";
 
 @Component({
     selector: 'app-home',
@@ -53,14 +56,15 @@ import {PartnerType} from "../../utilities/enums/PartnerType";
         ScrollTopModule,
         RippleModule,
         TagModule,
-        ImageModule
+        ImageModule,
+        FormsModule
     ],
     templateUrl: './landing2.html'
 })
 export class HomeComponent implements OnInit {
     homePageContent: HomePageContent | undefined;
     sections: SectionContent[] = [
-        { key: 'homes', label: 'Home', description: 'The first services and jobs referencing site.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
+        { key: 'homes', label: 'Home', description: 'Everything you need to find the service you need. The first services and jobs referencing site.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
         { key: 'abouts', label: 'About', description: 'We provide you with the best advisors for your success.', icon: 'pi pi-info', submenu:[], type: SectionType.ABOUT, isVisible: true },
         { key: 'careers', label: 'Careers', description: 'Find job offers tailored to your professional goals.', icon: 'pi pi-briefcase', submenu:[], type: SectionType.CAREER, isVisible: true },
         { key: 'offers', label: 'Offers', description: 'Highlight your services using the most popular digital platform.', icon: 'pi pi-gift', submenu:[
@@ -125,7 +129,14 @@ export class HomeComponent implements OnInit {
         { id: 11, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
         { id: 12, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
     ];
-    contacts: ContactContent[] | undefined;
+    contacts: ContactContent[] = [
+        { type: ContactType.WHATSAPP, value: '+123456789', isVisible: true },
+        { type: ContactType.FACEBOOK, value: '@prime_ng', isVisible: true },
+        { type: ContactType.PHONE, value: '+123456789', isVisible: true },
+        { type: ContactType.TWITTER, value: '@prime_ng', isVisible: true },
+        { type: ContactType.EMAIL, value: 'contact@primetek.com.tr', isVisible: true },
+        { type: ContactType.FAX, value: '+123456789', isVisible: true }
+    ];
     responsiveOptions: any[] | undefined;
     loading: boolean = true;
     currentDate = new Date();
@@ -136,8 +147,14 @@ export class HomeComponent implements OnInit {
     defaultColor: string = '#293782f3';
     dropdownVisible = false;
     maxLength: number = 100;
+    // Initialize properties to hold input values
+    firstName: string = '';
+    lastName: string = '';
+    email: string = '';
+    phone: string = '';
+    messageText: string = '';
 
-    constructor(private el: ElementRef, private sharedService: SharedService, private homeApiService: HomeApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) {}
+    constructor(private messageService: MessageService, private el: ElementRef, private sharedService: SharedService, private homeApiService: HomeApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) {}
 
     ngOnInit(): void {
         this.loading = true;
@@ -245,16 +262,12 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    generateSeleton(typeString: string) {
-        return this.generalUtilsService.generateSeleton(typeString)
+    getContactIcon(type: ContactType) {
+        return this.generalUtilsService.getContactIcon(type)
     }
 
-    getSectionIcon(section: SectionContent) {
-        return this.generalUtilsService.getSectionIcon(section.type)
-    }
-
-    getColorByIndex(index: number) {
-        return this.generalUtilsService.getColorByIndex(index)
+    getContactAction(contact: string, type: ContactType) {
+        return this.generalUtilsService.getContactAction(contact, type)
     }
 
     closeBanner(): void {
@@ -327,6 +340,27 @@ export class HomeComponent implements OnInit {
 
     openSearchOffers() {
         this.router.navigate(['/search-offers']);
+    }
+
+    sendMessage(): void {
+        // Vérifiez si les champs requis sont remplis
+        if (!this.firstName || !this.lastName || !this.email || !this.phone || !this.messageText) {
+            // Affichez un message d'erreur si l'un des champs requis est vide
+            this.messageService.add({ severity: 'error', summary: 'Erreur de validation', detail: 'Veuillez remplir tous les champs requis.' });
+            return;
+        }
+
+        // Votre logique pour envoyer le message va ici
+
+        // Construisez l'objet de message de succès avec les saisies de l'utilisateur
+        const messageSucces = {
+            severity: 'success',
+            summary: 'Message envoyé',
+            detail: `Votre message a été envoyé avec succès. Détails : ${this.firstName}, ${this.lastName}, ${this.email}, ${this.phone}, ${this.messageText}`
+        };
+
+        // Affichez le message de succès
+        this.messageService.add(messageSucces);
     }
 
     generateSectionContent(section: SectionContent): string {

@@ -1,6 +1,8 @@
 export enum ContactType {
     EMAIL = 'EMAIL',
     FAX = 'FAX',
-    TELEPHONE = 'TELEPHONE',
-    WHATSAPP = 'WHATSAPP'
+    PHONE = 'PHONE',
+    WHATSAPP = 'WHATSAPP',
+    TWITTER = 'TWITTER',
+    FACEBOOK = 'FACEBOOK'
 }

@@ -49,7 +49,7 @@
                   <ul class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
                       <li *ngFor="let section of sections" (click)="scrollTo(section?.key)">
                           <div *ngIf="isSectionEnabled(section)">
-                              <a pripple="" class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
+                              <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
                                   <span>{{ section?.label }}</span>
                                   <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
                               </a>
@@ -77,11 +77,11 @@
                       </li>
                   </ul>
                   <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none border-gray-800 py-3 lg:py-0 mt-3 lg:mt-0">
-                      <button pbutton="" pripple="" label="Login" class="p-element p-ripple p-button-text font-bold p-button p-component" (click)="navigateToLogin()">
+                      <button label="Login" class="p-element p-ripple p-button-text font-bold p-button p-component" (click)="navigateToLogin()">
                           <span class="p-button-label">Login</span>
                           <span class="p-ink"></span>
                       </button>
-                      <button pbutton="" pripple="" label="Register" class="p-element p-ripple ml-3 font-bold p-button p-component" (click)="navigateToRegister()">
+                      <button label="Register" class="p-element p-ripple ml-3 font-bold p-button p-component" (click)="navigateToRegister()">
                           <span class="p-button-label">Register</span>
                           <span class="p-ink"></span>
                       </button>
@@ -98,7 +98,7 @@
                       <h1 class="text-6xl font-bold text-white mt-0 mb-3">{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.bannerTitle }}</h1>
                       <p class="text-sm text-white mt-0 mb-5">{{ loading ? 'For services managements.' : homePageContent?.bannerDescription }}</p>
                   <div class="w-12 lg:w-6 text-center lg:text-right overflow-hidden">
-                      <img [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/contacts2.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'" alt="banner" class="w-full lg:w-auto">
+                      <img [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/about-section-image.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'" alt="banner" class="w-full lg:w-auto">
                   </div>
               </div>
           </div>
@@ -106,10 +106,9 @@
 
       <div *ngFor="let section of sections">
           <div *ngIf="showSection(section?.key) && section?.key === 'homes'" id="{{ section?.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
-              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(loading ? 'Service Manager' : homePageContent?.name)">
-              </div>
+              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(loading ? 'Service Manager' : homePageContent?.name)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
-                  {{ loading ? 'Everything you need to find the service you need.' : homePageContent?.description }}
+                  {{ loading ? 'Everything you need to find the service you need. The first services and jobs referencing site.' : homePageContent?.description }}
               </div>
 
               <div class="grid">
@@ -128,21 +127,20 @@
                   <div class="flex flex-wrap relative overflow-hidden" style="border-radius: 1rem; background: radial-gradient(100% 1126.49% at 100% 0%, rgba(106, 200, 212, 0.4) 0%, rgba(33, 33, 33, 0) 100%), #212121;">
                       <div class="px-6 py-8"><span class="uppercase text-cyan-500 font-bold">BE THE FIRST ONE</span>
                           <div class="text-white text-medium text-5xl mt-3 mb-5">Join {{ loading ? 'Service Manager' : homePageContent?.name }}</div>
-                          <button pripple="" class="p-ripple p-element p-3 bg-cyan-500 hover:bg-cyan-300 cursor-pointer transition-colors font-medium gray-900 border-none p-component transition-duration-150" style="border-radius: 35px;" (click)="navigateToLogin()">
+                          <button class="p-ripple p-element p-3 bg-cyan-500 hover:bg-cyan-300 cursor-pointer transition-colors font-medium gray-900 border-none p-component transition-duration-150" style="border-radius: 35px;" (click)="navigateToLogin()">
                               Get Started
                               <span class="p-ink"></span>
                           </button>
                       </div>
-                      <img src="assets/layout/images/landing/Customer_care_anywhere.webp" alt="Image" class="static lg:absolute block mx-auto" style="height: 400px; top: -2rem; right: -1rem;">
+                      <img src="assets/layout/images/landing/contacts2.png" alt="Image" class="static lg:absolute block mx-auto" style="height: 400px; top: -2rem; right: -1rem;">
                   </div>
               </div>
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'abouts'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)">
-              </div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Abouts' : section?.label)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
-                  {{section?.description}}
+                  {{loading ? 'We provide you with the best advisors for your success.' : section?.description}}
               </div>
 
               <div *ngFor="let about of abouts; let i = index" class="flex lg:justify-content-center mb-5">
@@ -180,10 +178,9 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'careers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)">
-              </div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Careers' : section?.label)"></div>
               <div class="text-700 mb-6">
-                  {{section?.description}}
+                  {{loading ? 'Find job offers tailored to your professional goals.' : section?.description}}
               </div>
 
               <p-carousel [value]="careers" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
@@ -209,10 +206,9 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'offers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)">
-              </div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Offers' : section?.label)"></div>
               <div class="text-700 mb-6">
-                  {{section?.description}}
+                  {{loading ? 'Highlight your services using the most popular digital platform.' : section?.description}}
               </div>
 
               <p-carousel [value]="offers" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
@@ -238,7 +234,7 @@
                                       <span>{{ feature }}</span>
                                   </li>
                               </ul>
-                              <button pbutton="" pripple="" (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
+                              <button (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
                                   <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
                                   <span class="p-ink"></span>
                               </button>
@@ -267,7 +263,7 @@
                                       <span>{{ feature }}</span>
                                   </li>
                               </ul>
-                              <button pbutton="" pripple="" (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-success w-full mt-auto p-button p-component">
+                              <button (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-success w-full mt-auto p-button p-component">
                                   <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
                                   <span class="p-ink"></span>
                               </button>
@@ -294,7 +290,7 @@
                                       <span>{{ feature }}</span>
                                   </li>
                               </ul>
-                              <button pbutton="" pripple="" (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-outlined w-full mt-auto p-button p-component">
+                              <button (click)="viewDetails(offer?.id, SectionType.OFFER)" class="p-element p-ripple p-button-outlined w-full mt-auto p-button p-component">
                                   <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
                                   <span class="p-ink"></span>
                               </button>
@@ -310,10 +306,9 @@
           </div>
 
           <div *ngIf="showSection(section.key) && section.key === 'partners'" id="{{ section.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)">
-              </div>
+              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(loading ? 'Partners' : section?.label)"></div>
               <div class="text-700 mb-6">
-                  {{section?.description}}
+                  {{loading ? 'Become partners and benefit.' : section?.description}}
               </div>
 
               <p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
@@ -332,68 +327,53 @@
               </p-carousel>
           </div>
 
-          <div *ngIf="showSection(section.key) && section.key === 'contacts'" id="{{ section.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)">
-              </div>
-              <div class="text-700 mb-6">
-                  {{section?.description}}
-              </div>
-
-              <div class="surface-ground">
-                  <div class="grid grid-nogutter">
-                      <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8"
-                           style="background-image: url('assets/images/blocks/contact/contact-2.jpg');">
-                          <div class="text-white text-2xl font-medium mb-6">Contact Us</div>
-                          <div class="text-gray-300 line-height-3 mb-6">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                          </div>
-                          <a class="inline-flex align-items-center text-blue-300 font-bold no-underline cursor-pointer">
-                              <span class="mr-3">View Address on Google Maps</span>
-                              <i class="pi pi-arrow-right"></i>
-                          </a>
-                          <ul class="list-none p-0 m-0 mt-6 text-white">
-                              <li class="flex align-items-center mb-3">
-                                  <i class="pi pi-phone mr-2"></i>
-                                  <span>+123456789</span>
-                              </li>
-                              <li class="flex align-items-center mb-3">
-                                  <i class="pi pi-twitter mr-2"></i>
-                                  <span>@prime_ng</span>
-                              </li>
-                              <li class="flex align-items-center">
-                                  <i class="pi pi-inbox mr-2"></i>
-                                  <span>contact@primetek.com.tr</span>
-                              </li>
-                          </ul>
+          <div *ngIf="showSection(section.key) && section.key === 'contacts'" id="{{ section.key }}" class="surface-ground">
+              <div class="grid grid-nogutter">
+                  <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8" style="background-image: url('assets/layout/images/landing/ContactUs.png');">
+                      <div class="text-white text-2xl font-medium mb-6" [innerHTML]="generateLabelHtml(loading ? 'Contact Us' : section?.label)"></div>
+                      <div class="text-gray-300 line-height-3 mb-6">
+                          {{loading ? 'We are at your service 24h/24 and 7j/7.' : section?.description}}
                       </div>
-                      <div class="col-12 md:col-6">
-                          <div class="p-fluid formgrid grid px-4 py-8 md:px-6 lg:px-8">
-                              <div class="field col-12 lg:col-6 mb-4">
-                                  <input id="firstname" type="text" pinputtext="" placeholder="First Name" class="p-inputtext p-component p-element py-3 px-2 text-lg">
-                              </div>
-                              <div class="field col-12 lg:col-6 mb-4">
-                                  <input id="lastname" type="text" pinputtext="" placeholder="Last Name" class="p-inputtext p-component p-element py-3 px-2 text-lg">
-                              </div>
-                              <div class="field col-12 mb-4">
-                                  <input id="email" type="text" pinputtext="" placeholder="Email" class="p-inputtext p-component p-element py-3 px-2 text-lg">
-                              </div>
-                              <div class="field col-12 mb-4">
-                                  <input id="phone" type="text" pinputtext="" placeholder="Phone" class="p-inputtext p-component p-element py-3 px-2 text-lg">
-                              </div>
-                              <div class="field col-12 mb-4"><textarea id="message" pinputtextarea="" rows="3" placeholder="Message" class="p-inputtextarea p-inputtext p-component p-element py-3 px-2 text-lg p-inputtextarea-resizable" style="height: 95px; overflow: hidden;"></textarea>
-                              </div>
-                              <div class="col-12 text-right">
-                                  <button type="button" pbutton="" pripple="" label="Submit" icon="pi pi-envelope" class="p-element p-ripple px-5 py-3 w-auto p-button p-component"><span class="p-button-icon p-button-icon-left pi pi-envelope" aria-hidden="true"></span><span class="p-button-label">Submit</span><span class="p-ink"></span></button>
-                              </div>
+
+                      <ul *ngFor="let contact of contacts" class="list-none p-0 m-0 mt-6 text-white">
+                          <div *ngIf="isContactSectionEnabled(contact)">
+                              <li class="flex align-items-center mb-3" (click)="getContactAction(contact.value, contact.type)">
+                                  <i [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}" class="pi {{ getContactIcon(contact.type) }} mr-2"></i>
+                                  <span [ngStyle]="{'color': homePageContent?.hexaCouleurTheme || defaultColor}">{{ contact.value }}</span>
+                              </li>
+                          </div>
+                      </ul>
+                  </div>
+
+                  <div class="col-12 md:col-6">
+                      <div class="p-fluid formgrid grid px-4 py-8 md:px-6 lg:px-8">
+                          <div class="field col-12 lg:col-6 mb-4">
+                              <input id="firstname" type="text" pinputtext="" placeholder="Prénom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="firstName" required>
+                          </div>
+                          <div class="field col-12 lg:col-6 mb-4">
+                              <input id="lastname" type="text" pinputtext="" placeholder="Nom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="lastName" required>
+                          </div>
+                          <div class="field col-12 mb-4">
+                              <input id="email" type="text" pinputtext="" placeholder="Email" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="email" required>
+                          </div>
+                          <div class="field col-12 mb-4">
+                              <input id="phone" type="text" pinputtext="" placeholder="Téléphone" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="phone" required>
+                          </div>
+                          <div class="field col-12 mb-4">
+                              <textarea id="message" pinputtextarea="" rows="3" placeholder="Message" class="p-inputtextarea p-inputtext p-component p-element py-3 px-2 text-lg p-inputtextarea-resizable" style="height: 95px; overflow: hidden;" [ngStyle]="{'border-color': homePageContent?.hexaCouleurTheme || defaultColor}" [(ngModel)]="messageText" required></textarea>
+                          </div>
+                          <div class="col-12 text-right">
+                              <button type="button" label="Submit" icon="pi pi-envelope" class="p-element p-ripple px-5 py-3 w-auto p-button p-component" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}" (click)="sendMessage()">
+                                  <span class="p-button-icon p-button-icon-left pi pi-envelope" aria-hidden="true"></span>
+                                  <span class="p-button-label">Submit</span>
+                                  <span class="p-ink"></span>
+                              </button>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
       </div>
-
-
-
 
       <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
           <div class="flex align-items-start lg:align-items-center lg:justify-content-between pb-5 border-bottom-1 border-300 flex-column lg:flex-row">
@@ -402,7 +382,7 @@
                   <div class="text-gray-300 font-bold text-5xl">{{ loading ? 'Service Manager App' : homePageContent?.footerTitle }}</div>
                   <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerDescription }}</p>
               </div>
-              <button pbutton="" pripple="" label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" (click)="navigateToLogin()">
+              <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}" (click)="navigateToLogin()">
                   <span class="p-button-label">Get Started</span>
                   <span class="p-ink"></span>
               </button>
