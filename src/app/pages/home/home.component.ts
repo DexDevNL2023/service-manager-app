@@ -63,7 +63,16 @@ import {MessageService} from "primeng/api";
 })
 export class HomeComponent implements OnInit {
     homePageContent: HomePageContent = {
-        bannerDescription: "Premier segment, Deuxième segment, Troisième segment",
+        name: 'Nom de votre site',
+        description: 'Description de votre site',
+        hexaCouleurTheme: '#293782f3',
+        bannerImageUrl: '../../../assets/layout/images/landing/about-section-image.png',
+        bannerTitle: 'Bienvenue sur notre site',
+        bannerDescription: 'Découvrez ce que nous avons à offrir, Premier segment, Deuxième segment, Troisième segment',
+        logoUrl: '../../../assets/layout/images/logo-white.png',
+        faviconUrl: '../../../assets/layout/images/favicon-white.ico',
+        footerTitle: 'Titre du pied de page de votre site',
+        footerDescription: 'Description du pied de page de votre site',
     };
     sections: SectionContent[] = [
         { key: 'homes', label: 'Home', description: 'Everything you need to find the service you need. The first services and jobs referencing site.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
