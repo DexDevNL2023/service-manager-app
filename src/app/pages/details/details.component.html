@@ -1,332 +1,169 @@
+<!DOCTYPE html>
+<html>
 
-<div style="width: 100%; height: 100%; overflow: auto">
-    <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap">
-        <div class="font-bold mr-8">🔥 Service Manager!</div>
-        <div class="align-items-center hidden lg:flex">
-            <span class="line-height-3">The first services and jobs referencing site.</span>
-        </div>
-        <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="goToHome('home')" style="cursor: pointer;">
-            Learn More
-        </a>
-        <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
-            <i class="pi pi-times"></i>
-        </a>
-    </div>
+    <head>
+        <script>document.write('<base href="' + document.location + '" />');</script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>PrimeNG - Manhattan - Landing Page</title>
 
-    <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
+        <!-- PrimeNG styles -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeng@16.0.2/resources/primeng.min.css" />
 
-    <body class="landing-body">
-    <div class="landing-wrapper">
-        <div id="header" style="position: relative;" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
-            <div class="image" [style.background-image]="loading ? 'url(\'../../../assets/layout/images/landing/contacts2.png\')' : 'url(' + homePageContent?.bannerImageUrl + ')'"
-                 style="background-size: cover; background-position: center; height: 550px;">
-                <div class="header-top">
-                    <div class="px-8 py-4 md:px-6 lg:px-8 text-center" >
-                        <div class="px-8 md:px-8" >
-                            <div style="color: #fff; text-align: center;font-weight: bold;">
-                                <p-menubar [model]="menuItems" styleClass="centered-menu" [style]="{ 'width': 'fit-content', 'display': 'flex', 'justify-content': 'center', 'border-radius': '10px', 'text-align': 'center', 'color': '#fff' }">
-                                    <ng-template pTemplate="start">
-                                        <!-- Utilisation de la liaison de données pour l'attribut src -->
-                                        <img [src]="loading ? '../../../assets/layout/images/logo-manhattan.png' : (homePageContent?.logoUrl || '../../../assets/layout/images/logo-manhattan.png')" height="40" class="mr-2" />
-                                    </ng-template>
-                                </p-menubar>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="header-content animation-element slide-bottom">
-                        <div style="line-height: 1.5;color: #000000;font-size: xx-large; font-weight: bolder;">Welcome To <span
-                            class="tw"></span>
-                        </div>
-                        <div class="py-6 text-center" style="line-height: 1.5;color: #000000;" data-aos="fade-up" data-aos-duration="3000">
-                            <h3>{{ loading ? 'The first services and jobs referencing site.' : homePageContent?.bannerTitle }}</h3>
-                            <h6>{{ loading ? 'For services managements.' : homePageContent?.bannerDescription }}</h6>
-                        </div>
-                        <div class="py-4 text-center">
-                            <button pButton pRipple data-aos="fade-up" style="line-height: 1.5;color: #ffffff;"
-                                    data-aos-duration="3500" type="button" label="Learn More"
-                                    class="p-button-rounded p-button-primary mr-2 mb-2" (click)="goToHome('home')"></button>
-                        </div>
-                    </div>
-                </div>
+        <!-- PrimeIcons -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.css" />
+
+        <!-- PrimeFlex (optional, if you are using it) -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeflex@^3.3.1/primeflex.min.css" />
+
+        <!-- Your custom styles or additional stylesheets -->
+
+    </head>
+
+    <body class="ng-star-inserted">
+        <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center">
+            <div class="font-bold mr-8">🔥 Service Manager!</div>
+            <div class="align-items-center hidden lg:flex">
+                <span class="line-height-3">The first services and jobs referencing site.</span>
             </div>
+            <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="goToHome('home')" style="cursor: pointer;">
+                Learn More
+            </a>
+            <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
+                <i class="pi pi-times"></i>
+            </a>
         </div>
 
-        <div *ngIf="loading">
-            <div *ngIf="type === 'ABOUT'" id="abouts" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center">
-                <div class="mb-3 font-bold text-2xl">
-                    <span class="text-900">ABO</span>
-                    <span class="text-blue-600">UTS</span>
-                </div>
-                <span class="text-700 text-sm line-height-3">We provide you with the best advisors for your success.</span>
-                <div class="border-round border-1 surface-border p-4 surface-card">
-                    <div class="flex mb-3">
-                        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                        <div>
-                            <p-skeleton width="10rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                            <p-skeleton width="5rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                            <p-skeleton height=".5rem" borderRadius="16px"></p-skeleton>
-                        </div>
-                    </div>
-                    <p-skeleton width="100%" height="150px"></p-skeleton>
-                    <div class="flex justify-content-between mt-3">
-                        <p-skeleton width="4rem" height="2rem" borderRadius="16px"></p-skeleton>
-                        <p-skeleton width="4rem" height="2rem" borderRadius="16px"></p-skeleton>
-                    </div>
-                </div>
-            </div>
+        <p-goToHomep icon="pi pi-arrow-up"></p-goToHomep>
 
-            <div *ngIf="type === 'CAREER'" id="careers" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;" >
-                <div class="mb-3 font-bold text-2xl">
-                    <span class="text-blue-600">CAR</span>
-                    <span class="text-900">EERS</span>
-                </div>
-                <span class="text-700 text-sm line-height-3">Find job offers tailored to your professional goals.</span>
-                <p-skeleton styleClass="mb-2"></p-skeleton>
-                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-                <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
-                <p-skeleton width="10rem" height="4rem"></p-skeleton>
-
-                <p-skeleton styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                <p-skeleton width="10rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                <p-skeleton height="2rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                <p-skeleton width="10rem" height="4rem" borderRadius="16px"></p-skeleton>
-            </div>
-
-            <div *ngIf="type === 'OFFER'" id="offers" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" >
-                <div class="mb-3 font-bold text-2xl">
-                    <span class="text-900">O</span>
-                    <span class="text-blue-600">FFER</span>
-                    <span class="text-900">S</span>
-                </div>
-                <span class="text-700 text-sm line-height-3">Highlight your services using the most popular digital platform.</span>
-                <div class="border-round border-1 surface-border p-4 surface-card">
-                    <ul class="m-0 p-0 list-none">
-                        <li class="mb-3">
-                            <div class="flex">
-                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                                <div style="flex: 1">
-                                    <p-skeleton width="100%" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                                    <p-skeleton width="75%" borderRadius="16px"></p-skeleton>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="mb-3">
-                            <div class="flex">
-                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                                <div style="flex: 1">
-                                    <p-skeleton width="100%" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                                    <p-skeleton width="75%" borderRadius="16px"></p-skeleton>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="mb-3">
-                            <div class="flex">
-                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                                <div style="flex: 1">
-                                    <p-skeleton width="100%" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                                    <p-skeleton width="75%" borderRadius="16px"></p-skeleton>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex">
-                                <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-                                <div style="flex: 1">
-                                    <p-skeleton width="100%" styleClass="mb-2" borderRadius="16px"></p-skeleton>
-                                    <p-skeleton width="75%" borderRadius="16px"></p-skeleton>
+        <div id="header" style="position: relative;" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
+            <div id="navbar" class="bg-gray-900 py-3 px-6 shadow-2 flex align-items-center justify-content-between relative">
+                <img [src]="pageContent?.logoUrl" alt="logo" height="50">
+                <a pstyleclass="@next" enterclass="hidden" leavetoclass="hidden" class="p-element cursor-pointer block lg:hidden text-gray-400">
+                    <i class="pi pi-bars text-4xl"></i>
+                </a>
+                <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full bg-gray-900 left-0 top-100 px-6 lg:px-0 shadow-2 lg:shadow-none z-2">
+                    <section></section>
+                    <ul class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
+                        <li *ngFor="let section of sections" (click)="goToHome(section?.key)">
+                            <div *ngIf="isSectionEnabled(section)">
+                                <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
+                                    <span>{{ section?.label }}</span>
+                                    <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
+                                    <!-- Ajouter un icône chevron vers le bas s'il y a un submenu -->
+                                    <span *ngIf="section?.submenu" class="cursor-pointer ml-auto" (click)="toggleDropdown()">
+                                      <i class="pi pi-chevron-down"></i>
+                                    </span>
+                                </a>
+                                <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la propriété hasDropdown -->
+                                <div *ngIf="section?.submenu" class="lg:absolute bg-gray-800 origin-top left-0 top-100 w-full">
+                                    <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la variable offersDropdownVisible -->
+                                    <div *ngIf="dropdownVisible" class="flex flex-wrap p-6">
+                                        <div class="w-full lg:w-6 mb-4 lg:mb-0">
+                                            <span class="block font-normal text-2xl mb-4 text-white">{{ section?.label }}</span>
+                                            <p class="line-height-3 m-0 text-gray-400">{{ section?.description }}</p>
+                                        </div>
+                                        <div class="w-full lg:w-6">
+                                            <div class="flex flex-wrap border-bottom-1 border-gray-700 pb-3 mb-3" *ngFor="let submenu of section?.submenu; let i = index">
+                                                <div *ngIf="isSectionSubMenuEnabled(submenu)">
+                                                    <div class="px-0 lg:px-3 py-3" *ngFor="let item of [submenu?.label, submenu?.description, submenu?.isVisible]; let j = index">
+                                                        <span class="text-white" *ngIf="j === 0">{{ item?.label }}</span>
+                                                        <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3" *ngIf="j === 1">{{ item?.description }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                </div>
-            </div>
-
-            <div *ngIf="type === 'PARTNER'" id="partners" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" style="background-color: #0066ba26 !important;" >
-                <div class="mb-3 font-bold text-2xl">
-                    <span class="text-blue-600">PAR</span>
-                    <span class="text-900">RTN</span>
-                    <span class="text-blue-600">ERS</span>
-                </div>
-                <span class="text-700 text-sm line-height-3">Become partners and benefit.</span>
-                <p-table [value]="defaultSections" [tableStyle]="{ 'min-width': '50rem' }">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Name</th>
-                            <th>Adresses</th>
-                            <th>Phone number</th>
-                            <th>Web site</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-defaultSection>
-                        <tr>
-                            <td><p-skeleton borderRadius="16px"></p-skeleton></td>
-                            <td><p-skeleton borderRadius="16px"></p-skeleton></td>
-                            <td><p-skeleton borderRadius="16px"></p-skeleton></td>
-                            <td><p-skeleton borderRadius="16px"></p-skeleton></td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-
-            <div *ngIf="type === 'CONTACT'" id="contacts" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" >
-                <div class="mb-3 font-bold text-2xl">
-                    <span class="text-900">CO</span>
-                    <span class="text-blue-600">NT</span>
-                    <span class="text-900">AC</span>
-                    <span class="text-blue-600">TS</span>
-                </div>
-                <span class="text-700 text-sm line-height-3">We are at your service 24h/24 and 7j/7.</span>
-                <div class="col-12 block md:flex center">
-                    <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
-                    <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
-                    <p-skeleton shape="circle" size="5rem" styleClass="mr-2"></p-skeleton>
-                    <p-skeleton shape="circle" size="5rem"></p-skeleton>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="!loading">
-            <div *ngIf="detailsSection">
-                <!-- Utilisez la fonction generateSectionContent pour générer le contenu -->
-                <ng-container [innerHTML]="generateSectionContent(detailsSection)"></ng-container>
-            </div>
-            <div *ngIf="!detailsSection">
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-                <p-skeleton></p-skeleton>
-            </div>
-        </div>
-
-        <div id="footer" [ngStyle]="{'background-color': homePageContent?.hexaCouleurTheme || defaultColor}">
-            <div class="footer-content animation-element slide-bottom">
-                <div class="footer-content animation-element slide-bottom">
-                    <div class="px-2 md:px-2 lg:px-2">
-                        <div class="grid md:text-left">
-                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4">
-                                <span class="text-900 text-2xl block">Company</span>
-                                <ul class="list-none p-0">
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Abouts</a>
-                                    </li>
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Careers</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4">
-                                <span class="text-900 text-2xl block">Offers</span>
-                                <ul class="list-none p-0">
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">IT Graphik</a>
-                                    </li>
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">DeVops</a>
-                                    </li>
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Big Data</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4 lg:border-right-1">
-                                <span class="text-900 text-2xl block">Legal</span>
-                                <ul class="list-none p-0">
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Partners</a>
-                                    </li>
-                                    <li>
-                                        <a tabindex="0" class="text-white hover:text-900 transition-duration-150 cursor-pointer mt-3 block">Contacts</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-12 sm:col-6 md:col-4 lg:col-3 flex flex-column mt-2 py-4 px-4 mb-4 lg:mb-0">
-                                <span class="text-900 text-2xl block">Subscribe</span>
-                                <div class="text-white py-4 block mt-4 line-height-3"><i class="pi pi-discord"></i>&nbsp;{{ loading ? 'Join Service Manager Community.' : homePageContent?.footerTitle }}</div>
-                                <button pButton pRipple label="Join Now" icon="pi pi-discord" class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
-                            </div>
-                        </div>
+                    <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none border-gray-800 py-3 lg:py-0 mt-3 lg:mt-0">
+                        <button label="Login" class="p-element p-ripple p-button-text font-bold p-button p-component" (click)="navigateToLogin()">
+                            <span class="p-button-label">Login</span>
+                            <span class="p-ink"></span>
+                        </button>
+                        <button label="Register" class="p-element p-ripple ml-3 font-bold p-button p-component" (click)="navigateToRegister()">
+                            <span class="p-button-label">Register</span>
+                            <span class="p-ink"></span>
+                        </button>
                     </div>
-                    <div class="px-2 py-4 lg:px-2 flex flex-column lg:flex-row justify-content-between align-items-center">
-                        <div class="col-fixed flex align-items-center flex-order-0 lg:flex-order-1">
-                            <a tabindex="0" class="cursor-pointer mr-3">
-                                <i class="pi pi-facebook surface-900 p-1 text-sm border-circle text-0"></i>
-                            </a>
-                            <a tabindex="0" class="cursor-pointer mr-3">
-                                <i class="pi pi-twitter surface-900 p-1 text-sm border-circle text-0"></i>
-                            </a>
-                            <a tabindex="0" class="cursor-pointer mr-3">
-                                <i class="pi pi-youtube surface-900 p-1 text-sm border-circle text-0"></i>
-                            </a>
-                            <a tabindex="0" class="cursor-pointer">
-                                <i class="pi pi-google surface-900 p-1 text-sm border-circle text-0"></i>
-                            </a>
-                        </div>
+                </div>
+            </div>
+
+            <div id="banner" class="bg-gray-900 px-4 py-8 md:px-6 lg:px-8">
+                <div class="flex flex-wrap">
+                    <div class="w-12 lg:w-6 p-4">
+                        <h1 class="text-6xl font-bold text-white mt-0 mb-3">Welcome To <span class="tw"></span></h1>
+                        <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
+                        <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
+                            <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
+                                <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
+                                <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-gray-400 line-height-3">{{ segment.trim() }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-12 lg:w-6 text-center lg:text-right overflow-hidden">
+                        <img [style.background-image]="'url(' + pageContent?.bannerImageUrl + ')'" alt="banner" class="w-full lg:w-auto">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        EcuadorLanding = {
-            addClass: function (element, className) {
-                if (element.classList)
-                    element.classList.add(className);
-                else
-                    element.className += ' ' + className;
-            },
+        <div id="body" *ngFor="let section of sections">
 
-            removeClass: function (element, className) {
-                if (element.classList)
-                    element.classList.remove(className);
-                else
-                    element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-            },
+        </div>
 
-            hasClass: function (element, className) {
-                if (element.classList)
-                    return element.classList.contains(className);
-                else
-                    return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
-            },
+        <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }">
+            <div class="flex align-items-start lg:align-items-center lg:justify-content-between pb-5 border-bottom-1 border-300 flex-column lg:flex-row">
+                <div class="pr-0 lg:pr-8">
+                    <img [src]="pageContent?.logoUrl" alt="logo" height="50">
+                    <div class="text-gray-300 font-bold text-5xl">{{ pageContent?.footerTitle }}</div>
+                    <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ pageContent?.footerDescription }}</p>
+                </div>
+                <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="navigateToLogin()">
+                    <span class="p-button-label">Get Started</span>
+                    <span class="p-ink"></span>
+                </button>
+            </div>
 
-            hideMenu: function () {
-                this.removeClass(document.getElementById('landing-menu'), 'landing-menu-active');
-            },
+            <div class="py-5 border-bottom-1 border-300">
+                <div class="grid">
+                    <div *ngFor="let section of sections" class="col-12 sm:col-6 md:col-4 lg:col-2">
+                        <ng-container *ngIf="section.submenu && section.submenu.length > 0; else noSubmenu">
+                            <span class="text-900 block font-bold line-height-3 mb-3">{{ section.label }}</span>
+                            <ul class="list-none p-0 m-0">
+                                <li *ngFor="let submenuItem of section.submenu" class="mb-2" (click)="goToHome(section.key)">
+                                    <a class="text-700 cursor-pointer line-height-3">{{ submenuItem.label }}</a>
+                                </li>
+                            </ul>
+                        </ng-container>
+                        <ng-template #noSubmenu>
+                            <span class="text-900 block font-bold line-height-3 mb-3">{{ section.label }}</span>
+                            <ul class="list-none p-0 m-0">
+                                <li class="mb-2" (click)="goToHome(section.key)">
+                                    <a class="text-700 cursor-pointer line-height-3">{{ section.label }}</a>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
 
-            showMenu: function () {
-                this.addClass(document.getElementById('landing-menu'), 'landing-menu-active');
-            }
-        };
+            <div class="flex justify-content-between align-items-center py-5">
+                <span>Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
+                <div class="flex align-items-center justify-content-between">
+                    <a *ngFor="let contact of contacts" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
+                        <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        document.getElementById('menu-btn').addEventListener('click', function (e) {
-            var menu = document.getElementById('landing-menu');
-
-            if (EcuadorLanding.hasClass(menu, 'landing-menu-active'))
-                EcuadorLanding.hideMenu();
-            else
-                EcuadorLanding.showMenu();
-
-            e.preventDefault();
-        });
-
-        var menuLinks = document.querySelectorAll('#landing-menu a');
-        for (i = 0; i < menuLinks.length; i++) {
-            menuLinks[i].addEventListener('click', function (e) {
-                EcuadorLanding.hideMenu();
-            });
-        }
-    </script>
+        <!-- Scripts (make sure to include required PrimeNG and PrimeIcons scripts) -->
+        <script src="https://cdn.jsdelivr.net/npm/primeng@16.0.2/resources/primeng.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.js"></script>
     </body>
-</div>
+</html>

@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SharedService} from "../../utilities/services/shared.service";
 import {DetailsApiService} from "../../utilities/services/details.api.service";
 import {SectionType} from "../../utilities/enums/SectionType";
-import {AboutContent} from "../../utilities/models/AboutContent";
 import {CareerContent} from "../../utilities/models/CareerContent";
 import {OfferContent} from "../../utilities/models/OfferContent";
 import {PartnerContent} from "../../utilities/models/PartnerContent";
@@ -16,8 +15,10 @@ import {DetailsContent} from "../../utilities/models/DetailsContent";
 import {CareerType} from "../../utilities/enums/CareerType";
 import {PartnerType} from "../../utilities/enums/PartnerType";
 import {PageContent} from "../../utilities/models/PageContent";
-import {LandingContent} from "../../utilities/models/LandingContent";
 import {MenuPageContent} from "../../utilities/models/MenuPageContent";
+import {ContactType} from "../../utilities/enums/ContactType";
+import {SectionSubMenuContent} from "../../utilities/models/SectionSubMenuContent";
+import {ContactContent} from "../../utilities/models/ContactContent";
 
 @Component({
     selector: 'app-details',
@@ -53,6 +54,14 @@ export class DetailsComponent implements OnInit {
         { key: 'partners', label: 'Partners', description: 'Become partners and benefit.', icon: 'pi pi-users', submenu:[], type: SectionType.PARTNER, isVisible: true },
         { key: 'contacts', label: 'Contacts', description: 'We are at your service 24h/24 and 7j/7.', icon: 'pi pi-envelope', submenu:[], type: SectionType.CONTACT, isVisible: true },
     ];
+    contacts: ContactContent[] = [
+        { type: ContactType.WHATSAPP, value: '+123456789', isVisible: true },
+        { type: ContactType.FACEBOOK, value: '@prime_ng', isVisible: true },
+        { type: ContactType.PHONE, value: '+123456789', isVisible: true },
+        { type: ContactType.TWITTER, value: '@prime_ng', isVisible: true },
+        { type: ContactType.EMAIL, value: 'contact@primetek.com.tr', isVisible: true },
+        { type: ContactType.FAX, value: '+123456789', isVisible: true }
+    ];
     career: CareerContent = { id: 1, job: 'Ordered', type: CareerType.CDI, description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!', missions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', jobRequirements: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', applicantProfile: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', applicationDocuments: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', appyInstructions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', dateLimite: '05/10/2024', heureLimite: '10:30', partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, isVisible: true };
     offer: OfferContent = { id: 3, name: 'Build your mobile app', price: '10$', period: '30$', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', features: ['Arcu vitae elementum', 'Dui faucibus in ornare', 'Morbi tincidunt augue', 'Duis ultricies lacus sed', 'Imperdiet proin'], partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, subscriptionMessage: 'Contact Us', isVisible: true };
     partner: PartnerContent = { id: 1, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true };
@@ -62,6 +71,7 @@ export class DetailsComponent implements OnInit {
     responsiveOptions: any[] | undefined;
     currentDate = new Date();
     isBannerVisible = true;
+    dropdownVisible = false;
 
     constructor(private location: Location, private sharedService: SharedService, private detailsApiService: DetailsApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) { }
 
@@ -86,6 +96,7 @@ export class DetailsComponent implements OnInit {
         this.sharedService.homePageContent$.subscribe((data: MenuPageContent) => {
             this.pageContent = data.pageContent;
             this.sections = data.sectionContents;
+            this.contacts = data.contactContents;
 
             // Ajoutez les titres dynamiques à partir de homePageContent.bannerTitle
             if (this.pageContent && this.pageContent.bannerTitle) {
@@ -153,6 +164,36 @@ export class DetailsComponent implements OnInit {
 
     goBackToParentComponent(): void {
         this.location.back();
+    }
+
+    isSectionEnabled(section: SectionContent): boolean {
+        return section.isVisible;
+    }
+
+    isSectionSubMenuEnabled(submenu: SectionSubMenuContent): boolean {
+        return submenu.isVisible;
+    }
+
+    toggleDropdown(): void {
+        this.dropdownVisible = !this.dropdownVisible;
+    }
+
+    getContactIcon(type: ContactType) {
+        return this.generalUtilsService.getContactIcon(type)
+    }
+
+    getContactAction(contact: string, type: ContactType) {
+        return this.generalUtilsService.getContactAction(contact, type)
+    }
+
+    // Définissez une fonction pour naviguer vers le composant d'inscription
+    navigateToRegister(): void {
+        this.router.navigate(['/register']);
+    }
+
+    // Définissez une fonction pour naviguer vers le composant de connexion
+    navigateToLogin(): void {
+        this.router.navigate(['/login']);
     }
 
     private generateCareerCardContent(career: CareerContent, type: SectionType): string {

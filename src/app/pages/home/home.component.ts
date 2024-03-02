@@ -153,7 +153,6 @@ export class HomeComponent implements OnInit {
     responsiveOptions: any[] | undefined;
     currentDate = new Date();
     isBannerVisible = true;
-    // Assurez-vous que homePageContent.bannerTitle est défini avant d'utiliser ce code
     dropdownVisible = false;
     maxLength: number = 100;
     // Initialize properties to hold input values
@@ -297,7 +296,7 @@ export class HomeComponent implements OnInit {
         const typeString = SectionType[type];
 
         // En supposant que MenuPageContent prend pageContent et sections comme paramètres dans son constructeur
-        const menuPage: MenuPageContent = new MenuPageContent(this.pageContent, this.sections);
+        const menuPage: MenuPageContent = new MenuPageContent(this.pageContent, this.sections, this.contacts);
 
         // Naviguez vers DetailsComponent avec les paramètres de l'URL
         this.sharedService.setMenuPageContent(menuPage);

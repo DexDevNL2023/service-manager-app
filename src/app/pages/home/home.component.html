@@ -52,6 +52,10 @@
                               <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
                                   <span>{{ section?.label }}</span>
                                   <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
+                                  <!-- Ajouter un icône chevron vers le bas s'il y a un submenu -->
+                                  <span *ngIf="section?.submenu" class="cursor-pointer ml-auto" (click)="toggleDropdown()">
+                                      <i class="pi pi-chevron-down"></i>
+                                  </span>
                               </a>
                               <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la propriété hasDropdown -->
                               <div *ngIf="section?.submenu" class="lg:absolute bg-gray-800 origin-top left-0 top-100 w-full">
