@@ -101,6 +101,7 @@ import { DetailsComponent } from './pages/details/details.component';
 import {RouterModule} from "@angular/router";
 import {DetailsApiService} from "./utilities/services/details.api.service";
 import {GeneralUtilsService} from "./utilities/services/general.utils.service";
+import {MessageService} from "primeng/api";
 
 @NgModule({
     imports: [
@@ -202,7 +203,7 @@ import {GeneralUtilsService} from "./utilities/services/general.utils.service";
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        EventService,  MenuService, SharedService, GeneralUtilsService, HomeApiService, DetailsApiService
+        EventService,  MenuService, SharedService, GeneralUtilsService, HomeApiService, DetailsApiService, MessageService
     ],
     exports: [RouterModule],
     bootstrap: [AppComponent]
