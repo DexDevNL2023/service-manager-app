@@ -35,6 +35,7 @@ import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {PageContent} from "../../utilities/models/PageContent";
 import {LandingContent} from "../../utilities/models/LandingContent";
+import {MenuPageContent} from "../../utilities/models/MenuPageContent";
 
 @Component({
     selector: 'app-home',
@@ -295,8 +296,10 @@ export class HomeComponent implements OnInit {
         // Convertissez SectionType en chaîne pour l'URL
         const typeString = SectionType[type];
 
+        MenuPageContent menuPage = new MenuPageContent(this.pageContent, this.sections);
+
         // Naviguez vers DetailsComponent avec les paramètres de l'URL
-        this.sharedService.setHomePageContent(this.pageContent);
+        this.sharedService.setMenuPageContent(menuPage);
         this.router.navigate(['/details', item.id, typeString]);
     }
 

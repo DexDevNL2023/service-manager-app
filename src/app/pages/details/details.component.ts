@@ -8,46 +8,65 @@ import {AboutContent} from "../../utilities/models/AboutContent";
 import {CareerContent} from "../../utilities/models/CareerContent";
 import {OfferContent} from "../../utilities/models/OfferContent";
 import {PartnerContent} from "../../utilities/models/PartnerContent";
-import {LiteSectionContent} from "../../utilities/models/LiteSectionContent";
 import {GeneralUtilsService} from "../../utilities/services/general.utils.service";
-import {HomePageContent} from "../../utilities/models/HomePageContent";
 import {SectionContent} from "../../utilities/models/SectionContent";
 import AOS from 'aos';
 import Typewriter from 't-writer.js';
+import {DetailsContent} from "../../utilities/models/DetailsContent";
+import {CareerType} from "../../utilities/enums/CareerType";
+import {PartnerType} from "../../utilities/enums/PartnerType";
+import {PageContent} from "../../utilities/models/PageContent";
+import {LandingContent} from "../../utilities/models/LandingContent";
+import {MenuPageContent} from "../../utilities/models/MenuPageContent";
 
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html'
 })
 export class DetailsComponent implements OnInit {
-    homePageContent: HomePageContent | undefined;
-    responsiveOptions: any[] | undefined;
-    loading: boolean = true;
-    currentDate = new Date();
-    defaultSections: any[] | undefined;
-    isBannerVisible = true;
-    menuItems = [
-        { label: 'Home', icon: 'pi pi-home', command: () => this.goToHome('home') },
-        { label: 'About', icon: 'pi pi-info', command: () => this.goToHome('abouts') },
-        { label: 'Careers', icon: 'pi pi-briefcase', command: () => this.goToHome('careers') },
-        { label: 'Offers', icon: 'pi pi-gift', command: () => this.goToHome('offers') },
-        { label: 'Partners', icon: 'pi pi-users', command: () => this.goToHome('partners') },
-        { label: 'Contacts', icon: 'pi pi-envelope', command: () => this.goToHome('contacts') },
+    pageContent: PageContent = {
+        name: 'Nom de votre site',
+        description: 'Description de votre site',
+        hexaCouleurTheme: '#293782f3',
+        bannerImageUrl: '../../../assets/layout/images/landing/about-section-image.png',
+        bannerTitle: 'Service Manager, The first services and jobs referencing site.',
+        bannerDescription: 'Découvrez ce que nous avons à offrir, Premier segment, Deuxième segment, Troisième segment',
+        logoUrl: '../../../assets/layout/images/logo-white.png',
+        faviconUrl: '../../../assets/layout/images/favicon-white.ico',
+        footerTitle: 'Titre du pied de page de votre site',
+        footerDescription: 'Description du pied de page de votre site',
+    };
+    sections: SectionContent[] = [
+        { key: 'homes', label: 'Home', description: 'Everything you need to find the service you need. The first services and jobs referencing site.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
+        { key: 'abouts', label: 'About', description: 'We provide you with the best advisors for your success.', icon: 'pi pi-info', submenu:[], type: SectionType.ABOUT, isVisible: true },
+        { key: 'careers', label: 'Careers', description: 'Find job offers tailored to your professional goals.', icon: 'pi pi-briefcase', submenu:[], type: SectionType.CAREER, isVisible: true },
+        { key: 'offers', label: 'Offers', description: 'Highlight your services using the most popular digital platform.', icon: 'pi pi-gift', submenu:[
+                { label: 'IT Graphik', description: 'Porta lorem mollis aliquam ut porttitor leo a diam.', isVisible: true },
+                { label: 'DeVops', description: 'Amet purus gravida quis blandit.', isVisible: true },
+                { label: 'Big Data', description: 'Aenean vel elit scelerisque mauris.', isVisible: true },
+                { label: 'Development Application', description: 'Aenean vel elit scelerisque mauris.', isVisible: true },
+                { label: 'Courses', description: 'Feugiat pretium nibh ipsum consequat.', isVisible: true },
+                { label: 'Documentation', description: 'Tristique nulla aliquet enim tortor.', isVisible: true },
+                { label: 'API Reference', description: 'Feugiat pretium nibh ipsum consequat.', isVisible: true }
+            ], type: SectionType.OFFER, isVisible: true
+        },
+        { key: 'partners', label: 'Partners', description: 'Become partners and benefit.', icon: 'pi pi-users', submenu:[], type: SectionType.PARTNER, isVisible: true },
+        { key: 'contacts', label: 'Contacts', description: 'We are at your service 24h/24 and 7j/7.', icon: 'pi pi-envelope', submenu:[], type: SectionType.CONTACT, isVisible: true },
     ];
-    // Assurez-vous que homePageContent.bannerTitle est défini avant d'utiliser ce code
-    bannerTitles: string[] = ["Service Manager", "App"];
-    defaultColor: string = '#293782f3';
+    career: CareerContent = { id: 1, job: 'Ordered', type: CareerType.CDI, description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!', missions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', jobRequirements: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', applicantProfile: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', applicationDocuments: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', appyInstructions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', dateLimite: '05/10/2024', heureLimite: '10:30', partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, isVisible: true };
+    offer: OfferContent = { id: 3, name: 'Build your mobile app', price: '10$', period: '30$', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', features: ['Arcu vitae elementum', 'Dui faucibus in ornare', 'Morbi tincidunt augue', 'Duis ultricies lacus sed', 'Imperdiet proin'], partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, subscriptionMessage: 'Contact Us', isVisible: true };
+    partner: PartnerContent = { id: 1, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true };
 
     sectionId: number | undefined;
     type: SectionType | undefined;
-    detailsSection: LiteSectionContent | undefined;
+    responsiveOptions: any[] | undefined;
+    currentDate = new Date();
+    isBannerVisible = true;
 
     constructor(private location: Location, private sharedService: SharedService, private detailsApiService: DetailsApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) { }
 
     ngOnInit(): void {
-        this.loading = true;
         AOS.init();
-        this.defaultSections = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
 
         const target = document.querySelector('.tw')
         const writer = new Typewriter(target, {
@@ -58,28 +77,20 @@ export class DetailsComponent implements OnInit {
         })
 
         // Utilisez le tableau résultant pour la séquence d'écriture
-        writer.strings(400, ...this.bannerTitles).start();
+        writer.strings(400, ...this.pageContent.bannerTitle).start();
 
         // Utilisez cette méthode pour changer l'état de la Landing Page
         this.sharedService.setLandingPageState(true);
 
         // Récupère homePageContent du service partagé
-        this.sharedService.homePageContent$.subscribe((content) => {
-            this.homePageContent = content;
+        this.sharedService.homePageContent$.subscribe((data: MenuPageContent) => {
+            this.pageContent = data.pageContent;
+            this.sections = data.sections;
 
             // Ajoutez les titres dynamiques à partir de homePageContent.bannerTitle
-            if (this.homePageContent && this.homePageContent.bannerTitle) {
-                this.bannerTitles.push(...this.homePageContent.bannerTitle.split(','));
+            if (this.pageContent && this.pageContent.bannerTitle) {
+                writer.strings(400, ...this.pageContent.bannerTitle).start();
             }
-
-            // Construisez le tableau menuItems
-            this.menuItems = content.sections
-                .filter(section => this.isSectionEnabled(section))
-                .map(section => ({
-                    label: section.label,
-                    icon: this.generalUtilsService.getSectionIcon(section.type),
-                    command: () => this.goToHome(`${section.key}`),
-                }));
         });
 
         this.route.paramMap.subscribe(params => {
@@ -119,20 +130,12 @@ export class DetailsComponent implements OnInit {
         window.removeEventListener('popstate', this.goBackToParentComponent);
     }
 
-    generateSeleton(typeString: string) {
-        return this.generalUtilsService.generateSeleton(typeString)
-    }
-
-    isSectionEnabled(section: SectionContent): boolean {
-        // Déterminer si la section est activée ou désactivée
-        return section.isVisible;
-    }
-
     // Récupérez du contenu dynamique depuis le backend
     loadSectionDetails() {
-        this.detailsApiService.getDetailsSection(this.sectionId, this.type).subscribe(data => {
-            this.detailsSection = data;
-            this.loading = false;
+        this.detailsApiService.getDetailsSection(this.sectionId, this.type).subscribe((data: DetailsContent) => {
+            this.career = data.career;
+            this.offer = data.offer;
+            this.partner = data.partner;
         });
     }
 
@@ -150,49 +153,6 @@ export class DetailsComponent implements OnInit {
 
     goBackToParentComponent(): void {
         this.location.back();
-    }
-
-    generateSectionContent(section: LiteSectionContent): string {
-        switch (section.type) {
-            case SectionType.ABOUT:
-                return this.generateAboutCardContent(section.about, section.type);
-            case SectionType.CAREER:
-                return this.generateCareerCardContent(section.career, section.type);
-            case SectionType.CONTACT:
-                // Ne rien faire
-            case SectionType.OFFER:
-                return this.generateOfferCardContent(section.offer, section.type);
-            case SectionType.PARTNER:
-                return this.generatePartnerCardContent(section.partner, section.type);
-            default:
-                return '';
-        }
-    }
-
-    private generateAboutCardContent(about: AboutContent, type: SectionType): string {
-        // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        return `
-            <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
-            </p-divider>
-            <div [ngIf]="${about.images}">
-                <p-galleria [(value)]="${about.images}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="false" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
-                    <ng-template let-image pTemplate="item">
-                        <img [src]="image" style="width: 100%; display: block;" />
-                    </ng-template>
-                </p-galleria>
-            </div>
-            <div [ngIf]="${about.title}">
-                <p-divider align="left" type="solid">
-                    <b>${about.title}</b>
-                </p-divider>
-                <p class="m-0">
-                    ${about.description}
-                </p>
-            </div>
-            <p-divider></p-divider>
-            <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
-       `;
     }
 
     private generateCareerCardContent(career: CareerContent, type: SectionType): string {

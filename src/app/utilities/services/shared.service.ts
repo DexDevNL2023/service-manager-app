@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {PageContent} from "../models/PageContent";
+import {MenuContent} from "../models/MenuContent";
 
 @Injectable({
     providedIn: 'root',
@@ -11,8 +12,8 @@ export class SharedService {
     private pageContentSource = new BehaviorSubject<any>(null);
     homePageContent$ = this.pageContentSource.asObservable();
 
-    setHomePageContent(content: PageContent) {
-        this.pageContentSource.next(content);
+    setMenuPageContent(menContent: MenuContent) {
+        this.pageContentSource.next(menContent);
     }
 
     setLandingPageState(isActive: boolean) {

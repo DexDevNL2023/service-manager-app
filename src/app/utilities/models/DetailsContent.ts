@@ -6,10 +6,10 @@ import {PartnerContent} from "./PartnerContent";
 import {ContactContent} from "./ContactContent";
 
 export class DetailsContent {
-    homes: HomeContent;
-    abouts: AboutContent;
-    careers: CareerContent;
-    offers: OfferContent;
-    partners: PartnerContent;
-    contacts: ContactContent;
+    home: HomeContent;
+    about: AboutContent;
+    career: CareerContent;
+    offer: OfferContent;
+    partner: PartnerContent;
+    contact: ContactContent;
 }
