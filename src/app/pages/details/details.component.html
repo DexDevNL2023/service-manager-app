@@ -112,8 +112,189 @@
             </div>
         </div>
 
-        <div id="body" *ngFor="let section of sections">
+        <div id="body">
+            <div *ngIf="type === 'CAREER'" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center">
+                <p-divider align="center" type="dotted">
+                    <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml('CAREERS')"></div>
+                </p-divider>
 
+                <div *ngIf="career?.partenaire">
+                    <p-image *ngIf="career?.partenaire.logo" src="career?.partenaire.logo" alt="{{ career?.job }}" class="w-6 shadow-2" [preview]="true"></p-image>
+                    <p-divider align="center" type="dotted">
+                        <h3 [ngStyle]="{ color: pageContent?.hexaCouleurTheme }">{{ career?.partenaire.name.toUpperCase() }}</h3>
+                    </p-divider>
+                    <p-tag [value]="career?.partenaire.siteWeb ? career?.partenaire.siteWeb : career?.partenaire.contact" severity="secondary"></p-tag>
+                </div>
+
+                <div *ngIf="career?.job">
+                    <p-divider align="left" type="solid">
+                        <b>Job</b>
+                    </p-divider>
+                    <p class="m-0">
+                        <b>{{ career?.job }}</b>
+                        {{ getCareerTypeLabelHtml(career?.type) }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.description">
+                    <p-divider align="left" type="solid">
+                        <b>Description</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ career?.description }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.missions">
+                    <p-divider align="left" type="solid">
+                        <b>Missions</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ career?.missions }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.jobRequirements">
+                    <p-divider align="left" type="solid">
+                        <b>Job requirements</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ career?.jobRequirements }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.applicantProfile">
+                    <p-divider align="left" type="solid">
+                        <b>Applicant profile</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ career?.applicantProfile }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.applicationDocuments">
+                    <p-divider align="left" type="solid">
+                        <b>Application documents</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ career?.applicationDocuments }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.appyInstructions">
+                    <p-divider align="left" type="solid">
+                        <b>Appy instructions</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ career?.appyInstructions }}
+                    </p>
+                </div>
+
+                <div *ngIf="career?.dateLimite">
+                    <p-divider align="left" type="solid">
+                        <b>Deadline</b>
+                    </p-divider>
+                    <p class="m-0">
+                        <p-tag [value]="'Deadline ' + career?.dateLimite + ' at ' + career?.heureLimite" [severity]="getSeverityHtml(career?.dateLimite, career?.heureLimite)"></p-tag>
+                    </p>
+                </div>
+
+                <p-divider></p-divider>
+
+                <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
+            </div>
+
+            <div *ngIf="type === 'OFFER'" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center" >
+                <p-divider align="center" type="dotted">
+                    <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml('OFFERS')"></div>
+                </p-divider>
+
+                <div *ngIf="offer?.partenaire">
+                    <p-image *ngIf="offer?.partenaire.logo" src="career?.partenaire.logo" alt="{{ offer?.name }}" class="w-6 shadow-2" [preview]="true"></p-image>
+                    <p-divider align="center" type="dotted">
+                        <h3 [ngStyle]="{ color: pageContent?.hexaCouleurTheme }">{{ offer?.partenaire.name.toUpperCase() }}</h3>
+                    </p-divider>
+                    <p-tag [value]="offer?.partenaire.siteWeb ? offer?.partenaire.siteWeb : offer?.partenaire.contact" severity="secondary"></p-tag>
+                </div>
+
+                <div *ngIf="offer.name">
+                    <p-divider align="left" type="solid">
+                        <b>{{ offer.name }}</b>
+                    </p-divider>
+                    <p-tag [value]="offer?.price" severity="success"></p-tag>
+                    <p-tag [value]="offer?.period" severity="secondary"></p-tag>
+                </div>
+
+                <div *ngIf="offer?.description">
+                    <p-divider align="left" type="solid">
+                        <b>Description</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ offer?.description }}
+                    </p>
+                    <div *ngIf="offer?.features" class="mb-6 md:mb-0 flex flex-column flex-grow-1">
+                        <ul class="list-none p-0 m-0 mb-5 text-blue-100">
+                            <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
+                                <i class="pi pi-circle-on mr-2 text-sm"></i>
+                                <span>{{ feature }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p-divider></p-divider>
+                <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
+            </div>
+
+            <div *ngIf="type === 'PARTNER'" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center">
+                <p-divider align="center" type="dotted">
+                    <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml('PARTNERS')"></div>
+                </p-divider>
+
+                <p-image *ngIf="partner?.logo" src="partner?.logo" alt="{{ partner?.name }}" class="w-6 shadow-2" [preview]="true"></p-image>
+                <p-divider align="center" type="dotted">
+                    <h3 [ngStyle]="{ 'color': pageContent?.hexaCouleurTheme }">{{ partner?.name.toUpperCase() }}</h3>
+                </p-divider>
+
+                <div *ngIf="partner?.type">
+                    <p class="m-0">
+                        {{ getPartnerTypeLabelHtml(partner?.type) }}
+                    </p>
+                </div>
+
+                <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
+                <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
+
+                <div *ngIf="partner?.sigle">
+                    <p-divider align="left" type="solid">
+                        <b>Sigle</b>
+                    </p-divider>
+                    <p class="m-0">
+                        <b>{{ partner?.sigle }}</b>
+                    </p>
+                </div>
+
+                <div *ngIf="partner?.about">
+                    <p-divider align="left" type="solid">
+                        <b>About</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ partner?.about }}
+                    </p>
+                </div>
+
+                <div *ngIf="partner?.localization">
+                    <p-divider align="left" type="solid">
+                        <b>Localization</b>
+                    </p-divider>
+                    <p class="m-0">
+                        {{ partner?.localization }}
+                    </p>
+                </div>
+
+                <p-divider></p-divider>
+                <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
+            </div>
         </div>
 
         <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }">

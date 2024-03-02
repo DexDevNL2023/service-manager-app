@@ -8,11 +8,11 @@ import {MenuPageContent} from "../models/MenuPageContent";
 export class SharedService {
     private isLandingPageActiveSubject = new BehaviorSubject<boolean>(true);
     isLandingPageActive$ = this.isLandingPageActiveSubject.asObservable();
-    private pageContentSource = new BehaviorSubject<any>(null);
-    homePageContent$ = this.pageContentSource.asObservable();
+    private menPageContentSource = new BehaviorSubject<any>(null);
+    menPageContent$ = this.menPageContentSource.asObservable();
 
     setMenuPageContent(menPageContent: MenuPageContent) {
-        this.pageContentSource.next(menPageContent);
+        this.menPageContentSource.next(menPageContent);
     }
 
     setLandingPageState(isActive: boolean) {

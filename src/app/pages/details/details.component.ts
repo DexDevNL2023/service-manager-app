@@ -92,13 +92,13 @@ export class DetailsComponent implements OnInit {
         // Utilisez cette méthode pour changer l'état de la Landing Page
         this.sharedService.setLandingPageState(true);
 
-        // Récupère homePageContent du service partagé
-        this.sharedService.homePageContent$.subscribe((data: MenuPageContent) => {
+        // Récupère pageContent du service partagé
+        this.sharedService.menPageContent$.subscribe((data: MenuPageContent) => {
             this.pageContent = data.pageContent;
             this.sections = data.sectionContents;
             this.contacts = data.contactContents;
 
-            // Ajoutez les titres dynamiques à partir de homePageContent.bannerTitle
+            // Ajoutez les titres dynamiques à partir de pageContent.bannerTitle
             if (this.pageContent && this.pageContent.bannerTitle) {
                 writer.strings(400, ...this.pageContent.bannerTitle).start();
             }
@@ -196,166 +196,19 @@ export class DetailsComponent implements OnInit {
         this.router.navigate(['/login']);
     }
 
-    private generateCareerCardContent(career: CareerContent, type: SectionType): string {
-        // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        return `
-            <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
-            </p-divider>
-            <div [ngIf]="${career.partenaire}">
-                <img [ngIf]="${career.partenaire.logo}" [ngSrc]="${career.partenaire.logo}" alt="${career.job}" class="w-6 shadow-2" [preview]="true" />
-                <p-divider align="center" type="dotted">
-                    <h3 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${career.partenaire.name.toUpperCase()}</h3>
-                </p-divider>
-                <p-tag [value]="${career.partenaire.siteWeb ? career.partenaire.siteWeb : career.partenaire.contact}" severity="secondary"></p-tag>
-            </div>
-            <div [ngIf]="${career.job}">
-                <p-divider align="left" type="solid">
-                    <b>Job</b>
-                </p-divider>
-                <p class="m-0">
-                    <b>${career.job}</b>
-                    ${this.generalUtilsService.getCareerTypeLabel(career.type)}
-                </p>
-            </div>
-            <div [ngIf]="${career.description}">
-                <p-divider align="left" type="solid">
-                    <b>Description</b>
-                </p-divider>
-                <p class="m-0">
-                    ${career.description}
-                </p>
-            </div>
-            <div [ngIf]="${career.missions}">
-                <p-divider align="left" type="solid">
-                    <b>Missions</b>
-                </p-divider>
-                <p class="m-0">
-                    ${career.missions}
-                </p>
-            </div>
-            <div [ngIf]="${career.jobRequirements}">
-                <p-divider align="left" type="solid">
-                    <b>Job requirements</b>
-                </p-divider>
-                <p class="m-0">
-                    ${career.jobRequirements}
-                </p>
-            </div>
-            <div [ngIf]="${career.applicantProfile}">
-                <p-divider align="left" type="solid">
-                    <b>Applicant profile</b>
-                </p-divider>
-                <p class="m-0">
-                    ${career.applicantProfile}
-                </p>
-            </div>
-            <div [ngIf]="${career.applicationDocuments}">
-                <p-divider align="left" type="solid">
-                    <b>Application documents</b>
-                </p-divider>
-                <p class="m-0">
-                    ${career.applicationDocuments}
-                </p>
-            </div>
-            <div [ngIf]="${career.appyInstructions}">
-                <p-divider align="left" type="solid">
-                    <b>Appy instructions</b>
-                </p-divider>
-                <p class="m-0">
-                    ${career.appyInstructions}
-                </p>
-            </div>
-            <div [ngIf]="${career.dateLimite}">
-                <p-divider align="left" type="solid">
-                    <b>Deadline</b>
-                </p-divider>
-                <p class="m-0">
-                    <p-tag [value]="Deadline ${career.dateLimite} at ${career.heureLimite}" [severity]="${this.generalUtilsService.getSeverity(career.dateLimite, career.heureLimite)}"></p-tag>
-                </p>
-            </div>
-            <p-divider></p-divider>
-            <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
-       `;
+    getCareerTypeLabelHtml(type: CareerType): string {
+        return this.generalUtilsService.getCareerTypeLabel(type);
     }
 
-    private generateOfferCardContent(offer: OfferContent, type: SectionType): string {
-        // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        return `
-            <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
-            </p-divider>
-            <div [ngIf]="${offer.partenaire}">
-                <img [ngIf]="${offer.partenaire.logo}" [ngSrc]="${offer.partenaire.logo}" alt="${offer.name}" class="w-6 shadow-2" [preview]="true" />
-                <p-divider align="center" type="dotted">
-                    <h3 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${offer.partenaire.name.toUpperCase()}</h3>
-                </p-divider>
-                <p-tag [value]="${offer.partenaire.siteWeb ? offer.partenaire.siteWeb : offer.partenaire.contact}" severity="secondary"></p-tag>
-            </div>
-            <div [ngIf]="${offer.name}">
-                <p-divider align="left" type="solid">
-                    <b>${offer.name}</b>
-                </p-divider>
-                <div [ngIf]="${offer.images}">
-                    <p-galleria [(value)]="${offer.images}" [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="false" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
-                        <ng-template let-image pTemplate="item">
-                            <img [src]="image" style="width: 100%; display: block;" />
-                        </ng-template>
-                    </p-galleria>
-                </div>
-            </div>
-            <div [ngIf]="${offer.description}">
-                <p-divider align="left" type="solid">
-                    <b>Description</b>
-                </p-divider>
-                <p class="m-0">
-                    ${offer.description}
-                </p>
-            </div>
-            <p-divider></p-divider>
-            <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
-       `;
+    getSeverityHtml(date: string, time: string): string {
+        return this.generalUtilsService.getSeverity(date, time);
     }
 
-    private generatePartnerCardContent(partner: PartnerContent, type: SectionType): string {
-        // Personnalisez cette fonction en fonction de votre structure de données spécifique
-        return `
-            <p-divider align="center" type="dotted">
-                <h1 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${this.generalUtilsService.getSectionTypeLabel(type).toUpperCase()}</h1>
-            </p-divider>
-            <img [ngIf]="${partner.logo}" [ngSrc]="${partner.logo}" alt="${partner.name}" class="w-6 shadow-2" [preview]="true" />
-            <p-divider align="center" type="dotted">
-                <h3 [ngStyle]="{ color: ${this.homePageContent?.hexaCouleurTheme || this.defaultColor} }">${partner.name.toUpperCase()}</h3>
-            </p-divider>
-            <p-tag [value]="${partner.siteWeb}" severity="secondary"></p-tag>
-            <p-tag [value]="${partner.contact}" severity="secondary"></p-tag>
-            <div [ngIf]="${partner.sigle}">
-                <p-divider align="left" type="solid">
-                    <b>Sigle</b>
-                </p-divider>
-                <p class="m-0">
-                    <b>${partner.sigle}</b>
-                    ${this.generalUtilsService.getPartnerTypeLabel(partner.type)}
-                </p>
-            </div>
-            <div [ngIf]="${partner.about}">
-                <p-divider align="left" type="solid">
-                    <b>About</b>
-                </p-divider>
-                <p class="m-0">
-                    ${partner.about}
-                </p>
-            </div>
-            <div [ngIf]="${partner.localization}">
-                <p-divider align="left" type="solid">
-                    <b>Localization</b>
-                </p-divider>
-                <p class="m-0">
-                    ${partner.localization}
-                </p>
-            </div>
-            <p-divider></p-divider>
-            <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
-       `;
+    generateLabelHtml(label): string {
+        return this.generalUtilsService.generateLabelContent(label);
+    }
+
+    getPartnerTypeLabelHtml(type: PartnerType): string {
+        return this.generalUtilsService.getPartnerTypeLabel(type);
     }
 }
