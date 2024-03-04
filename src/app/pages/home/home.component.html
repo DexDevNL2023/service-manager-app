@@ -40,46 +40,48 @@
 
       <div id="header" style="position: relative;" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
           <div id="navbar" class="bg-gray-900 py-3 px-6 shadow-2 flex align-items-center justify-content-between relative">
-              <img [src]="pageContent?.logoUrl" alt="logo" height="50">
+              <img [src]="pageContent?.logoUrl" alt="logo" height="20">
               <a pstyleclass="@next" enterclass="hidden" leavetoclass="hidden" class="p-element cursor-pointer block lg:hidden text-gray-400">
                   <i class="pi pi-bars text-4xl"></i>
               </a>
               <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full bg-gray-900 left-0 top-100 px-6 lg:px-0 shadow-2 lg:shadow-none z-2">
                   <section></section>
-                  <ul class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
-                      <li *ngFor="let section of sections" (click)="scrollTo(section?.key)">
-                          <div *ngIf="isSectionEnabled(section)">
-                              <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
-                                  <span>{{ section?.label }}</span>
-                                  <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
-                                  <!-- Ajouter un icône chevron vers le bas s'il y a un submenu -->
-                                  <span *ngIf="section?.submenu" class="cursor-pointer ml-auto" (click)="toggleDropdown()">
-                                      <i class="pi pi-chevron-down"></i>
-                                  </span>
-                              </a>
-                              <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la propriété hasDropdown -->
-                              <div *ngIf="section?.submenu" class="lg:absolute bg-gray-800 origin-top left-0 top-100 w-full">
-                                  <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la variable offersDropdownVisible -->
-                                  <div *ngIf="dropdownVisible" class="flex flex-wrap p-6">
-                                      <div class="w-full lg:w-6 mb-4 lg:mb-0">
-                                          <span class="block font-normal text-2xl mb-4 text-white">{{ section?.label }}</span>
-                                          <p class="line-height-3 m-0 text-gray-400">{{ section?.description }}</p>
-                                      </div>
-                                      <div class="w-full lg:w-6">
-                                          <div class="flex flex-wrap border-bottom-1 border-gray-700 pb-3 mb-3" *ngFor="let submenu of section?.submenu; let i = index">
-                                              <div *ngIf="isSectionSubMenuEnabled(submenu)">
-                                                  <div class="px-0 lg:px-3 py-3" *ngFor="let item of [submenu?.label, submenu?.description, submenu?.isVisible]; let j = index">
-                                                      <span class="text-white" *ngIf="j === 0">{{ item?.label }}</span>
-                                                      <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3" *ngIf="j === 1">{{ item?.description }}</p>
+                  <div class="flex justify-content-center items-center">
+                      <ul *ngFor="let section of sections" class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
+                          <li (click)="scrollTo(section?.key)" class="flex items-center">
+                              <div *ngIf="isSectionEnabled(section)">
+                                  <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
+                                      <span class="block font-normal text-xl text-white">{{ section?.label }}</span>
+                                      <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
+                                  </a>
+                                  <!-- Utilisez la variable selectedSection pour construire le dropdown -->
+                                  <div *ngIf="section?.submenu?.length" class="lg:absolute bg-gray-800 origin-top left-0 top-100 w-full">
+                                      <div *ngIf="dropdownVisible && selectedSection === section" class="flex flex-wrap p-6">
+                                          <div class="w-full lg:w-6 mb-4 lg:mb-0">
+                                              <span class="block font-normal text-2xl mb-4 text-white">{{ selectedSection?.label }}</span>
+                                              <p class="line-height-3 m-0 text-gray-400">{{ selectedSection?.description }}</p>
+                                          </div>
+                                          <div class="w-full lg:w-6">
+                                              <div *ngFor="let submenuItem of selectedSection?.submenu" class="flex flex-wrap border-bottom-1 border-gray-700 pb-3 mb-3">
+                                                  <div *ngIf="isSectionSubMenuEnabled(submenuItem)">
+                                                      <div class="px-0 lg:px-3 py-3">
+                                                          <span class="text-white">{{ submenuItem.label }}</span>
+                                                          <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3">{{ submenuItem.description }}</p>
+                                                      </div>
                                                   </div>
                                               </div>
                                           </div>
                                       </div>
                                   </div>
                               </div>
-                          </div>
-                      </li>
-                  </ul>
+                          </li>
+                          <!-- Ajouter un icône chevron vers le bas s'il y a un submenu -->
+                          <span *ngIf="section?.submenu?.length" class="cursor-pointer ml-auto" (click)="toggleDropdown(section)">
+                              <i class="pi pi-chevron-down"></i>
+                          </span>
+                      </ul>
+                  </div>
+
                   <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none border-gray-800 py-3 lg:py-0 mt-3 lg:mt-0">
                       <button label="Login" class="p-element p-ripple p-button-text font-bold p-button p-component" (click)="navigateToLogin()">
                           <span class="p-button-label">Login</span>
@@ -96,7 +98,7 @@
           <div id="banner" class="bg-gray-900 px-4 py-8 md:px-6 lg:px-8">
               <div class="flex flex-wrap">
                   <div class="w-12 lg:w-6 p-4">
-                      <h1 class="text-6xl font-bold text-white mt-0 mb-3">Welcome To <span class="tw"></span></h1>
+                      <h1 class="text-6xl font-bold text-white mt-0 mb-3">{{ pageContent?.name }}</h1>
                       <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
                       <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
                           <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
@@ -146,7 +148,7 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'abouts'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
+              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
               </div>
@@ -186,8 +188,8 @@
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'careers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 mb-6">
+              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
+              <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
               </div>
 
@@ -207,15 +209,17 @@
                   </ng-template>
               </p-carousel>
 
-              <button pButton type="button" (click)="openSearchCareers()" class="text-blue-500 font-medium flex align-items-center mt-2">
-                  <span>View More</span>
-                  <i class="pi pi-arrow-right ml-3"></i>
-              </button>
+              <div class="flex justify-content-center items-center">
+                  <button pButton type="button" (click)="openSearchCareers()" class="text-white font-medium flex align-items-center mt-2">
+                      <span>View More</span>
+                      <i class="pi pi-arrow-right ml-3"></i>
+                  </button>
+              </div>
           </div>
 
           <div *ngIf="showSection(section?.key) && section?.key === 'offers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 mb-6">
+              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
+              <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
               </div>
 
@@ -304,15 +308,17 @@
                   </ng-template>
               </p-carousel>
 
-              <button pButton type="button" (click)="openSearchOffers()" class="text-blue-500 font-medium flex align-items-center mt-2">
-                  <span>View More</span>
-                  <i class="pi pi-arrow-right ml-3"></i>
-              </button>
+              <div class="flex justify-content-center items-center">
+                  <button pButton type="button" (click)="openSearchOffers()" class="text-white font-medium flex align-items-center mt-2">
+                      <span>View More</span>
+                      <i class="pi pi-arrow-right ml-3"></i>
+                  </button>
+              </div>
           </div>
 
           <div *ngIf="showSection(section.key) && section.key === 'partners'" id="{{ section.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
-              <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 mb-6">
+              <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
+              <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
               </div>
 
@@ -336,7 +342,7 @@
               <div class="grid grid-nogutter">
                   <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8" style="background-image: url('assets/layout/images/landing/ContactUs.png');">
                       <div class="text-white text-2xl font-medium mb-6" [innerHTML]="generateLabelHtml(section?.label)"></div>
-                      <div class="text-gray-300 line-height-3 mb-6">
+                      <div class="line-height-3 mb-6" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">
                           {{section?.description}}
                       </div>
                       <ul class="list-none p-0 m-0 mt-6 text-white">
@@ -352,19 +358,19 @@
                   <div class="col-12 md:col-6">
                       <div class="p-fluid formgrid grid px-4 py-8 md:px-6 lg:px-8">
                           <div class="field col-12 lg:col-6 mb-4">
-                              <input id="firstname" type="text" pinputtext="" placeholder="Prénom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="firstName" required>
+                              <input id="firstname" type="text" placeholder="Prénom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="firstName" required>
                           </div>
                           <div class="field col-12 lg:col-6 mb-4">
-                              <input id="lastname" type="text" pinputtext="" placeholder="Nom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="lastName" required>
+                              <input id="lastname" type="text" placeholder="Nom" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="lastName" required>
                           </div>
                           <div class="field col-12 mb-4">
-                              <input id="email" type="text" pinputtext="" placeholder="Email" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="email" required>
+                              <input id="email" type="text" placeholder="Email" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="email" required>
                           </div>
                           <div class="field col-12 mb-4">
-                              <input id="phone" type="text" pinputtext="" placeholder="Téléphone" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="phone" required>
+                              <input id="phone" type="text" placeholder="Téléphone" class="p-inputtext p-component p-element py-3 px-2 text-lg" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="phone" required>
                           </div>
                           <div class="field col-12 mb-4">
-                              <textarea id="message" pinputtextarea="" rows="3" placeholder="Message" class="p-inputtextarea p-inputtext p-component p-element py-3 px-2 text-lg p-inputtextarea-resizable" style="height: 95px; overflow: hidden;" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="messageText" required></textarea>
+                              <textarea id="message" rows="3" placeholder="Message" class="p-inputtextarea p-inputtext p-component p-element py-3 px-2 text-lg p-inputtextarea-resizable" style="height: 95px; overflow: hidden;" [ngStyle]="{'border-color': pageContent?.hexaCouleurTheme }" [(ngModel)]="messageText" required></textarea>
                           </div>
                           <div class="col-12 text-right">
                               <button type="button" label="Submit" icon="pi pi-envelope" class="p-element p-ripple px-5 py-3 w-auto p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="sendMessage()">
@@ -383,7 +389,7 @@
           <div class="flex align-items-start lg:align-items-center lg:justify-content-between pb-5 border-bottom-1 border-300 flex-column lg:flex-row">
               <div class="pr-0 lg:pr-8">
                   <img [src]="pageContent?.logoUrl" alt="logo" height="50">
-                  <div class="text-gray-300 font-bold text-5xl">{{ pageContent?.footerTitle }}</div>
+                  <div class="text-gray-300 font-bold text-5xl py-2">{{ pageContent?.footerTitle }}</div>
                   <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ pageContent?.footerDescription }}</p>
               </div>
               <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="navigateToLogin()">
@@ -399,7 +405,8 @@
                           <span class="text-900 block font-bold line-height-3 mb-3">{{ section.label }}</span>
                           <ul class="list-none p-0 m-0">
                               <li *ngFor="let submenuItem of section.submenu" class="mb-2" (click)="scrollTo(section.key)">
-                                  <a class="text-700 cursor-pointer line-height-3">{{ submenuItem.label }}</a>
+                                  <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
+                                  <a class="text-white cursor-pointer line-height-3">{{ submenuItem.label }}</a>
                               </li>
                           </ul>
                       </ng-container>
@@ -407,7 +414,7 @@
                           <span class="text-900 block font-bold line-height-3 mb-3">{{ section.label }}</span>
                           <ul class="list-none p-0 m-0">
                               <li class="mb-2" (click)="scrollTo(section.key)">
-                                  <a class="text-700 cursor-pointer line-height-3">{{ section.label }}</a>
+                                  <a class="text-white cursor-pointer line-height-3">{{ section.label }}</a>
                               </li>
                           </ul>
                       </ng-template>

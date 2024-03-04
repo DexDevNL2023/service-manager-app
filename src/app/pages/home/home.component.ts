@@ -10,12 +10,9 @@ import {ContactContent} from "../../utilities/models/ContactContent";
 import {OfferContent} from "../../utilities/models/OfferContent";
 import {PartnerContent} from "../../utilities/models/PartnerContent";
 import {GeneralUtilsService} from "../../utilities/services/general.utils.service";
-import AOS from 'aos';
-import Typewriter from 't-writer.js';
 import {SectionSubMenuContent} from "../../utilities/models/SectionSubMenuContent";
 import {HomeContent} from "../../utilities/models/HomeContent";
 import {CareerType} from "../../utilities/enums/CareerType";
-import {PartnerType} from "../../utilities/enums/PartnerType";
 import {ContactType} from "../../utilities/enums/ContactType";
 import {MessageService} from "primeng/api";
 import {PageContent} from "../../utilities/models/PageContent";
@@ -40,6 +37,7 @@ export class HomeComponent implements OnInit {
     isBannerVisible = true;
     dropdownVisible = false;
     maxLength: number = 100;
+    selectedSection: SectionContent;
     // Initialize properties to hold input values
     firstName: string = '';
     lastName: string = '';
@@ -50,26 +48,18 @@ export class HomeComponent implements OnInit {
     constructor(private el: ElementRef, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private sharedService: SharedService, private homeApiService: HomeApiService, private generalUtilsService: GeneralUtilsService) {}
 
     ngOnInit(): void {
-        AOS.init();
+        console.log('run 1');
         this.initDefaultData();
 
-        const target = document.querySelector('.tw')
-        const writer = new Typewriter(target, {
-            loop: true,
-            typeSpeed: 80,
-            deleteSpeed: 80,
-            typeColor: '#0066ba'
-        })
-
-        // Utilisez le tableau résultant pour la séquence d'écriture
-        writer.strings(400, ...this.pageContent.bannerTitle).start();
-
         // Utilisez cette méthode pour changer l'état de la Landing Page
+        console.log('run 2');
         this.sharedService.setLandingPageState(true);
 
         // Récupérer le paramètre 'scrollTo' de l'URL
+        console.log('run 3');
         this.route.params.subscribe(params => {
             const scrollTo = params['scrollTo'];
+            console.log(scrollTo);
 
             // Assurez-vous que scrollToSection est défini avant de faire défiler
             if (scrollTo) {
@@ -79,6 +69,7 @@ export class HomeComponent implements OnInit {
         });
 
         // Récupérez du contenu dynamique depuis le backend
+        console.log('run 4');
         this.homeApiService.getSections().subscribe((data: LandingContent) => {
             this.pageContent = data.pageContent;
             console.log(this.pageContent);
@@ -96,13 +87,9 @@ export class HomeComponent implements OnInit {
             console.log(this.partners);
             this.contacts = data.contacts;
             console.log(this.contacts);
-
-            // Ajoutez les titres dynamiques à partir de homePageContent.bannerTitle
-            if (this.pageContent && this.pageContent.bannerTitle) {
-                writer.strings(400, ...this.pageContent.bannerTitle).start();
-            }
         });
 
+        console.log('run 5');
         this.responsiveOptions = [
             {
                 breakpoint: '1400px',
@@ -140,7 +127,8 @@ export class HomeComponent implements OnInit {
         return this.generalUtilsService.getSeverity(date, time);
     }
 
-    toggleDropdown(): void {
+    toggleDropdown(section: SectionContent): void {
+        this.selectedSection = section;
         this.dropdownVisible = !this.dropdownVisible;
     }
 
@@ -302,7 +290,7 @@ export class HomeComponent implements OnInit {
             { key: 'contacts', label: 'Contacts', description: 'We are at your service 24h/24 and 7j/7.', icon: 'pi pi-envelope', submenu:[], type: SectionType.CONTACT, isVisible: true },
         ];
         console.log(this.sections);
-        this.homes = [
+        /*this.homes = [
             { title: 'Home', icon: 'pi pi-home', description: 'The first services and jobs referencing site.', isVisible: true },
             { title: 'About', icon: 'pi pi-info', description: 'We provide you with the best advisors for your success.', isVisible: true },
             { title: 'Careers', icon: 'pi pi-briefcase', description: 'Find job offers tailored to your professional goals.', isVisible: true },
@@ -364,6 +352,6 @@ export class HomeComponent implements OnInit {
             { type: ContactType.EMAIL, value: 'contact@primetek.com.tr', isVisible: true },
             { type: ContactType.FAX, value: '+123456789', isVisible: true }
         ];
-        console.log(this.contacts);
+        console.log(this.contacts);*/
     }
 }

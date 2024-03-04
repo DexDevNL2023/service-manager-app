@@ -5,14 +5,14 @@ import {DividerModule} from "primeng/divider";
 
 @Component({
     selector: 'app-login',
-    templateUrl: './app.login.component.html',
+    templateUrl: './login.component.html',
     imports: [
         ButtonModule,
         DividerModule
     ],
     standalone: true
 })
-export class AppLoginComponent {
+export class LoginComponent {
 
     constructor(private router: Router) {}
 
