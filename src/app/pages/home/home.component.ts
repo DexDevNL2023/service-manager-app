@@ -1,8 +1,7 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import {SharedService} from "../../utilities/services/shared.service";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HomeApiService} from "../../utilities/services/home.api.service";
-import {NgForOf, NgIf, NgOptimizedImage, NgStyle} from "@angular/common";
 import {SectionContent} from "../../utilities/models/SectionContent";
 import {SectionType} from "../../utilities/enums/SectionType";
 import {AboutContent} from "../../utilities/models/AboutContent";
@@ -10,28 +9,14 @@ import {CareerContent} from "../../utilities/models/CareerContent";
 import {ContactContent} from "../../utilities/models/ContactContent";
 import {OfferContent} from "../../utilities/models/OfferContent";
 import {PartnerContent} from "../../utilities/models/PartnerContent";
-import {CarouselModule} from "primeng/carousel";
-import {CardModule} from "primeng/card";
-import {ButtonModule} from "primeng/button";
 import {GeneralUtilsService} from "../../utilities/services/general.utils.service";
-import {DividerModule} from "primeng/divider";
-import {SkeletonModule} from "primeng/skeleton";
-import {TableModule} from "primeng/table";
 import AOS from 'aos';
 import Typewriter from 't-writer.js';
-import {AvatarModule} from "primeng/avatar";
-import {ToolbarModule} from "primeng/toolbar";
-import {MenubarModule} from "primeng/menubar";
-import {ScrollTopModule} from "primeng/scrolltop";
-import {RippleModule} from "primeng/ripple";
 import {SectionSubMenuContent} from "../../utilities/models/SectionSubMenuContent";
 import {HomeContent} from "../../utilities/models/HomeContent";
-import {TagModule} from "primeng/tag";
 import {CareerType} from "../../utilities/enums/CareerType";
-import {ImageModule} from "primeng/image";
 import {PartnerType} from "../../utilities/enums/PartnerType";
 import {ContactType} from "../../utilities/enums/ContactType";
-import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {PageContent} from "../../utilities/models/PageContent";
 import {LandingContent} from "../../utilities/models/LandingContent";
@@ -39,30 +24,7 @@ import {MenuPageContent} from "../../utilities/models/MenuPageContent";
 
 @Component({
     selector: 'app-home',
-    standalone: true,
-    imports: [
-        RouterLink,
-        NgStyle,
-        NgForOf,
-        NgIf,
-        CarouselModule,
-        CardModule,
-        ButtonModule,
-        NgOptimizedImage,
-        DividerModule,
-        SkeletonModule,
-        TableModule,
-        AvatarModule,
-        ToolbarModule,
-        MenubarModule,
-        ScrollTopModule,
-        RippleModule,
-        TagModule,
-        ImageModule,
-        FormsModule
-    ],
-    templateUrl: './home.component.html',
-    providers: [MessageService]
+    templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
     pageContent: PageContent | undefined;
@@ -85,7 +47,7 @@ export class HomeComponent implements OnInit {
     phone: string = '';
     messageText: string = '';
 
-    constructor(private messageService: MessageService, private el: ElementRef, private sharedService: SharedService, private homeApiService: HomeApiService, private route: ActivatedRoute, private router: Router, private generalUtilsService: GeneralUtilsService) {}
+    constructor(private el: ElementRef, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private sharedService: SharedService, private homeApiService: HomeApiService, private generalUtilsService: GeneralUtilsService) {}
 
     ngOnInit(): void {
         AOS.init();

@@ -3,7 +3,15 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {
+    CommonModule,
+    HashLocationStrategy,
+    LocationStrategy,
+    NgForOf,
+    NgIf,
+    NgOptimizedImage,
+    NgStyle
+} from '@angular/common';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AccordionModule} from 'primeng/accordion';
@@ -98,10 +106,11 @@ import {MenuService} from './app.menu.service';
 import {SharedService} from "./utilities/services/shared.service";
 import {HomeApiService} from "./utilities/services/home.api.service";
 import { DetailsComponent } from './pages/details/details.component';
-import {RouterModule} from "@angular/router";
+import {RouterLink, RouterModule} from "@angular/router";
 import {DetailsApiService} from "./utilities/services/details.api.service";
 import {GeneralUtilsService} from "./utilities/services/general.utils.service";
 import {MessageService} from "primeng/api";
+import {HomeComponent} from "./pages/home/home.component";
 
 @NgModule({
     imports: [
@@ -189,7 +198,12 @@ import {MessageService} from "primeng/api";
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        RouterModule
+        RouterModule,
+        RouterLink,
+        NgStyle,
+        NgForOf,
+        NgIf,
+        NgOptimizedImage
     ],
     declarations: [
         AppComponent,
@@ -199,6 +213,7 @@ import {MessageService} from "primeng/api";
         AppConfigComponent,
         AppTopBarComponent,
         AppFooterComponent,
+        HomeComponent,
         DetailsComponent
     ],
     providers: [
