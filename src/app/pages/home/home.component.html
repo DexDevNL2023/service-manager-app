@@ -153,30 +153,38 @@
                   {{section?.description}}
               </div>
 
-              <div *ngFor="let about of abouts; let i = index" class="flex lg:justify-content-center mb-5">
-                  <div *ngIf="isAboutSectionEnabled(about)" class="flex lg:justify-content-center mb-5">
-                      <div *ngIf="isEven(i)">
+              <div *ngFor="let about of abouts; let i = index">
+                  <div *ngIf="isAboutSectionEnabled(about)">
+                      <div *ngIf="isEven(i)" class="flex lg:justify-content-center mb-5">
                           <div class="py-3 pr-8 pl-3 w-30rem hidden lg:block">
                               <img [src]="about?.image" alt="Image" class="w-full mr-8">
                           </div>
                           <div class="flex flex-column align-items-center w-2rem">
-                              <span class="bg-blue-500 text-0 flex align-items-center justify-content-center border-circle" style="min-width: 2.5rem; min-height: 2.5rem;"><i [class]="'pi ' + about?.icon + ' text-sm text-white'"></i></span>
+                              <span class="bg-blue-500 text-0 flex align-items-center justify-content-center border-circle" style="min-width: 2.5rem; min-height: 2.5rem;">
+                                  <i [class]="about?.icon + ' text-xl text-white'"></i>
+                              </span>
                               <div class="h-full bg-blue-500" style="width: 2px; min-height: 4rem;"></div>
                           </div>
                           <div class="py-3 pl-5 lg:pl-8 pl-3 lg:w-30rem">
                               <div class="text-900 text-xl mb-2 font-medium">{{ about?.title }}</div>
-                              <span class="block text-700 line-height-3 mb-3">{{ about?.description }}</span>
+                              <span class="block text-700 line-height-3 mb-3">
+                              {{ about?.description }}
+                          </span>
                               <img [src]="about?.image" alt="Image" class="w-full mt-3 block lg:hidden">
                           </div>
                       </div>
-                      <div *ngIf="!isEven(i)">
+
+                      <div *ngIf="!isEven(i)" class="flex justify-content-center mb-5">
                           <div class="py-3 pl-5 pr-3 lg:pr-8 lg:pl-3 lg:w-30rem flex-order-1 lg:flex-order-0">
                               <div class="text-900 text-xl mb-2 font-medium">{{ about?.title }}</div>
-                              <span class="block text-700 line-height-3 mb-3">{{ about?.description }}</span>
-                              <img [src]="about?.image" alt="Image" class="w-full mt-3 block lg:hidden">
-                          </div>
+                              <span class="block text-700 line-height-3 mb-3">
+                              {{ about?.description }}
+                          </span>
+                              <img [src]="about?.image" alt="Image" class="w-full mt-3 block lg:hidden"></div>
                           <div class="flex flex-column align-items-center w-2rem flex-order-0 lg:flex-order-1">
-                              <span class="bg-yellow-500 text-0 flex align-items-center justify-content-center border-circle" style="min-width: 2.5rem; min-height: 2.5rem;"><i [class]="'pi ' + about?.icon + ' text-sm text-white'"></i></span>
+                              <span class="bg-yellow-500 text-0 flex align-items-center justify-content-center border-circle" style="min-width: 2.5rem; min-height: 2.5rem;">
+                                  <i [class]="about?.icon + ' text-xl text-white'"></i>
+                              </span>
                               <div class="h-full bg-yellow-500" style="width: 2px; min-height: 4rem;"></div>
                           </div>
                           <div class="py-3 pl-8 pr-3 w-30rem hidden lg:block flex-order-2">
@@ -187,7 +195,7 @@
               </div>
           </div>
 
-          <div *ngIf="showSection(section?.key) && section?.key === 'careers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
+          <div *ngIf="showSection(section?.key) && section?.key === 'careers'" id="{{ section?.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
@@ -217,7 +225,7 @@
               </div>
           </div>
 
-          <div *ngIf="showSection(section?.key) && section?.key === 'offers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
+          <div *ngIf="showSection(section?.key) && section?.key === 'offers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
@@ -316,7 +324,7 @@
               </div>
           </div>
 
-          <div *ngIf="showSection(section.key) && section.key === 'partners'" id="{{ section.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8">
+          <div *ngIf="showSection(section.key) && section.key === 'partners'" id="{{ section.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
               <div class="text-700 text-center mb-5 line-height-3">
                   {{section?.description}}
@@ -338,7 +346,7 @@
               </p-carousel>
           </div>
 
-          <div *ngIf="showSection(section.key) && section.key === 'contacts'" id="{{ section.key }}" class="surface-ground">
+          <div *ngIf="showSection(section.key) && section.key === 'contacts'" id="{{ section.key }}" class="surface-section">
               <div class="grid grid-nogutter">
                   <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8" style="background-image: url('assets/layout/images/landing/ContactUs.png');">
                       <div class="text-white text-2xl font-medium mb-6" [innerHTML]="generateLabelHtml(section?.label)"></div>
