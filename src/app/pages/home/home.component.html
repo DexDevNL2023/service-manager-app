@@ -122,13 +122,13 @@
               </div>
 
               <div class="grid">
-                  <div *ngFor="let home of homes" class="col-12 md:col-4 mb-4 px-5" data-aos="fade-up" data-aos-duration="2300">
+                  <div *ngFor="let home of homes" class="col-12 md:col-4 mb-4 px-5">
                       <div *ngIf="isHomeSectionEnabled(home)">
-                          <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-                              <i [class]="'pi ' + home?.icon + ' text-4xl text-blue-500'"></i>
-                          </span>
-                          <div class="text-900 mb-3 font-medium">{{ home?.title }}</div>
-                          <span class="text-700 text-sm line-height-3">{{ home?.description }}</span>
+                      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px;">
+                          <i [class]="home?.icon + ' text-4xl text-blue-500'"></i>
+                      </span>
+                          <div class="text-900 text-xl mb-3 font-medium">{{ home?.title }}</div>
+                          <span class="text-700 line-height-3">{{ home?.description }}</span>
                       </div>
                   </div>
               </div>
@@ -388,7 +388,7 @@
       <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }">
           <div class="flex align-items-start lg:align-items-center lg:justify-content-between pb-5 border-bottom-1 border-300 flex-column lg:flex-row">
               <div class="pr-0 lg:pr-8">
-                  <img [src]="pageContent?.logoUrl" alt="logo" height="50">
+                  <img [src]="pageContent?.logoUrl" alt="logo" height="30">
                   <div class="text-gray-300 font-bold text-5xl py-2">{{ pageContent?.footerTitle }}</div>
                   <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ pageContent?.footerDescription }}</p>
               </div>

@@ -263,11 +263,11 @@ export class HomeComponent implements OnInit {
             name: 'Nom de votre site',
             description: 'Description de votre site',
             hexaCouleurTheme: '#293782f3',
-            bannerImageUrl: '../../../assets/layout/images/landing/about-section-image.png',
+            bannerImageUrl: 'assets/layout/images/landing/about-section-image.png',
             bannerTitle: 'Service Manager, The first services and jobs referencing site.',
             bannerDescription: 'Découvrez ce que nous avons à offrir, Premier segment, Deuxième segment, Troisième segment',
-            logoUrl: '../../../assets/layout/images/logo-white.png',
-            faviconUrl: '../../../assets/layout/images/favicon-white.ico',
+            logoUrl: 'assets/layout/images/logo-white.png',
+            faviconUrl: 'assets/layout/images/favicon-white.ico',
             footerTitle: 'Titre du pied de page de votre site',
             footerDescription: 'Description du pied de page de votre site',
         };
@@ -290,7 +290,7 @@ export class HomeComponent implements OnInit {
             { key: 'contacts', label: 'Contacts', description: 'We are at your service 24h/24 and 7j/7.', icon: 'pi pi-envelope', submenu:[], type: SectionType.CONTACT, isVisible: true },
         ];
         console.log(this.sections);
-        /*this.homes = [
+        this.homes = [
             { title: 'Home', icon: 'pi pi-home', description: 'The first services and jobs referencing site.', isVisible: true },
             { title: 'About', icon: 'pi pi-info', description: 'We provide you with the best advisors for your success.', isVisible: true },
             { title: 'Careers', icon: 'pi pi-briefcase', description: 'Find job offers tailored to your professional goals.', isVisible: true },
@@ -299,7 +299,7 @@ export class HomeComponent implements OnInit {
             { title: 'Contacts', icon: 'pi pi-envelope', description: 'We are at your service 24h/24 and 7j/7.', isVisible: true },
         ];
         console.log(this.homes);
-        this.abouts = [
+        /*this.abouts = [
             { title: 'Ordered', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!', icon: 'pi pi-shopping-cart', color: '#9C27B0', image: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
             { title: 'Processing', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!', icon: 'pi pi-cog', color: '#673AB7', image: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
             { title: 'Shipped', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!', icon: 'pi pi-shopping-cart', color: '#FF9800', image: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
