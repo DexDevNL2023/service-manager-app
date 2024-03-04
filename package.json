@@ -8,7 +8,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "start": "http-server-spa dist/service-manager-app index.html 8080"
+        "start": "ng serve"
     },
     "private": true,
     "dependencies": {
