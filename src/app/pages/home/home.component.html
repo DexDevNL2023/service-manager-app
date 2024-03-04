@@ -246,86 +246,32 @@
                   {{section?.description}}
               </div>
 
-              <p-carousel [value]="offers" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
+              <p-carousel [value]="offers" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="6000" (onPage)="onCarouselPageChange($event)">
                   <ng-template let-offer pTemplate="carousel">
-                      <div *ngIf="isOfferSectionEnabled(offer)" class="mb-6 md:mb-0 mr-0 md:mr-4 flex flex-column flex-grow-1">
-                          <div class="bg-blue-100 text-center p-3" style="border-radius: 6px 6px 0 0;">
-                              <div class="text-2xl font-bold text-blue-900 mb-3">{{ offer?.name }}</div>
-                              <div class="flex align-items-center justify-content-center">
-                                  <span class="font-bold text-blue-900 text-5xl mr-2">{{ offer?.price }}</span>
-                                  <span class="text-2xl text-blue-400"> / {{ offer?.period }}</span>
+                      <div *ngIf="isOfferSectionEnabled(offer)" class="flex flex-column md:flex-row mt-6">
+                          <div class="mb-6 md:mb-0 mr-0 md:mr-4 flex flex-column flex-grow-1">
+                              <div class="bg-bluegray-100 text-center p-3" style="border-radius: 6px 6px 0 0;">
+                                  <div class="text-2xl font-bold text-bluegray-900 mb-3">{{ offer?.name }}</div>
+                                  <div class="flex align-items-center justify-content-center">
+                                      <span class="font-bold text-bluegray-900 text-5xl mr-2">{{ offer?.price }}</span>
+                                      <span class="text-2xl text-bluegray-400"> / {{ offer?.period }}</span>
+                                  </div>
                               </div>
-                          </div>
-                          <div class="bg-blue-50 p-4 flex flex-column flex-grow-1" style="box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1); border-radius: 0 0 6px 6px;">
-                              <div class="text-bluegray-500 font-bold line-height-3 mb-4">
-                                  {{ truncateDescription(offer?.description) }}
+                              <div class="bg-bluegray-50 p-4 flex flex-column flex-grow-1" style="box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1); border-radius: 0 0 6px 6px;">
+                                  <div class="text-bluegray-500 font-bold line-height-3 mb-4">
+                                      {{ truncateDescription(offer?.description) }}
+                                  </div>
+                                  <ul class="list-none p-0 m-0 mb-5 text-bluegray-600">
+                                      <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
+                                          <i class="pi pi-circle-on mr-2 text-sm"></i>
+                                          <span>{{ feature }}</span>
+                                      </li>
+                                  </ul>
+                                  <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
+                                      <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
+                                      <span class="p-ink"></span>
+                                  </button>
                               </div>
-                              <ul class="list-none p-0 m-0 mb-5 text-blue-600">
-                                  <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
-                                      <i class="pi pi-circle-on mr-2 text-sm"></i>
-                                      <span>{{ feature }}</span>
-                                  </li>
-                              </ul>
-                              <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
-                                  <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
-                                  <span class="p-ink"></span>
-                              </button>
-                          </div>
-                      </div>
-                  </ng-template>
-
-                  <ng-template let-offer pTemplate="carousel">
-                      <div *ngIf="isOfferSectionEnabled(offer)" class="mb-6 md:mb-0 mr-0 md:mr-4 flex flex-column flex-grow-1">
-                          <div class="bg-blue-800 text-center p-3 border-3 border-green-500 border-bottom-none" style="border-radius: 6px 6px 0 0;">
-                              <div class="bg-green-500 text-0 font-bold text-sm inline-block p-2 mb-3" style="border-radius: 20px;">
-                                  {{ offer?.name }}
-                              </div>
-                              <div class="flex align-items-center justify-content-center">
-                                  <span class="font-bold text-white text-5xl mr-2">{{ offer?.price }}</span>
-                                  <span class="text-2xl text-blue-400"> / {{ offer?.period }}</span>
-                              </div>
-                          </div>
-                          <div class="bg-blue-900 p-4 flex flex-column flex-grow-1 border-3 border-green-500 border-top-none" style="box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1); border-radius: 0 0 6px 6px;">
-                              <div class="text-white font-bold line-height-3 mb-4">
-                                  {{ truncateDescription(offer?.description) }}
-                              </div>
-                              <ul class="list-none p-0 m-0 mb-5 text-blue-100">
-                                  <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
-                                      <i class="pi pi-circle-on mr-2 text-sm"></i>
-                                      <span>{{ feature }}</span>
-                                  </li>
-                              </ul>
-                              <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-success w-full mt-auto p-button p-component">
-                                  <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
-                                  <span class="p-ink"></span>
-                              </button>
-                          </div>
-                      </div>
-                  </ng-template>
-
-                  <ng-template let-offer pTemplate="carousel">
-                      <div *ngIf="isOfferSectionEnabled(offer)" class="mb-6 md:mb-0 flex flex-column flex-grow-1">
-                          <div class="bg-blue-800 text-center p-3" style="border-radius: 6px 6px 0 0;">
-                              <div class="text-2xl font-bold text-white mb-3">{{ offer?.name }}</div>
-                              <div class="flex align-items-center justify-content-center">
-                                  <span class="font-bold text-white text-5xl mr-2">{{ offer?.price }}</span>
-                                  <span class="text-2xl text-blue-400"> / {{ offer?.period }}</span>
-                              </div>
-                          </div>
-                          <div class="bg-blue-900 p-4 flex flex-column flex-grow-1" style="box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1); border-radius: 0 0 6px 6px;">
-                              <div class="text-blue-400 font-bold line-height-3 mb-4">
-                                  {{ truncateDescription(offer?.description) }}
-                              </div>
-                              <ul class="list-none p-0 m-0 mb-5 text-blue-100">
-                                  <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
-                                      <i class="pi pi-circle-on mr-2 text-sm"></i>
-                                      <span>{{ feature }}</span>
-                                  </li>
-                              </ul>
-                              <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-outlined w-full mt-auto p-button p-component">
-                                  <span class="p-button-label">{{ offer?.subscriptionMessage }}</span>
-                                  <span class="p-ink"></span>
-                              </button>
                           </div>
                       </div>
                   </ng-template>
