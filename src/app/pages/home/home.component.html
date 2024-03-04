@@ -201,18 +201,33 @@
                   {{section?.description}}
               </div>
 
-              <p-carousel [value]="careers" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
+              <p-carousel [value]="careers" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="6000">
                   <ng-template let-career pTemplate="item">
-                      <div *ngIf="isCareerSectionEnabled(career)" class="w-full lg:w-6 xl:w-3 p-5">
-                          <img [src]="career?.partenaire.logo" alt="Image" class="w-full">
-                          <div class="mt-3 mb-2 font-medium text-900 text-xl">{{ career?.job | uppercase }}</div>
-                          <p style="line-height: 1.5">{{ getCareerTypeLabelHtml(career?.type) }}</p>
-                          <p-tag [value]="'Deadline ' + career?.dateLimite + ' at ' + career?.heureLimite" [severity]="getSeverityHtml(career?.dateLimite, career?.heureLimite)"></p-tag>
-                          <span *ngIf="career?.description" class="text-700 line-height-3">{{ truncateDescription(career?.description) }}</span>
-                          <button pButton type="button" (click)="viewDetails(career?.id, section.type)" class="text-blue-500 font-medium flex align-items-center mt-2">
-                              <span>Explore</span>
-                              <i class="pi pi-arrow-right ml-3"></i>
-                          </button>
+                      <div *ngIf="isCareerSectionEnabled(career)" class="w-full p-5">
+                          <div class="shadow-2 border-round h-full surface-card">
+                              <img *ngIf="career?.partenaire?.logo" [src]="career?.partenaire?.logo" alt="Image" class="block w-full border-round-top">
+                              <div class="p-4">
+                                  <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="block font-medium text-orange-600 mb-3">{{ career?.partenaire?.name }}</span>
+                                  <div class="text-xl text-900 font-medium mb-3 line-height-3">
+                                      {{ career?.job | uppercase }}
+                                      <h6 [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-center mb-5 line-height-3">{{ getCareerTypeLabelHtml(career?.type) }}</h6>
+                                  </div>
+                                  <div class="flex">
+                                      <div class="grid grid-nogutter">
+                                          <div class="col-12 md:col-6">
+                                              <div class="text-sm font-bold text-900 mb-1">Deadline</div>
+                                              <div class="text-sm flex align-items-center text-700">
+                                                  <i class="pi pi-calendar mr-1 text-sm"></i>
+                                                  <p-tag [value]="career?.dateLimite + ' at ' + career?.heureLimite" [severity]="getSeverityHtml(career?.dateLimite, career?.heureLimite)"></p-tag>
+                                              </div>
+                                          </div>
+                                          <div class="col-12 md:col-6 px-6 py-2">
+                                              <button pButton label="Explore" class="p-button-text ml-auto" (click)="viewDetails(career?.id, section.type)"></button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
                   </ng-template>
               </p-carousel>
