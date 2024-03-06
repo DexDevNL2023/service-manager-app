@@ -18,6 +18,7 @@ import {MessageService} from "primeng/api";
 import {PageContent} from "../../utilities/models/PageContent";
 import {LandingContent} from "../../utilities/models/LandingContent";
 import {MenuPageContent} from "../../utilities/models/MenuPageContent";
+import {PartnerType} from "../../utilities/enums/PartnerType";
 
 @Component({
     selector: 'app-home',
@@ -335,7 +336,7 @@ export class HomeComponent implements OnInit {
             { id: 9, name: 'Enterprise', price: '10$', period: 'month', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', features: ['Arcu vitae elementum', 'Dui faucibus in ornare', 'Morbi tincidunt augue', 'Duis ultricies lacus sed', 'Imperdiet proin'], partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, subscriptionMessage: 'Contact Us', isVisible: true },
         ];
         console.log(this.offers);
-        /*this.partners = [
+        this.partners = [
             { id: 1, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
             { id: 2, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
             { id: 3, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
@@ -350,7 +351,7 @@ export class HomeComponent implements OnInit {
             { id: 12, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true },
         ];
         console.log(this.partners);
-        this.contacts = [
+        /*this.contacts = [
             { type: ContactType.WHATSAPP, value: '+123456789', isVisible: true },
             { type: ContactType.FACEBOOK, value: '@prime_ng', isVisible: true },
             { type: ContactType.PHONE, value: '+123456789', isVisible: true },

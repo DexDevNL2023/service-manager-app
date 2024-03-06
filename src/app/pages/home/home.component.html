@@ -293,15 +293,25 @@
 
               <p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
                   <ng-template let-partner pTemplate="carousel">
-                      <div *ngIf="isPartnerSectionEnabled(partner)" class="p-3">
-                          <p-image [src]="partner?.logo" [preview]="true" alt="Image" width="50">
-                              <ng-template pTemplate="indicator">
-                                  <div class="text-900 mb-3 font-medium">{{ partner?.name }}</div>
-                                  <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
-                                  <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
-                                  <button pButton label="Read more" class="p-button-text" (click)="viewDetails(partner?.id, section.type)"></button>
-                              </ng-template>
-                          </p-image>
+                      <div class="px-4 py-8 md:px-6 lg:px-8">
+                          <div *ngIf="isPartnerSectionEnabled(partner)" class="flex justify-content-evenly flex-wrap">
+                              <p-image [src]="partner?.logo" [preview]="true" alt="Image" width="100">
+                                  <ng-template pTemplate="indicator">
+                                      <div class="p-3">
+                                          <div class="text-900 text-2xl mb-3 font-medium">{{ partner?.name }}</div>
+                                          <ng-container *ngIf="partner?.siteWeb">
+                                              <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
+                                          </ng-container>
+                                          <ng-container *ngIf="!partner?.siteWeb">
+                                              <ng-container *ngIf="partner?.contact">
+                                                  <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
+                                              </ng-container>
+                                          </ng-container>
+                                          <button pButton label="Read more" class="p-button-text" (click)="viewDetails(partner?.id, section.type)"></button>
+                                      </div>
+                                  </ng-template>
+                              </p-image>
+                          </div>
                       </div>
                   </ng-template>
               </p-carousel>
