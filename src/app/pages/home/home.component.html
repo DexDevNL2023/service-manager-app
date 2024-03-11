@@ -28,7 +28,7 @@
           <div class="align-items-center hidden lg:flex">
               <span class="line-height-3">The first services and jobs referencing site.</span>
           </div>
-          <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="scrollTo('home')" style="cursor: pointer;">
+          <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="scrollTo('homes')" style="cursor: pointer;">
               Learn More
           </a>
           <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
@@ -212,18 +212,16 @@
                                       {{ career?.job | uppercase }}
                                       <h6 [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-center mb-5 line-height-3">{{ getCareerTypeLabelHtml(career?.type) }}</h6>
                                   </div>
-                                  <div class="flex">
-                                      <div class="grid grid-nogutter">
-                                          <div class="col-12 md:col-6">
-                                              <div class="text-sm font-bold text-900 mb-1">Deadline</div>
-                                              <div class="text-sm flex align-items-center text-700">
-                                                  <i class="pi pi-calendar mr-1 text-sm"></i>
-                                                  <p-tag [value]="career?.dateLimite + ' at ' + career?.heureLimite" [severity]="getSeverityHtml(career?.dateLimite, career?.heureLimite)"></p-tag>
-                                              </div>
+                                  <div class="grid grid-nogutter flex">
+                                      <div class="col-12 md:col-6">
+                                          <div class="text-sm font-bold text-900 mb-1">Deadline</div>
+                                          <div class="text-sm flex align-items-center text-700">
+                                              <i class="pi pi-calendar mr-1 text-sm"></i>
+                                              <p-tag [value]="career?.dateLimite + ' at ' + career?.heureLimite" [severity]="getSeverityHtml(career?.dateLimite, career?.heureLimite)"></p-tag>
                                           </div>
-                                          <div class="col-12 md:col-6 px-6 py-2">
-                                              <button pButton label="Explore" class="p-button-text ml-auto" (click)="viewDetails(career?.id, section.type)"></button>
-                                          </div>
+                                      </div>
+                                      <div class="col-12 md:col-6 px-8 py-2">
+                                          <button pButton label="Explore" class="p-button-text ml-auto" (click)="viewDetails(career?.id, section.type)"></button>
                                       </div>
                                   </div>
                               </div>
@@ -264,7 +262,7 @@
                                   <ul class="list-none p-0 m-0 mb-5 text-bluegray-600">
                                       <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
                                           <i class="pi pi-circle-on mr-2 text-sm"></i>
-                                          <span>{{ feature }}</span>
+                                          <span>{{ truncateDescription(feature) }}</span>
                                       </li>
                                   </ul>
                                   <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
@@ -291,27 +289,33 @@
                   {{section?.description}}
               </div>
 
-              <p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
+              <p-carousel [value]="partners" [numVisible]="4" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
                   <ng-template let-partner pTemplate="carousel">
-                      <div class="px-4 py-8 md:px-6 lg:px-8">
-                          <div *ngIf="isPartnerSectionEnabled(partner)" class="flex justify-content-evenly flex-wrap">
-                              <p-image [src]="partner?.logo" [preview]="true" alt="Image" width="100">
-                                  <ng-template pTemplate="indicator">
-                                      <div class="p-3">
-                                          <div class="text-900 text-2xl mb-3 font-medium">{{ partner?.name }}</div>
-                                          <ng-container *ngIf="partner?.siteWeb">
-                                              <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
-                                          </ng-container>
-                                          <ng-container *ngIf="!partner?.siteWeb">
-                                              <ng-container *ngIf="partner?.contact">
-                                                  <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
+                      <div *ngIf="isPartnerSectionEnabled(partner)" class="px-2 py-8 md:px-2 lg:px-2">
+                          <p-image [src]="partner?.logo" [preview]="true" alt="Image" width="300">
+                              <ng-template pTemplate="indicator">
+                                  <div class="flex justify-content-evenly flex-wrap gap-2">
+                                      <div class="p-col-12">
+                                          <div class="p-row">
+                                              <div class="text-900 text-2xl mb-3 font-medium">{{ partner?.name }}</div>
+                                          </div>
+                                          <div class="p-row">
+                                              <ng-container *ngIf="partner?.siteWeb">
+                                                  <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
                                               </ng-container>
-                                          </ng-container>
-                                          <button pButton label="Read more" class="p-button-text" (click)="viewDetails(partner?.id, section.type)"></button>
+                                              <ng-container *ngIf="!partner?.siteWeb">
+                                                  <ng-container *ngIf="partner?.contact">
+                                                      <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
+                                                  </ng-container>
+                                              </ng-container>
+                                          </div>
+                                          <div class="p-row">
+                                              <button pButton label="Read more" class="p-button-text mt-2" (click)="viewDetails(partner?.id, section.type)"></button>
+                                          </div>
                                       </div>
-                                  </ng-template>
-                              </p-image>
-                          </div>
+                                  </div>
+                              </ng-template>
+                          </p-image>
                       </div>
                   </ng-template>
               </p-carousel>
@@ -328,7 +332,7 @@
                           <li *ngFor="let contact of contacts" class="flex align-items-center mb-3" (click)="getContactAction(contact.value, contact.type)">
                               <div *ngIf="isContactSectionEnabled(contact)">
                                   <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} mr-2"></i>
-                                  <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">{{ contact.value }}</span>
+                                  <span class="text-xl" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }"><b>{{ contact.value }}</b></span>
                               </div>
                           </li>
                       </ul>

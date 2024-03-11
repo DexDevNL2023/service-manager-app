@@ -13,7 +13,7 @@ import {LoginComponent} from "./pages/login/login.component";
     imports: [
         RouterModule.forRoot([
             { path: 'home/:scrollTo?', component: HomeComponent },
-            { path: 'details/:id/:type', component: DetailsComponent },
+            { path: 'details/:id?/:type?', component: DetailsComponent },
             { path: 'help', component: AppHelpComponent },
             { path: 'error', component: AppErrorComponent },
             { path: 'access', component: AppAccessdeniedComponent },

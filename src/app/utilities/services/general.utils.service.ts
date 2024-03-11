@@ -93,7 +93,7 @@ export class GeneralUtilsService {
             case ContactType.WHATSAPP:
                 return 'pi pi-whatsapp';
             case ContactType.FAX:
-                return 'pi pi-fax';
+                return 'pi pi-paperclip';
             case ContactType.EMAIL:
                 return 'pi pi-envelope';
             case ContactType.TWITTER:
