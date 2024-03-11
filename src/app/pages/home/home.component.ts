@@ -1,5 +1,4 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {SharedService} from "../../utilities/services/shared.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HomeApiService} from "../../utilities/services/home.api.service";
 import {SectionContent} from "../../utilities/models/SectionContent";
@@ -17,8 +16,8 @@ import {ContactType} from "../../utilities/enums/ContactType";
 import {MessageService} from "primeng/api";
 import {PageContent} from "../../utilities/models/PageContent";
 import {LandingContent} from "../../utilities/models/LandingContent";
-import {MenuPageContent} from "../../utilities/models/MenuPageContent";
 import {PartnerType} from "../../utilities/enums/PartnerType";
+import {PageService} from "../../utilities/services/page.service";
 
 @Component({
     selector: 'app-home',
@@ -47,18 +46,14 @@ export class HomeComponent implements OnInit {
     phone: string = '';
     messageText: string = '';
 
-    constructor(private el: ElementRef, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private sharedService: SharedService, private homeApiService: HomeApiService, private generalUtilsService: GeneralUtilsService) {}
+    constructor(private el: ElementRef, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private homeApiService: HomeApiService, private generalUtilsService: GeneralUtilsService, private pageService: PageService) {}
 
     ngOnInit(): void {
         console.log('run 1');
         this.initDefaultData();
 
-        // Utilisez cette méthode pour changer l'état de la Landing Page
-        console.log('run 2');
-        this.sharedService.setLandingPageState(true);
-
         // Récupérer le paramètre 'scrollTo' de l'URL
-        console.log('run 3');
+        console.log('run 2');
         this.route.params.subscribe(params => {
             const scrollTo = params['scrollTo'];
             console.log(scrollTo);
@@ -71,7 +66,7 @@ export class HomeComponent implements OnInit {
         });
 
         // Récupérez du contenu dynamique depuis le backend
-        console.log('run 4');
+        console.log('run 3');
         this.homeApiService.getSections().subscribe((data: LandingContent) => {
             this.pageContent = data.pageContent;
             console.log(this.pageContent);
@@ -91,7 +86,7 @@ export class HomeComponent implements OnInit {
             console.log(this.contacts);
         });
 
-        console.log('run 5');
+        console.log('run 4');
         this.responsiveOptions = [
             {
                 breakpoint: '1400px',
@@ -113,12 +108,29 @@ export class HomeComponent implements OnInit {
 
     // Définissez une fonction pour naviguer vers le composant d'inscription
     navigateToRegister(): void {
+        // Utilisez le service pour mettre à jour les données
+        this.pageService.updatePage(this.pageContent, null, null);
+
         this.router.navigate(['/register']);
     }
 
     // Définissez une fonction pour naviguer vers le composant de connexion
     navigateToLogin(): void {
+        // Utilisez le service pour mettre à jour les données
+        this.pageService.updatePage(this.pageContent, null, null);
+
         this.router.navigate(['/login']);
+    }
+
+    viewDetails(id: number, type: SectionType): void {
+        // Utilisez le service pour mettre à jour les données
+        this.pageService.updatePage(this.pageContent, this.sections, this.contacts);
+
+        // Convertissez SectionType en chaîne pour l'URL
+        const typeString = SectionType[type];
+
+        // Naviguez vers DetailsComponent avec les paramètres de l'URL
+        this.router.navigate(['/details', id, typeString]);
     }
 
     getCareerTypeLabelHtml(type: CareerType): string {
@@ -173,18 +185,6 @@ export class HomeComponent implements OnInit {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
-    }
-
-    viewDetails(item: any, type: SectionType): void {
-        // Convertissez SectionType en chaîne pour l'URL
-        const typeString = SectionType[type];
-
-        // En supposant que MenuPageContent prend pageContent et sections comme paramètres dans son constructeur
-        const menuPage: MenuPageContent = new MenuPageContent(this.pageContent, this.sections, this.contacts);
-
-        // Naviguez vers DetailsComponent avec les paramètres de l'URL
-        this.sharedService.setMenuPageContent(menuPage);
-        this.router.navigate(['/details', item.id, typeString]);
     }
 
     isSectionEnabled(section: SectionContent): boolean {

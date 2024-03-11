@@ -20,7 +20,7 @@ import {LoginComponent} from "./pages/login/login.component";
             { path: 'notfound', component: AppNotfoundComponent },
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
-            { path: '', redirectTo: '/home/header', pathMatch: 'full' },
+            { path: '', redirectTo: 'home/header', pathMatch: 'full' },
             { path: '**', redirectTo: '/notfound' }
         ], {scrollPositionRestoration: 'enabled'})
     ],

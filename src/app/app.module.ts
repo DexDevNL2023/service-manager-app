@@ -111,6 +111,9 @@ import {DetailsApiService} from "./utilities/services/details.api.service";
 import {GeneralUtilsService} from "./utilities/services/general.utils.service";
 import {MessageService} from "primeng/api";
 import {HomeComponent} from "./pages/home/home.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {RegisterComponent} from "./pages/register/register.component";
+import {PageService} from "./utilities/services/page.service";
 
 @NgModule({
     imports: [
@@ -214,11 +217,13 @@ import {HomeComponent} from "./pages/home/home.component";
         AppTopBarComponent,
         AppFooterComponent,
         HomeComponent,
-        DetailsComponent
+        DetailsComponent,
+        LoginComponent,
+        RegisterComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        EventService,  MenuService, SharedService, GeneralUtilsService, HomeApiService, DetailsApiService, MessageService
+        EventService,  MenuService, SharedService, GeneralUtilsService, HomeApiService, DetailsApiService, MessageService, PageService
     ],
     exports: [RouterModule],
     bootstrap: [AppComponent]

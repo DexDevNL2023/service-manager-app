@@ -102,7 +102,7 @@
                       <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
                       <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
                           <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
-                              <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
+                              <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-xl mr-2"></i>
                               <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-gray-400 line-height-3">{{ segment.trim() }}</span>
                           </li>
                       </ul>
@@ -289,7 +289,7 @@
                   {{section?.description}}
               </div>
 
-              <p-carousel [value]="partners" [numVisible]="4" [numScroll]="3" [circular]="true" [autoplayInterval]="3000">
+              <p-carousel [value]="partners" [numVisible]="4" [numScroll]="3" [circular]="true" [autoplayInterval]="3000" class="p-element">
                   <ng-template let-partner pTemplate="carousel">
                       <div *ngIf="isPartnerSectionEnabled(partner)" class="px-2 py-8 md:px-2 lg:px-2">
                           <p-image [src]="partner?.logo" [preview]="true" alt="Image" width="300">
@@ -331,8 +331,10 @@
                       <ul class="list-none p-0 m-0 mt-6 text-white">
                           <li *ngFor="let contact of contacts" class="flex align-items-center mb-3" (click)="getContactAction(contact.value, contact.type)">
                               <div *ngIf="isContactSectionEnabled(contact)">
-                                  <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} mr-2"></i>
-                                  <span class="text-xl" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }"><b>{{ contact.value }}</b></span>
+                                  <a [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
+                                      <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} mr-2"></i>
+                                      <span class="text-xl" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }"><b>{{ contact.value }}</b></span>
+                                  </a>
                               </div>
                           </li>
                       </ul>
