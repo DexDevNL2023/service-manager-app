@@ -55,8 +55,7 @@
                                       <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
                                   </a>
                                   <!-- Utilisez la variable selectedSection pour construire le dropdown -->
-                                  <!--<div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background-color': 'rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 0.8)'}">-->
-                                  <div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background-color': hexToRgba(pageContent?.hexaCouleurTheme, 1.0)}">
+                                  <div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background': 'radial-gradient(100% 1126.49% at 100% 0%, rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 0.8) 0%, rgba(33, 33, 33, 0) 100%), #212121'}">
                                       <div *ngIf="dropdownVisible && selectedSection === section" class="flex flex-wrap p-6">
                                           <div class="w-full lg:w-6 mb-4 lg:mb-0">
                                               <span class="block font-normal text-2xl mb-4 text-white">{{ selectedSection?.label }}</span>
@@ -96,20 +95,20 @@
               </div>
           </div>
 
-          <div id="banner" class="bg-gray-900 px-4 py-8 md:px-6 lg:px-8">
-              <div class="flex flex-wrap">
-                  <div class="w-12 lg:w-6 p-4">
+          <div id="banner" [ngStyle]="{'background': 'radial-gradient(100% 1126.49% at 0% 0%, rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 10.8) 0%, rgba(33, 33, 33, 0) 100%), #212121'}">
+              <div class="flex flex-wrap" [ngStyle]="{'background-image': 'url(' + pageContent?.bannerLeftImageUrl + ')', 'background-size': 'cover'}">
+                  <div class="bg-no-repeat px-4 py-8 md:px-6 lg:px-8 w-12 lg:w-6 p-4">
                       <h1 class="text-6xl font-bold text-white mt-0 mb-3">{{ pageContent?.name }}</h1>
                       <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
                       <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
                           <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
-                              <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-xl mr-2"></i>
-                              <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-gray-400 line-height-3">{{ segment.trim() }}</span>
+                              <i [ngStyle]="{'color': 'white' }" class="pi pi-caret-right text-xl mr-2"></i>
+                              <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-white line-height-3">{{ segment.trim() }}</span>
                           </li>
                       </ul>
                   </div>
-                  <div class="w-12 lg:w-6 text-center lg:text-right overflow-hidden">
-                      <img [src]="pageContent?.bannerImageUrl" alt="banner" class="w-full lg:w-auto" style="height: 700px; top: -2rem; right: -1rem;">
+                  <div class="px-4 py-8 md:px-6 lg:px-8 w-12 lg:w-6 text-center lg:text-right overflow-hidden">
+                      <img [src]="pageContent?.bannerRightImageUrl" alt="banner" class="w-full lg:w-auto" style="height: 700px; top: -2rem; right: -1rem;">
                   </div>
               </div>
           </div>
@@ -135,7 +134,7 @@
               </div>
 
               <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
-                  <div class="flex flex-wrap relative overflow-hidden" style="border-radius: 1rem; background: radial-gradient(100% 1126.49% at 100% 0%, rgba(106, 200, 212, 0.4) 0%, rgba(33, 33, 33, 0) 100%), #212121;">
+                  <div class="flex flex-wrap relative overflow-hidden" [ngStyle]="{'background': 'radial-gradient(100% 1126.49% at 100% 0%, rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 4.8) 0%, rgba(33, 33, 33, 0) 100%), #212121', 'border-radius': '1rem'}">
                       <div class="px-6 py-8">
                           <span class="uppercase text-cyan-500 font-bold">BE THE FIRST ONE</span>
                           <div class="text-white text-medium text-5xl mt-3 mb-5">Join {{ pageContent?.name }}</div>

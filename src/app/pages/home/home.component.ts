@@ -266,7 +266,7 @@ export class HomeComponent implements OnInit {
         this.messageService.add(messageSucces);
     }
 
-    /*hexToRgb(hex: string): string {
+    hexToRgb(hex: string): string {
         // Supprimer le # du début s'il est présent
         hex = hex.replace(/^#/, '');
 
@@ -279,20 +279,6 @@ export class HomeComponent implements OnInit {
         const b = bigint & 255;
 
         return `${r}, ${g}, ${b}`;
-    }*/
-    hexToRgba(hex: string, alpha: number): string {
-        // Supprimer le # du début s'il est présent
-        hex = hex.replace(/^#/, '');
-
-        // Convertir chaque paire de caractères en un nombre décimal
-        const bigint = parseInt(hex, 16);
-
-        // Extraire les composants R, V, B
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
 
     initDefaultData(): void {
@@ -302,7 +288,8 @@ export class HomeComponent implements OnInit {
             hexaCouleurTheme: '#293782f3',
             getStartedImageUrl: 'assets/layout/images/landing/personal-settings-concept-illustration_114360-2659.avif',
             contactBgImageUrl: 'assets/layout/images/landing/img-contact-bg.svg',
-            bannerImageUrl: 'assets/layout/images/landing/banner24.gif',
+            bannerLeftImageUrl: 'assets/layout/images/landing/bg-10.svg',
+            bannerRightImageUrl: 'assets/layout/images/landing/banner24.gif',
             bannerTitle: 'Service Manager, The first services and jobs referencing site.',
             bannerDescription: 'Découvrez ce que nous avons à offrir, Premier segment, Deuxième segment, Troisième segment',
             logoUrl: 'assets/layout/images/logo-white.png',

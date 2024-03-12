@@ -92,24 +92,6 @@
                     </div>
                 </div>
             </div>
-
-            <div id="banner" class="bg-gray-900 px-4 py-8 md:px-6 lg:px-8">
-                <div class="flex flex-wrap">
-                    <div class="w-12 lg:w-6 p-4">
-                        <h1 class="text-6xl font-bold text-white mt-0 mb-3">Welcome To <span class="tw"></span></h1>
-                        <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
-                        <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
-                            <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
-                                <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
-                                <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-gray-400 line-height-3">{{ segment.trim() }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="w-12 lg:w-6 text-center lg:text-right overflow-hidden">
-                        <img [style.background-image]="'url(' + pageContent?.bannerImageUrl + ')'" alt="banner" class="w-full lg:w-auto">
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div id="body">

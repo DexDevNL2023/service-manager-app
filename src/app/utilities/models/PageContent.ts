@@ -4,7 +4,8 @@ export class PageContent {
     hexaCouleurTheme: string;
     getStartedImageUrl: string;
     contactBgImageUrl: string;
-    bannerImageUrl: string;
+    bannerLeftImageUrl: string;
+    bannerRightImageUrl: string;
     bannerTitle: string;
     bannerDescription: string;
     logoUrl: string;
