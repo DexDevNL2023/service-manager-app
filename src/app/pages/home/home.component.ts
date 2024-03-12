@@ -173,6 +173,7 @@ export class HomeComponent implements OnInit {
     }
 
     getContactAction(contact: string, type: ContactType) {
+        console.log('Contact Action:', contact, type);
         return this.generalUtilsService.getContactAction(contact, type)
     }
 
@@ -270,7 +271,9 @@ export class HomeComponent implements OnInit {
             name: 'Nom de votre site',
             description: 'Description de votre site',
             hexaCouleurTheme: '#293782f3',
-            bannerImageUrl: 'assets/layout/images/landing/about-section-image.png',
+            getStartedImageUrl: 'assets/layout/images/landing/personal-settings-concept-illustration_114360-2659.avif',
+            contactBgImageUrl: 'assets/layout/images/landing/img-contact-bg.svg',
+            bannerImageUrl: 'assets/layout/images/landing/banner24.gif',
             bannerTitle: 'Service Manager, The first services and jobs referencing site.',
             bannerDescription: 'Découvrez ce que nous avons à offrir, Premier segment, Deuxième segment, Troisième segment',
             logoUrl: 'assets/layout/images/logo-white.png',

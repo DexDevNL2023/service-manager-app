@@ -53,7 +53,7 @@ export class GeneralUtilsService {
 
         // Assembler les morceaux dans un p-divider
         return `<p-divider layout="horizontal" styleClass="hidden md:flex" [align]="'center'">
-            <div class="mb-3 font-bold text-2xl">${pieces.join('')}</div>
+            <div class="mb-3 font-bold text-4xl">${pieces.join('')}</div>
           </p-divider>`;
     }
 
@@ -71,17 +71,23 @@ export class GeneralUtilsService {
         // Déterminez l'action en fonction du type de contact
         switch (type) {
             case ContactType.EMAIL:
+                console.log('Email:', contact, type);
                 return `window.location.href = 'mailto:${contact}'`;
             case ContactType.FAX:
                 // Ajoutez ici l'action pour le fax
+                console.log('Fax:', contact, type);
                 return '';
             case ContactType.PHONE:
+                console.log('Phone:', contact, type);
                 return `window.location.href = 'tel:${contact}'`;
             case ContactType.WHATSAPP:
+                console.log('Whatsapp:', contact, type);
                 return `window.open('https://wa.me/${contact}', '_blank')`;
             case ContactType.FACEBOOK:
+                console.log('Facebook:', contact, type);
                 return `window.open('https://www.facebook.com/${contact}', '_blank')`;
             case ContactType.TWITTER:
+                console.log('Twitter:', contact, type);
                 return `window.open('https://twitter.com/${contact}', '_blank')`;
         }
     }

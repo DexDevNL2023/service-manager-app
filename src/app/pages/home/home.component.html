@@ -108,7 +108,7 @@
                       </ul>
                   </div>
                   <div class="w-12 lg:w-6 text-center lg:text-right overflow-hidden">
-                      <img [src]="pageContent?.bannerImageUrl" alt="banner" class="w-full lg:w-auto">
+                      <img [src]="pageContent?.bannerImageUrl" alt="banner" class="w-full lg:w-auto" style="height: 700px; top: -2rem; right: -1rem;">
                   </div>
               </div>
           </div>
@@ -135,14 +135,15 @@
 
               <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
                   <div class="flex flex-wrap relative overflow-hidden" style="border-radius: 1rem; background: radial-gradient(100% 1126.49% at 100% 0%, rgba(106, 200, 212, 0.4) 0%, rgba(33, 33, 33, 0) 100%), #212121;">
-                      <div class="px-6 py-8"><span class="uppercase text-cyan-500 font-bold">BE THE FIRST ONE</span>
+                      <div class="px-6 py-8">
+                          <span class="uppercase text-cyan-500 font-bold">BE THE FIRST ONE</span>
                           <div class="text-white text-medium text-5xl mt-3 mb-5">Join {{ pageContent?.name }}</div>
                           <button class="p-ripple p-element p-3 bg-cyan-500 hover:bg-cyan-300 cursor-pointer transition-colors font-medium gray-900 border-none p-component transition-duration-150" style="border-radius: 35px;" (click)="navigateToLogin()">
                               Get Started
                               <span class="p-ink"></span>
                           </button>
                       </div>
-                      <img src="assets/layout/images/landing/contacts2.png" alt="Image" class="static lg:absolute block mx-auto" style="height: 400px; top: -2rem; right: -1rem;">
+                      <img [src]="pageContent?.getStartedImageUrl" alt="Image" class="w-full lg:w-auto static lg:absolute block mx-auto" style="height: 400px; top: -2rem; right: -1rem;">
                   </div>
               </div>
           </div>
@@ -323,9 +324,9 @@
 
           <div *ngIf="showSection(section.key) && section.key === 'contacts'" id="{{ section.key }}" class="surface-section">
               <div class="grid grid-nogutter">
-                  <div class="col-12 md:col-6 bg-no-repeat bg-cover p-8" style="background-image: url('assets/layout/images/landing/ContactUs.png');">
-                      <div class="text-white text-2xl font-medium mb-6" [innerHTML]="generateLabelHtml(section?.label)"></div>
-                      <div class="line-height-3 mb-6" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">
+                  <div class="col-12 md:col-6 bg-no-repeat p-8" [ngStyle]="{'background': 'url(' + pageContent?.contactBgImageUrl + ')', 'background-size': 'contain', 'background-position': 'right'}">
+                      <div class="text-white font-bold text-8xl mb-6" [innerHTML]="generateLabelHtml(section?.label)"></div>
+                      <div class="line-height-3 mb-6 text-2xl " [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">
                           {{section?.description}}
                       </div>
                       <ul class="list-none p-0 m-0 mt-6 text-white">
@@ -410,8 +411,8 @@
           <div class="flex justify-content-between align-items-center py-5">
               <span>Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
               <div class="flex align-items-center justify-content-between">
-                  <a *ngFor="let contact of contacts" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
-                      <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} text-xl"></i>
+                  <a *ngFor="let contact of contacts" class="cursor-pointer text-500 md:ml-3 ml-2">
+                      <i class="pi {{ getContactIcon(contact.type) }} text-xl" (click)="getContactAction(contact.value, contact.type)"></i>
                   </a>
               </div>
           </div>
