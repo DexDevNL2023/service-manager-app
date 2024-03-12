@@ -38,13 +38,13 @@
 
       <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
 
-      <div id="header" style="position: relative;" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
-          <div id="navbar" class="bg-gray-900 py-3 px-6 shadow-2 flex align-items-center justify-content-between relative">
+      <div id="header" style="position: relative;">
+          <div id="navbar" class="py-3 px-6 shadow-2 flex align-items-center justify-content-between relative" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
               <img [src]="pageContent?.logoUrl" alt="logo" height="20">
               <a pstyleclass="@next" enterclass="hidden" leavetoclass="hidden" class="p-element cursor-pointer block lg:hidden text-gray-400">
                   <i class="pi pi-bars text-4xl"></i>
               </a>
-              <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full bg-gray-900 left-0 top-100 px-6 lg:px-0 shadow-2 lg:shadow-none z-2">
+              <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 top-100 px-6 lg:px-0 shadow-2 lg:shadow-none z-2">
                   <section></section>
                   <div class="flex justify-content-center items-center">
                       <ul *ngFor="let section of sections" class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
@@ -55,7 +55,8 @@
                                       <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
                                   </a>
                                   <!-- Utilisez la variable selectedSection pour construire le dropdown -->
-                                  <div *ngIf="section?.submenu?.length" class="lg:absolute bg-gray-800 origin-top left-0 top-100 w-full">
+                                  <!--<div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background-color': 'rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 0.8)'}">-->
+                                  <div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background-color': hexToRgba(pageContent?.hexaCouleurTheme, 1.0)}">
                                       <div *ngIf="dropdownVisible && selectedSection === section" class="flex flex-wrap p-6">
                                           <div class="w-full lg:w-6 mb-4 lg:mb-0">
                                               <span class="block font-normal text-2xl mb-4 text-white">{{ selectedSection?.label }}</span>

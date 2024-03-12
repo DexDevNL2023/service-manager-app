@@ -266,6 +266,35 @@ export class HomeComponent implements OnInit {
         this.messageService.add(messageSucces);
     }
 
+    /*hexToRgb(hex: string): string {
+        // Supprimer le # du début s'il est présent
+        hex = hex.replace(/^#/, '');
+
+        // Convertir chaque paire de caractères en un nombre décimal
+        const bigint = parseInt(hex, 16);
+
+        // Extraire les composants R, V, B
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+
+        return `${r}, ${g}, ${b}`;
+    }*/
+    hexToRgba(hex: string, alpha: number): string {
+        // Supprimer le # du début s'il est présent
+        hex = hex.replace(/^#/, '');
+
+        // Convertir chaque paire de caractères en un nombre décimal
+        const bigint = parseInt(hex, 16);
+
+        // Extraire les composants R, V, B
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
     initDefaultData(): void {
         this.pageContent = {
             name: 'Nom de votre site',
