@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <script>document.write('<base href="' + document.location + '" />');</script>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <title>PrimeNG - Manhattan - Landing Page</title>
+<head>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>PrimeNG - Manhattan - Landing Page</title>
 
-        <!-- PrimeNG styles -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeng@16.0.2/resources/primeng.min.css" />
+    <!-- PrimeNG styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeng@16.0.2/resources/primeng.min.css" />
 
-        <!-- PrimeIcons -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.css" />
+    <!-- PrimeIcons -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.css" />
 
-        <!-- PrimeFlex (optional, if you are using it) -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeflex@^3.3.1/primeflex.min.css" />
+    <!-- PrimeFlex (optional, if you are using it) -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/primeflex@^3.3.1/primeflex.min.css" />
 
-        <!-- Your custom styles or additional stylesheets -->
+    <!-- Your custom styles or additional stylesheets -->
 
-    </head>
+</head>
 
     <body class="ng-star-inserted">
         <div *ngIf="isBannerVisible" class="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center">
@@ -28,7 +28,7 @@
             <div class="align-items-center hidden lg:flex">
                 <span class="line-height-3">The first services and jobs referencing site.</span>
             </div>
-            <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="goToHome('home')" style="cursor: pointer;">
+            <a class="flex align-items-center ml-2 mr-8 text-white underline font-bold" (click)="goToHome('homes')" style="cursor: pointer;">
                 Learn More
             </a>
             <a pRipple class="flex align-items-center no-underline justify-content-center border-circle text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style="width:2rem; height: 2rem" (click)="closeBanner()">
@@ -38,48 +38,50 @@
 
         <p-scrollTop icon="pi pi-arrow-up"></p-scrollTop>
 
-        <div id="header" style="position: relative;" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
-            <div id="navbar" class="bg-gray-900 py-3 px-6 shadow-2 flex align-items-center justify-content-between relative">
-                <img [src]="pageContent?.logoUrl" alt="logo" height="50">
+        <div id="header" style="position: relative;">
+            <div id="navbar" class="py-3 px-6 shadow-2 flex align-items-center justify-content-between relative" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme}">
+                <img [src]="pageContent?.logoUrl" alt="logo" height="20">
                 <a pstyleclass="@next" enterclass="hidden" leavetoclass="hidden" class="p-element cursor-pointer block lg:hidden text-gray-400">
                     <i class="pi pi-bars text-4xl"></i>
                 </a>
-                <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full bg-gray-900 left-0 top-100 px-6 lg:px-0 shadow-2 lg:shadow-none z-2">
+                <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 top-100 px-6 lg:px-0 shadow-2 lg:shadow-none z-2">
                     <section></section>
-                    <ul class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
-                        <li *ngFor="let section of sections" (click)="goToHome(section?.key)">
-                            <div *ngIf="isSectionEnabled(section)">
-                                <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
-                                    <span>{{ section?.label }}</span>
-                                    <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
-                                    <!-- Ajouter un icône chevron vers le bas s'il y a un submenu -->
-                                    <span *ngIf="section?.submenu" class="cursor-pointer ml-auto" (click)="toggleDropdown()">
-                                      <i class="pi pi-chevron-down"></i>
-                                    </span>
-                                </a>
-                                <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la propriété hasDropdown -->
-                                <div *ngIf="section?.submenu" class="lg:absolute bg-gray-800 origin-top left-0 top-100 w-full">
-                                    <!-- Utilisez la directive *ngIf pour afficher ou masquer l'élément en fonction de la variable offersDropdownVisible -->
-                                    <div *ngIf="dropdownVisible" class="flex flex-wrap p-6">
-                                        <div class="w-full lg:w-6 mb-4 lg:mb-0">
-                                            <span class="block font-normal text-2xl mb-4 text-white">{{ section?.label }}</span>
-                                            <p class="line-height-3 m-0 text-gray-400">{{ section?.description }}</p>
-                                        </div>
-                                        <div class="w-full lg:w-6">
-                                            <div class="flex flex-wrap border-bottom-1 border-gray-700 pb-3 mb-3" *ngFor="let submenu of section?.submenu; let i = index">
-                                                <div *ngIf="isSectionSubMenuEnabled(submenu)">
-                                                    <div class="px-0 lg:px-3 py-3" *ngFor="let item of [submenu?.label, submenu?.description, submenu?.isVisible]; let j = index">
-                                                        <span class="text-white" *ngIf="j === 0">{{ item?.label }}</span>
-                                                        <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3" *ngIf="j === 1">{{ item?.description }}</p>
+                    <div class="flex justify-content-center items-center">
+                        <ul *ngFor="let section of sections" class="list-none p-0 m-0 flex lg:align-items-center text-gray-400 select-none flex-column lg:flex-row cursor-pointer">
+                            <li (click)="goToHome(section?.key)" class="flex items-center">
+                                <div *ngIf="isSectionEnabled(section)">
+                                    <a class="p-ripple p-element flex px-0 lg:px-5 py-3 hover:text-blue-600 font-medium transition-colors transition-duration-150">
+                                        <span class="block font-normal text-xl text-white">{{ section?.label }}</span>
+                                        <span class="p-ink" style="height: 135px; width: 135px; top: -52.6094px; left: -16.5px;"></span>
+                                    </a>
+                                    <!-- Utilisez la variable selectedSection pour construire le dropdown -->
+                                    <div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background': 'radial-gradient(100% 1126.49% at 100% 0%, rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 0.8) 0%, rgba(33, 33, 33, 0) 100%), #212121'}">
+                                        <div *ngIf="dropdownVisible && selectedSection === section" class="flex flex-wrap p-6">
+                                            <div class="w-full lg:w-4 mb-4 lg:mb-0">
+                                                <span class="block font-normal text-2xl mb-4 text-white">{{ selectedSection?.label }}</span>
+                                                <p class="line-height-3 m-0 text-gray-400" [innerHTML]="formatDescription(selectedSection?.description)"></p>
+                                            </div>
+                                            <div class="w-full lg:w-8">
+                                                <div *ngFor="let submenuItem of selectedSection?.submenu" class="flex flex-wrap border-bottom-1 border-gray-700 pb-3 mb-3">
+                                                    <div *ngIf="isSectionSubMenuEnabled(submenuItem)">
+                                                        <div class="px-0 lg:px-3 py-3">
+                                                            <span class="text-white">{{ submenuItem.label }}</span>
+                                                            <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3" [innerHTML]="formatDescription(submenuItem.description)"></p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                            <!-- Ajouter un icône chevron vers le bas s'il y a un submenu -->
+                            <span *ngIf="section?.submenu?.length" class="cursor-pointer ml-auto" (click)="toggleDropdown(section)">
+                                      <i class="pi pi-chevron-down"></i>
+                                  </span>
+                        </ul>
+                    </div>
+
                     <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none border-gray-800 py-3 lg:py-0 mt-3 lg:mt-0">
                         <button label="Login" class="p-element p-ripple p-button-text font-bold p-button p-component" (click)="navigateToLogin()">
                             <span class="p-button-label">Login</span>
@@ -105,7 +107,7 @@
                     <p-divider align="center" type="dotted">
                         <h3 [ngStyle]="{ color: pageContent?.hexaCouleurTheme }">{{ career?.partenaire.name.toUpperCase() }}</h3>
                     </p-divider>
-                    <p-tag [value]="career?.partenaire.siteWeb ? career?.partenaire.siteWeb : career?.partenaire.contact" severity="secondary"></p-tag>
+                    <p-tag [value]="career?.partenaire.siteWeb" severity="secondary"></p-tag>
                 </div>
 
                 <div *ngIf="career?.job">
@@ -196,7 +198,7 @@
                     <p-divider align="center" type="dotted">
                         <h3 [ngStyle]="{ color: pageContent?.hexaCouleurTheme }">{{ offer?.partenaire.name.toUpperCase() }}</h3>
                     </p-divider>
-                    <p-tag [value]="offer?.partenaire.siteWeb ? offer?.partenaire.siteWeb : offer?.partenaire.contact" severity="secondary"></p-tag>
+                    <p-tag [value]="offer?.partenaire.siteWeb" severity="secondary"></p-tag>
                 </div>
 
                 <div *ngIf="offer.name">
@@ -227,64 +229,14 @@
                 <p-divider></p-divider>
                 <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
             </div>
-
-            <div *ngIf="type === 'PARTNER'" class="surface-section px-4 py-6 md:px-6 lg:px-8 text-center">
-                <p-divider align="center" type="dotted">
-                    <div class="text-900 font-bold text-4xl text-center mb-4" [innerHTML]="generateLabelHtml('PARTNERS')"></div>
-                </p-divider>
-
-                <p-image *ngIf="partner?.logo" src="partner?.logo" alt="{{ partner?.name }}" class="w-6 shadow-2" [preview]="true"></p-image>
-                <p-divider align="center" type="dotted">
-                    <h3 [ngStyle]="{ 'color': pageContent?.hexaCouleurTheme }">{{ partner?.name.toUpperCase() }}</h3>
-                </p-divider>
-
-                <div *ngIf="partner?.type">
-                    <p class="m-0">
-                        {{ getPartnerTypeLabelHtml(partner?.type) }}
-                    </p>
-                </div>
-
-                <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
-                <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
-
-                <div *ngIf="partner?.sigle">
-                    <p-divider align="left" type="solid">
-                        <b>Sigle</b>
-                    </p-divider>
-                    <p class="m-0">
-                        <b>{{ partner?.sigle }}</b>
-                    </p>
-                </div>
-
-                <div *ngIf="partner?.about">
-                    <p-divider align="left" type="solid">
-                        <b>About</b>
-                    </p-divider>
-                    <p class="m-0">
-                        {{ partner?.about }}
-                    </p>
-                </div>
-
-                <div *ngIf="partner?.localization">
-                    <p-divider align="left" type="solid">
-                        <b>Localization</b>
-                    </p-divider>
-                    <p class="m-0">
-                        {{ partner?.localization }}
-                    </p>
-                </div>
-
-                <p-divider></p-divider>
-                <p-button label="Back" icon="pi pi-arrow-left" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }" (click)="goBackToParentComponent()"></p-button>
-            </div>
         </div>
 
         <div id="footer" class="surface-section px-4 py-8 md:px-6 lg:px-8" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }">
             <div class="flex align-items-start lg:align-items-center lg:justify-content-between pb-5 border-bottom-1 border-300 flex-column lg:flex-row">
                 <div class="pr-0 lg:pr-8">
-                    <img [src]="pageContent?.logoUrl" alt="logo" height="50">
-                    <div class="text-gray-300 font-bold text-5xl">{{ pageContent?.footerTitle }}</div>
-                    <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ pageContent?.footerDescription }}</p>
+                    <img [src]="pageContent?.logoUrl" alt="logo" height="30">
+                    <div class="text-gray-300 font-bold text-5xl py-2">{{ pageContent?.footerTitle }}</div>
+                    <p class="text-600 line-height-3 text-xl mb-0 mt-5" [innerHTML]="formatDescription(pageContent?.footerDescription)"></p>
                 </div>
                 <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="navigateToLogin()">
                     <span class="p-button-label">Get Started</span>
@@ -299,7 +251,8 @@
                             <span class="text-900 block font-bold line-height-3 mb-3">{{ section.label }}</span>
                             <ul class="list-none p-0 m-0">
                                 <li *ngFor="let submenuItem of section.submenu" class="mb-2" (click)="goToHome(section.key)">
-                                    <a class="text-700 cursor-pointer line-height-3">{{ submenuItem.label }}</a>
+                                    <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi pi-caret-right text-yellow-500 text-xl mr-2"></i>
+                                    <a class="text-white cursor-pointer line-height-3">{{ submenuItem.label }}</a>
                                 </li>
                             </ul>
                         </ng-container>
@@ -307,7 +260,7 @@
                             <span class="text-900 block font-bold line-height-3 mb-3">{{ section.label }}</span>
                             <ul class="list-none p-0 m-0">
                                 <li class="mb-2" (click)="goToHome(section.key)">
-                                    <a class="text-700 cursor-pointer line-height-3">{{ section.label }}</a>
+                                    <a class="text-white cursor-pointer line-height-3">{{ section.label }}</a>
                                 </li>
                             </ul>
                         </ng-template>
@@ -318,8 +271,8 @@
             <div class="flex justify-content-between align-items-center py-5">
                 <span>Copyright © {{currentDate | date:'yyyy'}} by <a href="https://github.com/DexDevNL2023">Dexter Nlang</a></span>
                 <div class="flex align-items-center justify-content-between">
-                    <a *ngFor="let contact of contacts" [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="cursor-pointer text-500 md:ml-3 ml-2" (click)="getContactAction(contact.value, contact.type)">
-                        <i [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="pi {{ getContactIcon(contact.type) }} text-xl"></i>
+                    <a *ngFor="let contact of contacts" class="cursor-pointer text-500 md:ml-3 ml-2">
+                        <i class="pi {{ getContactIcon(contact.type) }} text-xl" (click)="getContactAction(contact.value, contact.type)"></i>
                     </a>
                 </div>
             </div>
@@ -330,3 +283,4 @@
         <script src="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.js"></script>
     </body>
 </html>
+

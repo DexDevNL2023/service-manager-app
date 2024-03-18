@@ -5,7 +5,6 @@ import {DetailsApiService} from "../../utilities/services/details.api.service";
 import {SectionType} from "../../utilities/enums/SectionType";
 import {CareerContent} from "../../utilities/models/CareerContent";
 import {OfferContent} from "../../utilities/models/OfferContent";
-import {PartnerContent} from "../../utilities/models/PartnerContent";
 import {GeneralUtilsService} from "../../utilities/services/general.utils.service";
 import {SectionContent} from "../../utilities/models/SectionContent";
 import AOS from 'aos';
@@ -30,7 +29,6 @@ export class DetailsComponent implements OnInit {
 
     career: CareerContent | undefined;
     offer: OfferContent | undefined;
-    partner: PartnerContent | undefined;
 
     type: SectionType | undefined = SectionType.OFFER;
     sectionId: number | undefined;
@@ -38,6 +36,7 @@ export class DetailsComponent implements OnInit {
     currentDate = new Date();
     isBannerVisible = true;
     dropdownVisible = false;
+    selectedSection: SectionContent;
 
     constructor(private location: Location, private route: ActivatedRoute, private router: Router, private detailsApiService: DetailsApiService, private generalUtilsService: GeneralUtilsService, private pageService: PageService) { }
 
@@ -113,7 +112,6 @@ export class DetailsComponent implements OnInit {
         this.detailsApiService.getDetailsSection(this.sectionId, this.type).subscribe((data: DetailsContent) => {
             this.career = data.career;
             this.offer = data.offer;
-            this.partner = data.partner;
         });
     }
 
@@ -141,7 +139,8 @@ export class DetailsComponent implements OnInit {
         return submenu.isVisible;
     }
 
-    toggleDropdown(): void {
+    toggleDropdown(section: SectionContent): void {
+        this.selectedSection = section;
         this.dropdownVisible = !this.dropdownVisible;
     }
 
@@ -185,14 +184,33 @@ export class DetailsComponent implements OnInit {
         return this.generalUtilsService.getPartnerTypeLabel(type);
     }
 
+    formatDescription(description: string): string {
+        return description.replace(/\n/g, '<br>');
+    }
+
+    hexToRgb(hex: string): string {
+        // Supprimer le # du début s'il est présent
+        hex = hex.replace(/^#/, '');
+
+        // Convertir chaque paire de caractères en un nombre décimal
+        const bigint = parseInt(hex, 16);
+
+        // Extraire les composants R, V, B
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+
+        return `${r}, ${g}, ${b}`;
+    }
+
     initDefaultData(): void {
         this.pageContent = {
             name: 'Nom de votre site',
             description: 'Description de votre site',
-            hexaCouleurTheme: '#293782f3',
+            hexaCouleurTheme: '#002430',
             getStartedImageUrl: 'assets/layout/images/landing/personal-settings-concept-illustration_114360-2659.avif',
             contactBgImageUrl: 'assets/layout/images/landing/img-contact-bg.svg',
-            bannerLeftImageUrl: 'assets/layout/images/landing/bg-12.svg',
+            bannerLeftImageUrl: 'assets/layout/images/landing/bg-10.svg',
             bannerRightImageUrl: 'assets/layout/images/landing/banner24.gif',
             bannerTitle: 'Service Manager, The first services and jobs referencing site.',
             bannerDescription: 'Découvrez ce que nous avons à offrir, Premier segment, Deuxième segment, Troisième segment',
@@ -203,29 +221,44 @@ export class DetailsComponent implements OnInit {
         };
         console.log(this.pageContent);
         this.sections = [
-            { key: 'homes', label: 'Home', description: 'Everything you need to find the service you need. The first services and jobs referencing site.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
-            { key: 'abouts', label: 'About', description: 'We provide you with the best advisors for your success.', icon: 'pi pi-info', submenu:[], type: SectionType.ABOUT, isVisible: true },
-            { key: 'careers', label: 'Careers', description: 'Find job offers tailored to your professional goals.', icon: 'pi pi-briefcase', submenu:[], type: SectionType.CAREER, isVisible: true },
-            { key: 'offers', label: 'Offers', description: 'Highlight your services using the most popular digital platform.', icon: 'pi pi-gift', submenu:[
-                    { label: 'IT Graphik', description: 'Porta lorem mollis aliquam ut porttitor leo a diam.', isVisible: true },
-                    { label: 'DeVops', description: 'Amet purus gravida quis blandit.', isVisible: true },
-                    { label: 'Big Data', description: 'Aenean vel elit scelerisque mauris.', isVisible: true },
-                    { label: 'Development Application', description: 'Aenean vel elit scelerisque mauris.', isVisible: true },
-                    { label: 'Courses', description: 'Feugiat pretium nibh ipsum consequat.', isVisible: true },
-                    { label: 'Documentation', description: 'Tristique nulla aliquet enim tortor.', isVisible: true },
-                    { label: 'API Reference', description: 'Feugiat pretium nibh ipsum consequat.', isVisible: true }
+            { key: 'homes', label: 'Home', description: 'The people supporting some of the most complex government and commercial projects across the country. We ensure today is safe and tomorrow is smarter. Offering the technology transformations, strategy and mission services needed to get the job done. Enough about us. Let’s get to work.', icon: 'pi pi-home', submenu:[], type: SectionType.HOME, isVisible: true },
+            { key: 'abouts', label: 'About Us', description: 'We are client focused and result-oriented. We thrive for quality and ensure the best possible results. From small sized technology solution to delivering big projects. We is equipped with the skills and experiences that streamline the process of delivery and outcome.', icon: 'pi pi-info', submenu:[
+                    { label: 'Who We Are', description: 'Consulting is passionate to find the right technology solution for your projects or product development. Understanding the importance of approaching a project with the right resources and tools can bring success for the most complicated project.', isVisible: true },
+                    { label: 'Why Nom de votre site?', description: 'Our deep skills and expertise transcend the conventional and complex IT projects, and everything in between. We quickly mobilize and assimilate to fit your project needs. And we take the worry out of things like top security clearances, critical certifications, training, audit and contract alignment so you can focus your valuable time elsewhere.', isVisible: true }
+                ], type: SectionType.ABOUT, isVisible: true },
+            { key: 'careers', label: 'Careers', description: 'The people supporting and securing some of the most complex government, defense, and intelligence projects across the country. We ensure today is safe and tomorrow is smarter. Our work has meaning and impact on the world around us, but also on us, and that’s important. You make it your own by embracing autonomy, seizing opportunity, and being trusted to deliver your best every day.', icon: 'pi pi-briefcase', submenu:[], type: SectionType.CAREER, isVisible: true },
+            { key: 'offers', label: 'What We Do', description: 'Our team of experts has done this many times before. Trust that every learning from our forerunning history of early AWS and Azure cloud adoption in the US Government has prepared us well to select your next technology, or implement what you\'ve chosen to ensure best-in-class cybersecurity capabilities.', icon: 'pi pi-gift', submenu:[
+                    { label: 'Cloud Transformation', description: 'Porta lorem mollis aliquam ut porttitor leo a diam.', isVisible: true },
+                    { label: 'Cyber Security', description: 'We secure today, embedding resilient cyber solutions into every aspect of the mission.', isVisible: true },
+                    { label: 'Networking Engineering', description: 'We understand the importance of networking and can help you establish a reliable and secure network.', isVisible: true },
+                    { label: 'Training', description: 'Our career training turn ambitions into job-ready skills.', isVisible: true },
+                    { label: 'Web Development', description: 'Web development services help create all types of web software and ensure a great experience for web users.', isVisible: true },
+                    { label: 'Application Development', description: 'We offer a wide range of personalized services in applications.', isVisible: true },
+                    { label: 'Artificial Intelligence', description: 'We offer AI consulting services and solutions that will help you achieve your business goals faster.', isVisible: true },
+                    { label: 'Managed Services (NOC & SOC)', description: 'Our experts are well-versed in customer networking and security needs.', isVisible: true }
                 ], type: SectionType.OFFER, isVisible: true
             },
-            { key: 'partners', label: 'Partners', description: 'Become partners and benefit.', icon: 'pi pi-users', submenu:[], type: SectionType.PARTNER, isVisible: true },
-            { key: 'contacts', label: 'Contacts', description: 'We are at your service 24h/24 and 7j/7.', icon: 'pi pi-envelope', submenu:[], type: SectionType.CONTACT, isVisible: true },
+            { key: 'partners', label: 'Partners', description: 'We pride ourselves on being a trusted partner for top government agencies and prominent commercial customers. While the types of services we deliver to customers vary, two things do not: our relentless commitment to quality and our sole focus on all things cybersecurity.', icon: 'pi pi-users', submenu:[], type: SectionType.PARTNER, isVisible: true },
+            { key: 'contacts', label: 'Contacts Us', description: 'Interested in our services? Get in touch today!', icon: 'pi pi-envelope', submenu:[], type: SectionType.CONTACT, isVisible: true },
         ];
         console.log(this.sections);
-        this.career = { id: 1, job: 'Ordered', type: CareerType.CDI, description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!', missions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', jobRequirements: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', applicantProfile: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', applicationDocuments: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', appyInstructions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', dateLimite: '05/10/2024', heureLimite: '10:30', partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, isVisible: true };
+        this.career = { id: 1, job: 'DevOps Engineer', type: CareerType.CDI, description: 'This position, reporting to the Chief Technology Officer (CTO), will work with our CTO and development team leaders on DevOps projects and practices.', missions: 'Design, implement and test CloudSpace’s software build, deployment, and configuration management.\n' +
+                'Build and test automation tools for infrastructure provisioning.\n' +
+                'Handle code deployments in all environments.\n' +
+                'Monitor metrics and develop ways to improve.\n' +
+                'Build, maintain, and monitor configuration standards.\n' +
+                'Maintain day-to-day management and administration of projects.\n' +
+                'Build and maintain application monitoring and logging infrastructure.\n' +
+                'Improve infrastructure development and application development.\n' +
+                'Manage CI and CD tools with the team.\n' +
+                'Document, design and update various development processes and practices.', jobRequirements: '', applicantProfile: '4-year technical degree or equivalent experience\n' +
+                '2 years of prior experience as DevOps engineer\n' +
+                'Hands-on experience with configuration management and application deployment tools like Ansible\n' +
+                'Familiarity with Docker, Kubernetes, Prometheus, Grafana, and AWS\n' +
+                'Strong communication skills and attention to detail', applicationDocuments: '', appyInstructions: '', dateLimite: '25/03/2024', heureLimite: '10:30', partenaire: { name: 'Carahsoft', siteWeb: 'https://www.carahsoft.com', logo: 'https://assets-global.website-files.com/601959b8cde20c101809c86a/60d603377b1252285556ec01_Carahsoft.svg' }, isVisible: true };
         console.log(this.career);
-        this.offer = { id: 3, name: 'Build your mobile app', price: '10$', period: '30$', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', features: ['Arcu vitae elementum', 'Dui faucibus in ornare', 'Morbi tincidunt augue', 'Duis ultricies lacus sed', 'Imperdiet proin'], partenaire: { name: 'IT Graphik', contact: 'Porta lorem.', siteWeb: 'Porta lorem.', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg' }, subscriptionMessage: 'Contact Us', isVisible: true };
+        this.offer = { id: 6, name: 'Application Development', price: '15$', period: 'Application', description: 'We offer a wide range of personalized services in applications.', features: ['Arcu vitae elementum', 'Dui faucibus in ornare', 'Morbi tincidunt augue', 'Duis ultricies lacus sed', 'Imperdiet proin'], partenaire: { name: 'Carahsoft', siteWeb: 'https://www.carahsoft.com', logo: 'https://assets-global.website-files.com/601959b8cde20c101809c86a/60d603377b1252285556ec01_Carahsoft.svg' }, subscriptionMessage: 'Buy Now', isVisible: true };
         console.log(this.offer);
-        this.partner = { id: 1, name: 'Partner 1', sigle: 'Partner 1', about: 'Partner 1', type: PartnerType.PRIVEE, contact: 'contact@partner1.com', siteWeb: 'www.partner1.com', localization: 'Awae escalier, yaounde cameroun', logo: 'https://primefaces.org/cdn/primeng/images/demo/product/game-controller.jpg', isVisible: true };
-        console.log(this.partner);
         this.contacts = [
             { type: ContactType.WHATSAPP, value: '+123456789', isVisible: true },
             { type: ContactType.FACEBOOK, value: '@prime_ng', isVisible: true },

@@ -203,3 +203,11 @@ input{
     color: white !important;
 }
 
+a.selected {
+    color: #00BFF0;
+}
+
+a.selected:hover {
+    color: #00BFF0; /* Couleur au survol */
+}
+

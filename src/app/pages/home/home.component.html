@@ -57,16 +57,16 @@
                                   <!-- Utilisez la variable selectedSection pour construire le dropdown -->
                                   <div *ngIf="section?.submenu?.length" class="lg:absolute origin-top left-0 top-100 w-full" [ngStyle]="{'background': 'radial-gradient(100% 1126.49% at 100% 0%, rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 0.8) 0%, rgba(33, 33, 33, 0) 100%), #212121'}">
                                       <div *ngIf="dropdownVisible && selectedSection === section" class="flex flex-wrap p-6">
-                                          <div class="w-full lg:w-6 mb-4 lg:mb-0">
+                                          <div class="w-full lg:w-4 mb-4 lg:mb-0">
                                               <span class="block font-normal text-2xl mb-4 text-white">{{ selectedSection?.label }}</span>
-                                              <p class="line-height-3 m-0 text-gray-400">{{ selectedSection?.description }}</p>
+                                              <p class="line-height-3 m-0 text-gray-400" [innerHTML]="formatDescription(selectedSection?.description)"></p>
                                           </div>
-                                          <div class="w-full lg:w-6">
+                                          <div class="w-full lg:w-8">
                                               <div *ngFor="let submenuItem of selectedSection?.submenu" class="flex flex-wrap border-bottom-1 border-gray-700 pb-3 mb-3">
                                                   <div *ngIf="isSectionSubMenuEnabled(submenuItem)">
                                                       <div class="px-0 lg:px-3 py-3">
                                                           <span class="text-white">{{ submenuItem.label }}</span>
-                                                          <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3">{{ submenuItem.description }}</p>
+                                                          <p class="text-sm text-gray-400 mt-2 mb-0 line-height-3" [innerHTML]="formatDescription(submenuItem.description)"></p>
                                                       </div>
                                                   </div>
                                               </div>
@@ -97,13 +97,13 @@
 
           <div id="banner" [ngStyle]="{'background': 'radial-gradient(100% 1126.49% at 0% 0%, rgba(' + hexToRgb(pageContent?.hexaCouleurTheme) + ', 10.8) 0%, rgba(33, 33, 33, 0) 100%), #212121'}">
               <div class="flex flex-wrap" [ngStyle]="{'background-image': 'url(' + pageContent?.bannerLeftImageUrl + ')', 'background-size': 'cover'}">
-                  <div class="bg-no-repeat px-4 py-8 md:px-6 lg:px-8 w-12 lg:w-6 p-4">
+                  <div class="bg-no-repeat px-8 py-8 md:px-8 lg:px-12 w-12 lg:w-6 p-6">
                       <h1 class="text-6xl font-bold text-white mt-0 mb-3">{{ pageContent?.name }}</h1>
                       <p class="text-3xl text-gray-400 mt-0 mb-5">{{ pageContent?.bannerTitle }}</p>
                       <ul *ngIf="pageContent?.bannerDescription" class="list-none p-0 m-0">
                           <li *ngFor="let segment of pageContent.bannerDescription.split(',')" class="mb-3 flex align-items-center">
                               <i [ngStyle]="{'color': 'white' }" class="pi pi-caret-right text-xl mr-2"></i>
-                              <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-white line-height-3">{{ segment.trim() }}</span>
+                              <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-white line-height-3" [innerHTML]="formatDescription(segment.trim())"></span>
                           </li>
                       </ul>
                   </div>
@@ -117,9 +117,7 @@
       <div id="body" *ngFor="let section of sections">
           <div *ngIf="showSection(section?.key) && section?.key === 'homes'" id="{{ section?.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(pageContent?.name)"></div>
-              <div class="text-700 text-center mb-5 line-height-3">
-                  {{ pageContent?.description }}
-              </div>
+              <div class="text-700 text-center mb-5 line-height-3" [innerHTML]="formatDescription(pageContent?.description)"></div>
 
               <div class="grid">
                   <div *ngFor="let home of homes" class="col-12 md:col-4 mb-4 px-5">
@@ -128,7 +126,7 @@
                           <i [class]="home?.icon + ' text-4xl text-blue-500'"></i>
                       </span>
                           <div class="text-900 text-xl mb-3 font-medium">{{ home?.title }}</div>
-                          <span class="text-700 line-height-3">{{ home?.description }}</span>
+                          <span class="text-700 line-height-3" [innerHTML]="formatDescription(home?.description)"></span>
                       </div>
                   </div>
               </div>
@@ -150,13 +148,11 @@
 
           <div *ngIf="showSection(section?.key) && section?.key === 'abouts'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 text-center mb-5 line-height-3">
-                  {{section?.description}}
-              </div>
+              <div class="text-700 text-center text-xl mb-5 line-height-3">{{ section?.description }}</div>
 
               <div *ngFor="let about of abouts; let i = index">
                   <div *ngIf="isAboutSectionEnabled(about)">
-                      <div *ngIf="isEven(i)" class="flex lg:justify-content-center mb-5">
+                      <div *ngIf="isEven(i)" class="flex lg:justify-content-start mb-5 mx-auto">
                           <div class="py-3 pr-8 pl-3 w-30rem hidden lg:block">
                               <img [src]="about?.image" alt="Image" class="w-full mr-8">
                           </div>
@@ -168,20 +164,17 @@
                           </div>
                           <div class="py-3 pl-5 lg:pl-8 pl-3 lg:w-30rem">
                               <div class="text-900 text-xl mb-2 font-medium">{{ about?.title }}</div>
-                              <span class="block text-700 line-height-3 mb-3">
-                              {{ about?.description }}
-                          </span>
+                              <span class="block text-700 line-height-3 mb-3" [innerHTML]="formatDescription(about?.description)"></span>
                               <img [src]="about?.image" alt="Image" class="w-full mt-3 block lg:hidden">
                           </div>
                       </div>
 
-                      <div *ngIf="!isEven(i)" class="flex justify-content-center mb-5">
+                      <div *ngIf="!isEven(i)" class="flex justify-content-end mb-5 mx-auto">
                           <div class="py-3 pl-5 pr-3 lg:pr-8 lg:pl-3 lg:w-30rem flex-order-1 lg:flex-order-0">
                               <div class="text-900 text-xl mb-2 font-medium">{{ about?.title }}</div>
-                              <span class="block text-700 line-height-3 mb-3">
-                              {{ about?.description }}
-                          </span>
-                              <img [src]="about?.image" alt="Image" class="w-full mt-3 block lg:hidden"></div>
+                              <span class="block text-700 line-height-3 mb-3" [innerHTML]="formatDescription(about?.description)"></span>
+                              <img [src]="about?.image" alt="Image" class="w-full mt-3 block lg:hidden">
+                          </div>
                           <div class="flex flex-column align-items-center w-2rem flex-order-0 lg:flex-order-1">
                               <span class="bg-yellow-500 text-0 flex align-items-center justify-content-center border-circle" style="min-width: 2.5rem; min-height: 2.5rem;">
                                   <i [class]="about?.icon + ' text-xl text-white'"></i>
@@ -198,22 +191,20 @@
 
           <div *ngIf="showSection(section?.key) && section?.key === 'careers'" id="{{ section?.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 text-center mb-5 line-height-3">
-                  {{section?.description}}
-              </div>
+              <div class="text-700 text-center text-xl mb-5 line-height-3">{{ section?.description }}</div>
 
               <p-carousel [value]="careers" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="6000">
                   <ng-template let-career pTemplate="item">
                       <div *ngIf="isCareerSectionEnabled(career)" class="w-full p-5">
                           <div class="shadow-2 border-round h-full surface-card">
-                              <img *ngIf="career?.partenaire?.logo" [src]="career?.partenaire?.logo" alt="Image" class="block w-full border-round-top">
+                              <img *ngIf="career?.partenaire?.logo" [src]="career?.partenaire?.logo" alt="Image" class="block w-full border-round-top bg-no-repeat bg-cover" height="200" width="200">
                               <div class="p-4">
                                   <span [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="block font-medium text-orange-600 mb-3">{{ career?.partenaire?.name }}</span>
                                   <div class="text-xl text-900 font-medium mb-3 line-height-3">
                                       {{ career?.job | uppercase }}
                                       <h6 [ngStyle]="{'color': pageContent?.hexaCouleurTheme }" class="text-center mb-5 line-height-3">{{ getCareerTypeLabelHtml(career?.type) }}</h6>
                                   </div>
-                                  <div class="grid grid-nogutter flex">
+                                  <div class="grid grid-nogutter flex w-full mt-auto">
                                       <div class="col-12 md:col-6">
                                           <div class="text-sm font-bold text-900 mb-1">Deadline</div>
                                           <div class="text-sm flex align-items-center text-700">
@@ -241,9 +232,7 @@
 
           <div *ngIf="showSection(section?.key) && section?.key === 'offers'" id="{{ section?.key }}" class="surface-section px-4 py-8 md:px-6 lg:px-8 overflow-hidden">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 text-center mb-5 line-height-3">
-                  {{section?.description}}
-              </div>
+              <div class="text-700 text-center text-xl mb-5 line-height-3">{{ section?.description }}</div>
 
               <p-carousel [value]="offers" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="6000" (onPage)="onCarouselPageChange($event)">
                   <ng-template let-offer pTemplate="carousel">
@@ -257,13 +246,11 @@
                                   </div>
                               </div>
                               <div class="bg-bluegray-50 p-4 flex flex-column flex-grow-1" style="box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1); border-radius: 0 0 6px 6px;">
-                                  <div class="text-bluegray-500 font-bold line-height-3 mb-4">
-                                      {{ truncateDescription(offer?.description) }}
-                                  </div>
+                                  <div class="text-bluegray-500 font-bold line-height-3 mb-4" [innerHTML]="formatDescription(truncateDescription(offer?.description))"></div>
                                   <ul class="list-none p-0 m-0 mb-5 text-bluegray-600">
                                       <li *ngFor="let feature of offer?.features" class="flex align-items-center mb-3">
                                           <i class="pi pi-circle-on mr-2 text-sm"></i>
-                                          <span>{{ truncateDescription(feature) }}</span>
+                                          <span [innerHTML]="formatDescription(truncateDescription(feature))"></span>
                                       </li>
                                   </ul>
                                   <button (click)="viewDetails(offer?.id, section.type)" class="p-element p-ripple p-button-secondary w-full mt-auto p-button p-component">
@@ -286,32 +273,23 @@
 
           <div *ngIf="showSection(section.key) && section.key === 'partners'" id="{{ section.key }}" class="surface-ground px-4 py-8 md:px-6 lg:px-8 text-center">
               <div class="font-bold text-900 text-3xl mb-3 text-center" [innerHTML]="generateLabelHtml(section?.label)"></div>
-              <div class="text-700 text-center mb-5 line-height-3">
-                  {{section?.description}}
-              </div>
+              <div class="text-700 text-center text-xl mb-5 line-height-3">{{ section?.description }}</div>
 
               <p-carousel [value]="partners" [numVisible]="4" [numScroll]="3" [circular]="true" [autoplayInterval]="3000" class="p-element">
                   <ng-template let-partner pTemplate="carousel">
                       <div *ngIf="isPartnerSectionEnabled(partner)" class="px-2 py-8 md:px-2 lg:px-2">
-                          <p-image [src]="partner?.logo" [preview]="true" alt="Image" width="300">
+                          <p-image [src]="partner?.logo" [preview]="true" alt="Image" height="200" width="200" class="bg-no-repeat bg-cover">
                               <ng-template pTemplate="indicator">
                                   <div class="flex justify-content-evenly flex-wrap gap-2">
                                       <div class="p-col-12">
                                           <div class="p-row">
-                                              <div class="text-900 text-2xl mb-3 font-medium">{{ partner?.name }}</div>
+                                              <div class="text-white-900 text-2xl mb-3 font-medium">{{ partner?.name }}</div>
                                           </div>
                                           <div class="p-row">
-                                              <ng-container *ngIf="partner?.siteWeb">
-                                                  <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
-                                              </ng-container>
-                                              <ng-container *ngIf="!partner?.siteWeb">
-                                                  <ng-container *ngIf="partner?.contact">
-                                                      <p-tag [value]="partner?.contact" severity="secondary"></p-tag>
-                                                  </ng-container>
-                                              </ng-container>
+                                              <p-tag [value]="partner?.siteWeb" severity="secondary"></p-tag>
                                           </div>
                                           <div class="p-row">
-                                              <button pButton label="Read more" class="p-button-text mt-2" (click)="viewDetails(partner?.id, section.type)"></button>
+                                              <button pButton label="Read more" class="p-button-text mt-2" (click)="openPartnerWebsite(partner?.siteWeb)"></button>
                                           </div>
                                       </div>
                                   </div>
@@ -326,9 +304,8 @@
               <div class="grid grid-nogutter">
                   <div class="col-12 md:col-6 bg-no-repeat p-8" [ngStyle]="{'background': 'url(' + pageContent?.contactBgImageUrl + ')', 'background-size': 'contain', 'background-position': 'right'}">
                       <div class="text-white font-bold text-8xl mb-6" [innerHTML]="generateLabelHtml(section?.label)"></div>
-                      <div class="line-height-3 mb-6 text-2xl " [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">
-                          {{section?.description}}
-                      </div>
+                      <div class="line-height-3 mb-6 text-2xl " [ngStyle]="{'color': pageContent?.hexaCouleurTheme }">{{ section?.description }}</div>
+
                       <ul class="list-none p-0 m-0 mt-6 text-white">
                           <li *ngFor="let contact of contacts" class="flex align-items-center mb-3" (click)="getContactAction(contact.value, contact.type)">
                               <div *ngIf="isContactSectionEnabled(contact)">
@@ -376,7 +353,7 @@
               <div class="pr-0 lg:pr-8">
                   <img [src]="pageContent?.logoUrl" alt="logo" height="30">
                   <div class="text-gray-300 font-bold text-5xl py-2">{{ pageContent?.footerTitle }}</div>
-                  <p class="text-600 line-height-3 text-xl mb-0 mt-5">{{ pageContent?.footerDescription }}</p>
+                  <p class="text-600 line-height-3 text-xl mb-0 mt-5" [innerHTML]="formatDescription(pageContent?.footerDescription)"></p>
               </div>
               <button label="Get Started" class="p-element p-ripple mt-5 lg:mt-0 white-space-nowrap min-w-max p-button p-component" [ngStyle]="{'background-color': pageContent?.hexaCouleurTheme }" (click)="navigateToLogin()">
                   <span class="p-button-label">Get Started</span>
